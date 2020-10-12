@@ -9,22 +9,22 @@ namespace Shiny.Impl
 {
     public class XfMaterialDialogs : IDialogs
     {
-        public Task Alert(string message, string title = "Confirm")
+        public virtual Task Alert(string message, string title = "Confirm")
             => MaterialDialog.Instance.AlertAsync(message, title);
 
 
-        public async Task<bool> Confirm(string message, string title = "Confirm", string okText = "OK", string cancelText = "Cancel")
+        public virtual async Task<bool> Confirm(string message, string title = "Confirm", string okText = "OK", string cancelText = "Cancel")
         {
             var result = await MaterialDialog.Instance.ConfirmAsync(message, title, okText, cancelText);
             return result ?? false;
         }
 
 
-        public Task<string?> Input(string message, string? title = null)
+        public virtual Task<string?> Input(string message, string? title = null)
             => MaterialDialog.Instance.InputAsync(title, message);
 
 
-        public Task ActionSheet(string title, bool allowCancel, params (string Key, Action Action)[] actions)
+        public virtual Task ActionSheet(string title, bool allowCancel, params (string Key, Action Action)[] actions)
         {
             var dict = new Dictionary<string, Action>();
             foreach (var action in actions)
@@ -34,7 +34,7 @@ namespace Shiny.Impl
         }
 
 
-        public async Task ActionSheet(string title, IDictionary<string, Action> actions, bool allowCancel = false)
+        public virtual async Task ActionSheet(string title, IDictionary<string, Action> actions, bool allowCancel = false)
         {
             var task = allowCancel
                 ? await MaterialDialog.Instance.SelectChoiceAsync(title, actions.Keys.ToList())
@@ -45,7 +45,7 @@ namespace Shiny.Impl
         }
 
 
-        public async Task<T> LoadingTask<T>(Func<Task<T>> task, string message)
+        public virtual async Task<T> LoadingTask<T>(Func<Task<T>> task, string message)
         {
             var result = default(T);
             IMaterialModalPage dialog = null;
@@ -64,17 +64,17 @@ namespace Shiny.Impl
         }
 
 
-        public Task LoadingTask(Func<Task> task, string message = "Loading")
+        public virtual Task LoadingTask(Func<Task> task, string message = "Loading")
             => this.LoadingTask<object>(async () =>
             {
                 await task();
                 return null;
             },
-                message
-             );
+            message
+        );
 
 
-        public Task Snackbar(string message)
+        public virtual Task Snackbar(string message)
             => MaterialDialog.Instance.SnackbarAsync(message);
     }
 }
