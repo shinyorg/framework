@@ -10,7 +10,11 @@
         <Nullable>enable</Nullable>
         <ContinuousIntegrationBuild>$(ContinuousIntegrationBuild)</ContinuousIntegrationBuild>
         <DisableExtraReferences>False</DisableExtraReferences>
-
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageReleaseNotes>https://github.com/shinyorg/shiny/blob/master/ChangeLog.md</PackageReleaseNotes>
+        <PackageTags>xamarin shiny</PackageTags>
         <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.0.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
         <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
