@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>Shiny</RootNamespace>
+        <Authors>Allan Ritchie</Authors>
+        <Owners>aritchie;shinylib</Owners>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ContinuousIntegrationBuild>$(ContinuousIntegrationBuild)</ContinuousIntegrationBuild>
+        <DisableExtraReferences>False</DisableExtraReferences>
+
+        <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">2.0.0</ShinyVersion>
+        <VersionPrefix>$(ShinyVersion)</VersionPrefix>
+        <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
+        <VersionSuffix Condition=" $(BUILD_SOURCEBRANCHNAME) == 'preview' ">preview</VersionSuffix>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DesignTimeBuild>false</DesignTimeBuild>
+        <DebugType>portable</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="nuget.png" Pack="true" PackagePath="icon.png" />
+        <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
+        <PackageReference Include="ReactiveUI.Fody" Version="11.5.35" />
+        <PackageReference Include="Shiny.Core" Version="2.0.0.2285-preview" />
+        <PackageReference Include="XF.Material" Version="1.7.5" />
+    </ItemGroup>
+
+</Project>
