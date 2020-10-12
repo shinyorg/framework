@@ -17,22 +17,29 @@ namespace Shiny.Scenarios.Auth
                     x => x.Tenant,
                     x => x.Identifier,
                     x => x.Password,
-                    (tenant, id, pass) =>
-                    {
-                        if (this.UseTenant && tenant.GetValue().IsEmpty())
-                            return false;
-
-                        if (id.GetValue().IsEmpty())
-                            return false;
-
-                        if (pass.GetValue().IsEmpty())
-                            return false;
-
-                        return true;
-                    }
+                    (tenant, id, pass) => this.Validate(
+                        id.GetValue(),
+                        pass.GetValue(),
+                        tenant.GetValue()
+                    )
                 )
             );
             this.BindBusyCommand(this.Login);
+        }
+
+
+        protected virtual bool Validate(string identifier, string password, string tenant)
+        {
+            if (this.UseTenant && tenant.IsEmpty())
+                return false;
+
+            if (identifier.IsEmpty())
+                return false;
+
+            if (password.IsEmpty())
+                return false;
+
+            return true;
         }
 
 

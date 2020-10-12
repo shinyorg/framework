@@ -10,61 +10,63 @@ namespace Shiny.Scenarios.Auth
         protected IObservable<bool> WhenIdentifierValidates() => this.WhenAny(
             x => x.Identifier,
             x => x.ConfirmIdentifier,
-            (identifier, confirm) =>
-            {
-                this.IsIdentifierMatching = true;
-                var id = identifier.GetValue();
-
-                if (id.IsEmpty())
-                    return false;
-
-                if (!this.IsIdentifierGood(id))
-                    return false;
-
-                if (this.UseConfirmIdentifier)
-                {
-                    var con = confirm.GetValue();
-                    if (con.IsEmpty())
-                        return false;
-
-                    if (!id.Equals(con))
-                    {
-                        this.IsIdentifierMatching = false;
-                        return false;
-                    }
-                }
-                return true;
-            }
+            (identifier, confirm) => this.ValidateIdentifer(
+                identifier.GetValue(),
+                confirm.GetValue()
+            )
         );
+
+
+        protected virtual bool ValidateIdentifer(string identifier, string confirmIdentifier)
+        {
+            this.IsIdentifierMatching = true;
+
+            if (identifier.IsEmpty() || !this.IsIdentifierGood(identifier))
+                return false;
+
+            if (this.UseConfirmIdentifier)
+            {
+                if (confirmIdentifier.IsEmpty())
+                    return false;
+
+                if (!identifier.Equals(confirmIdentifier))
+                {
+                    this.IsIdentifierMatching = false;
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
         protected IObservable<bool> WhenPasswordValidates() => this.WhenAny(
             x => x.Password,
             x => x.ConfirmPassword,
-            (pass, confirm) =>
-            {
-                this.IsPasswordMatching = true;
-                var p = pass.GetValue();
-                var c = pass.GetValue();
-
-                if (p.IsEmpty())
-                    return false;
-
-                if (!this.IsPasswordComplex(p))
-                   return false;
-
-                if (c.IsEmpty())
-                    return false;
-
-                if (!c.Equals(p))
-                {
-                    this.IsPasswordMatching = false;
-                    return false;
-                }
-                 
-                return true;
-             }
+            (pass, confirm) => this.ValidatePassword(
+                pass.GetValue(),
+                confirm.GetValue()
+            )
         );
+
+
+        protected virtual bool ValidatePassword(string newPassword, string confirmNewPassword)
+        {
+            this.IsPasswordMatching = true;
+
+            if (newPassword.IsEmpty() || !this.IsPasswordComplex(newPassword))
+                return false;
+
+            if (confirmNewPassword.IsEmpty())
+                return false;
+
+            if (!newPassword.Equals(confirmNewPassword))
+            {
+                this.IsPasswordMatching = false;
+                return false;
+            }
+
+            return true;
+        }
 
 
         protected bool UseConfirmIdentifier { get; set; } = false;

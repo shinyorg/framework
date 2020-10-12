@@ -15,12 +15,13 @@ namespace Shiny.Scenarios.Auth
                () => this.Process(this.Identity),
                 this.WhenAny(
                     x => x.Identity,
-                    id => !id.GetValue().IsEmpty()
+                    id => this.Validate(id.GetValue())
                 )
             );
         }
 
 
+        protected virtual bool Validate(string identifier) => !identifier.IsEmpty();
         protected abstract Task Process(string id);
         public ICommand Send { get; }
         [Reactive] public string ErrorMessage { get; protected set; }

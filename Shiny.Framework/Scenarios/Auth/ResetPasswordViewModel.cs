@@ -9,6 +9,7 @@ namespace Shiny.Scenarios.Auth
 {
     public enum ResetPasswordError
     {
+        None,
         PasswordNotComplex,
         PasswordsDontMatch
     }
@@ -24,35 +25,41 @@ namespace Shiny.Scenarios.Auth
                     x => x.ResetKey,
                     x => x.NewPassword,
                     x => x.ConfirmNewPassword,
-                    (key, pass, confirm) =>
-                    {
-                        if (key.GetValue().IsEmpty())
-                            return false;
-
-                        var pwd = pass.GetValue();
-                        if (pwd.IsEmpty())
-                            return false;
-
-                        if (!this.IsPasswordComplex(pwd))
-                        {
-                            this.Error = ResetPasswordError.PasswordNotComplex;
-                            return false;
-                        }
-
-                        var c = confirm.GetValue();
-                        if (c.IsEmpty())
-                            return false;
-
-                        if (pwd != c)
-                        {
-                            this.Error = ResetPasswordError.PasswordsDontMatch;
-                            return false;
-                        }
-                        return true;
-                    }
+                    (key, pass, confirm) => this.Validate(
+                        key.GetValue(),
+                        pass.GetValue(),
+                        confirm.GetValue()
+                    )
                 )
             );
             this.BindBusyCommand(this.Reset);
+        }
+
+
+        protected virtual bool Validate(string key, string newPassword, string confirmNewPassword)
+        {
+            this.Error = ResetPasswordError.None;
+            if (key.IsEmpty())
+                return false;
+
+            if (newPassword.IsEmpty())
+                return false;
+
+            if (!this.IsPasswordComplex(newPassword))
+            {
+                this.Error = ResetPasswordError.PasswordNotComplex;
+                return false;
+            }
+
+            if (confirmNewPassword.IsEmpty())
+                return false;
+
+            if (!newPassword.Equals(confirmNewPassword))
+            {
+                this.Error = ResetPasswordError.PasswordsDontMatch;
+                return false;
+            }
+            return true;
         }
 
 
