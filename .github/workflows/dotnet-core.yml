@@ -20,7 +20,8 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet msbuild -property:Configuration=release -property:BUILD_BUILDNUMBER=${{GITHUB_RUN_NUMBER}}
+      #run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: dotnet publish
