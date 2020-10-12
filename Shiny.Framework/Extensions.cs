@@ -11,6 +11,16 @@ namespace Shiny
 {
     public static class Extensions
     {
+        public static string GetEnum<T>(this ILocalize localize, T value)
+        {
+            if (!typeof(T).IsEnum)
+                throw new ArgumentException(typeof(T).FullName + " is not an enum");
+
+            var name = $"{typeof(T).Namespace}.{typeof(T).Name}.{value}";
+            return localize[name];
+        }
+
+
         public static IDisposable SubOnMainThread<T>(this IObservable<T> obs, Action<T> onNext)
             => obs
                 .ObserveOn(RxApp.MainThreadScheduler)

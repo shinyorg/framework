@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Description>A collection of libraries and classes to make Xamarin development easier - not intended for public consumption</Description>
+        <Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism easier - not intended for public consumption</Description>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>Shiny</RootNamespace>
         <Authors>Allan Ritchie</Authors>
