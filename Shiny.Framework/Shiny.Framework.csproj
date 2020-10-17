@@ -36,7 +36,7 @@
         <None Include="nuget.png" Pack="true" PackagePath="icon.png" />
         <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
         <PackageReference Include="ReactiveUI.Fody" Version="11.5.35" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2285-preview" />
+        <PackageReference Include="Shiny.Core" Version="2.0.0.2312-preview" />
         <PackageReference Include="XF.Material" Version="1.7.5" />
     </ItemGroup>
 
