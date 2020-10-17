@@ -16,11 +16,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
+    - name: Generate Build Number
+      id: buildnumber
+      uses: einaregilsson/build-number@v2
+      with:
+        token: ${{secrets.github_token}}
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet msbuild -property:Configuration=release -property:BUILD_BUILDNUMBER=$GITHUB_RUN_NUMBER
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet msbuild -property:Configuration=release -property:BUILD_BUILDNUMBER=${{ steps.buildnumber.outputs.build_number }}
+    #- name: Test
+    #  run: dotnet test --no-restore --verbosity normal
     - name: dotnet publish
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }}
