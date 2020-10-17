@@ -12,9 +12,9 @@ namespace Shiny.Scenarios.Auth
         protected ForgotPasswordViewModel()
         {
             this.Send = ReactiveCommand.CreateFromTask(
-               () => this.Process(this.Identity),
+               () => this.Process(this.Identifier),
                 this.WhenAny(
-                    x => x.Identity,
+                    x => x.Identifier,
                     id => this.Validate(id.GetValue())
                 )
             );
@@ -25,6 +25,6 @@ namespace Shiny.Scenarios.Auth
         protected abstract Task Process(string id);
         public ICommand Send { get; }
         [Reactive] public string ErrorMessage { get; protected set; }
-        [Reactive] public string Identity { get; set; }
+        [Reactive] public string Identifier { get; set; }
     }
 }

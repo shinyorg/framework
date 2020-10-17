@@ -4,14 +4,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Mvvm;
-
 using Shiny.Impl;
+
 
 namespace Shiny
 {
     public abstract class ShinyApplication : PrismApplication, IShinyStartup
     {
-
         protected override void OnInitialized()
         {
             XF.Material.Forms.Material.Init(this);
