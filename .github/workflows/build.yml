@@ -1,11 +1,14 @@
-name: .NET Core
+name: Build
 
 on:
   push:
     branches: [ master ]
+    paths:
+    - "Shiny.Framework/**"
   pull_request:
     branches: [ master ]
-
+    paths:
+    - "Shiny.Framework/**"
 jobs:
   build:
 
