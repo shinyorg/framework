@@ -6,6 +6,7 @@ using Prism.AppModel;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Shiny.Net;
 
 
 namespace Shiny
@@ -19,7 +20,6 @@ namespace Shiny
                                       IDestructible,
                                       IConfirmNavigationAsync
     {
-
         CompositeDisposable? deactivateWith;
         protected CompositeDisposable DeactivateWith => this.deactivateWith ??= new CompositeDisposable();
         protected CompositeDisposable DestroyWith { get; } = new CompositeDisposable();
@@ -35,13 +35,21 @@ namespace Shiny
         public virtual void Initialize(INavigationParameters parameters) { }
         public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
-        public virtual void OnAppearing() { }
+        public virtual void OnAppearing()
+        {
+            ShinyHost
+                .Resolve<IConnectivity>()
+                .WhenInternetStatusChanged()
+                .SubOnMainThread(x => this.IsConnected = x)
+                .DisposeWith(this.DeactivateWith);
+        }
         public virtual void OnDisappearing() { }
         public virtual void Destroy() => this.DestroyWith?.Dispose();
         public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
 
         [Reactive] public bool IsBusy { get; set; }
         [Reactive] public string? Title { get; protected set; }
+        [Reactive] public bool IsConnected { get; private set; }
 
 
         protected void BindBusyCommand(ICommand command)
