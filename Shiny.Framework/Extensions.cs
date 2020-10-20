@@ -39,17 +39,21 @@ namespace Shiny
                 .Subscribe(onNext, onError, onComplete);
 
         public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
-                    => navigation.Navigate(uri, parameters.ToNavParams());
+            => navigation.Navigate(uri, parameters.ToNavParams());
 
 
         public static async Task Navigate(this INavigationService navigation, string uri, INavigationParameters parameters)
-        {
-            var result = await navigation.NavigateAsync(uri, parameters);
-            if (!result.Success)
-                Console.WriteLine("[NAV FAIL] " + result.Exception);
-            //throw new ArgumentException("Failed to navigate", result.Exception);
-        }
+            => (await navigation.NavigateAsync(uri, parameters)).Assert();
 
+
+        public static void Assert(this INavigationResult result)
+        {
+            if (!result.Success)
+            {
+                Console.WriteLine("[NAV FAIL] " + result.Exception);
+                throw new ArgumentException("Failed to navigate", result.Exception);
+            }
+        }
 
         public static ICommand NavigateCommand(this INavigationService navigation, string uri, Action<INavigationParameters> getParams = null, IObservable<bool> canExecute = null)
             => ReactiveCommand.CreateFromTask(async () =>
@@ -82,8 +86,7 @@ namespace Shiny
                 : navigation.GoBackAsync(parameters);
 
             var result = await task.ConfigureAwait(false);
-            if (!result.Success)
-                Console.WriteLine("[NAV FAIL] " + result.Exception);
+            result.Assert();
         }
 
 
