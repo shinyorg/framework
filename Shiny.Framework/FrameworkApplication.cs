@@ -1,15 +1,13 @@
 ﻿using System;
 using DryIoc;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Mvvm;
-using Shiny.Impl;
 
 
 namespace Shiny
 {
-    public abstract class ShinyApplication : PrismApplication, IShinyStartup
+    public abstract class FrameworkApplication : PrismApplication
     {
         protected override void OnInitialized()
         {
@@ -36,16 +34,5 @@ namespace Shiny
             );
             return new DryIocContainerExtension(container);
         }
-
-
-        public virtual void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<IDialogs, XfMaterialDialogs>();
-            services.AddSingleton<GlobalExceptionHandler>();
-        }
-
-
-        public virtual IServiceProvider CreateServiceProvider(IServiceCollection services) => null;
-        public virtual void ConfigureApp(IServiceProvider provider) { }
     }
 }
