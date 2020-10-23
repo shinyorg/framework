@@ -12,7 +12,6 @@ using Shiny.Net;
 namespace Shiny
 {
     public abstract class ViewModel : ReactiveObject,
-                                      IAutoInitialize,
                                       IInitialize,
                                       IInitializeAsync,
                                       INavigatedAware,
