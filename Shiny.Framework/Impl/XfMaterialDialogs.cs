@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XF.Material.Forms.UI.Dialogs;
+using Shiny.Settings;
 
 
 namespace Shiny.Impl
 {
     public class XfMaterialDialogs : IDialogs
     {
+        readonly ISettings settings;
+        public XfMaterialDialogs(ISettings settings) => this.settings = settings;
+
+
         public virtual Task Alert(string message, string title = "Confirm")
             => MaterialDialog.Instance.AlertAsync(message, title);
 
@@ -45,12 +50,13 @@ namespace Shiny.Impl
         }
 
 
-        public virtual async Task<T> LoadingTask<T>(Func<Task<T>> task, string message)
+        public virtual async Task<T> LoadingTask<T>(Func<Task<T>> task, string message, bool useSnackbar = false)
         {
             var result = default(T);
-            IMaterialModalPage dialog = null;
+            IMaterialModalPage? dialog = null;
             try
             {
+                // TODO: snackbar
                 dialog = await MaterialDialog.Instance.LoadingDialogAsync(message);
                 result = await task();
                 await dialog.DismissAsync();
@@ -64,17 +70,26 @@ namespace Shiny.Impl
         }
 
 
-        public virtual Task LoadingTask(Func<Task> task, string message = "Loading")
+        public virtual Task LoadingTask(Func<Task> task, string message = "Loading", bool useSnackbar = false)
             => this.LoadingTask<object>(async () =>
             {
                 await task();
                 return null;
             },
-            message
+            message,
+            useSnackbar
         );
 
 
-        public virtual Task Snackbar(string message)
-            => MaterialDialog.Instance.SnackbarAsync(message);
+        public virtual Task Snackbar(string message, int durationMillis = 3000)
+            => MaterialDialog.Instance.SnackbarAsync(message, durationMillis);
+
+
+        public async Task SnackbarToOpenAppSettings(string message, string actionButtonText = "Open", int durationMillis = 3000)
+        {
+            var result = await MaterialDialog.Instance.SnackbarAsync(message, actionButtonText, durationMillis);
+            if (result)
+                await this.settings.OpenAppSettings();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
@@ -11,6 +12,24 @@ namespace Shiny
 {
     public static class Extensions
     {
+        public static async Task<AccessState> OpenAppSettingsIf(this IDialogs dialogs, Func<Task<AccessState>> accessRequest, string deniedMessage, string restrictedMessage)
+        {
+            var result = await accessRequest.Invoke();
+            switch (result)
+            {
+                case AccessState.Denied:
+                    await dialogs.SnackbarToOpenAppSettings(deniedMessage);
+                    break;
+
+                case AccessState.Restricted:
+                    await dialogs.SnackbarToOpenAppSettings(restrictedMessage);
+                    break;
+            }
+
+            return result;
+        }
+
+
         public static string GetEnum<T>(this ILocalize localize, T value)
         {
             if (!typeof(T).IsEnum)
