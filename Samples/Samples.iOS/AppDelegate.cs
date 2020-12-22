@@ -4,6 +4,7 @@ using Xamarin.Forms.Platform.iOS;
 
 [assembly: Shiny.ShinyApplication(ShinyStartupTypeName = "Samples.SampleStartup", XamarinFormsAppTypeName = "Samples.App")]
 
+
 namespace Samples.iOS
 {
     [Register("AppDelegate")]
