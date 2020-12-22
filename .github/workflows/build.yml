@@ -27,11 +27,14 @@ jobs:
       with:
         token: ${{secrets.github_token}}
 
-    - name: Install dependencies
-      run: dotnet restore
-
     - name: Build
       run: msbuild Shiny.Framework.sln /restore -m -property:Configuration=Release -property:BUILD_BUILDNUMBER=${{steps.buildnumber.outputs.build_number}}
+
+    - name: Post NuGet Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: nuget-artifacts
+        path: '**/*.nupkg'
 
     - name: dotnet publish
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
