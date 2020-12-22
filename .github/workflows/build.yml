@@ -8,9 +8,12 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
     - uses: actions/checkout@v2
 
     - name: Setup .NET Core
@@ -28,7 +31,7 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet msbuild -property:Configuration=release -property:BUILD_BUILDNUMBER=${{ steps.buildnumber.outputs.build_number }}
+      run: msbuild Shiny.Framework.sln /restore -m -property:Configuration=Release -property:BUILD_BUILDNUMBER=${{steps.buildnumber.outputs.build_number}}
 
     - name: dotnet publish
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
