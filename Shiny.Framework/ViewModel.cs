@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.AppModel;
@@ -39,7 +40,8 @@ namespace Shiny
             ShinyHost
                 .Resolve<IConnectivity>()
                 .WhenInternetStatusChanged()
-                .SubOnMainThread(x => this.IsConnected = x)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .ToPropertyEx(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DeactivateWith);
         }
         public virtual void OnDisappearing() { }
@@ -48,7 +50,7 @@ namespace Shiny
 
         [Reactive] public bool IsBusy { get; set; }
         [Reactive] public string? Title { get; protected set; }
-        [Reactive] public bool IsConnected { get; private set; }
+        public bool IsInternetAvailable { [ObservableAsProperty] get; }
 
 
         protected void BindBusyCommand(ICommand command)

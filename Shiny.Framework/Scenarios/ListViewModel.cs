@@ -49,7 +49,7 @@ namespace Shiny.Scenarios
         public override void OnAppearing()
         {
             base.OnAppearing();
-            ((ICommand)this.List).Execute(null);
+            this.Load.Execute(null);
         }
     }
 }
