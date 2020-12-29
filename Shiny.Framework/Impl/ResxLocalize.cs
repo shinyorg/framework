@@ -15,7 +15,7 @@ namespace Shiny.Impl
             => this.resources = new ResourceManager(baseName, assembly);
 
 
-        public string GetString(string key, CultureInfo culture) => this.resources.GetString(key, culture);
+        public string GetString(string key, CultureInfo culture = null) => this.resources.GetString(key, culture);
         public string this[string key] => this.resources.GetString(key);
     }
 }

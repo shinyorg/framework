@@ -12,17 +12,21 @@ namespace Shiny
 {
     public static class Extensions
     {
-        public static async Task<AccessState> OpenAppSettingsIf(this IDialogs dialogs, Func<Task<AccessState>> accessRequest, string deniedMessage, string restrictedMessage)
+        public static async Task<AccessState> OpenAppSettingsIf(this IDialogs dialogs, Func<Task<AccessState>> accessRequest, string deniedMessageKey, string restrictedMessageKey)
         {
             var result = await accessRequest.Invoke();
+            var localize = ShinyHost.Resolve<ILocalize>();
+
             switch (result)
             {
                 case AccessState.Denied:
-                    await dialogs.SnackbarToOpenAppSettings(deniedMessage);
+                    var deniedMsg = localize?.GetString(deniedMessageKey) ?? deniedMessageKey;
+                    await dialogs.SnackbarToOpenAppSettings(deniedMsg);
                     break;
 
                 case AccessState.Restricted:
-                    await dialogs.SnackbarToOpenAppSettings(restrictedMessage);
+                    var restrictMsg = localize?.GetString(restrictedMessageKey) ?? restrictedMessageKey;
+                    await dialogs.SnackbarToOpenAppSettings(restrictMsg);
                     break;
             }
 
