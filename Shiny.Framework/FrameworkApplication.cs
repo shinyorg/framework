@@ -11,7 +11,6 @@ namespace Shiny
     {
         protected override void OnInitialized()
         {
-            base.OnInitialized();
             XF.Material.Forms.Material.Init(this);
 
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
