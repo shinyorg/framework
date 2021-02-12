@@ -34,11 +34,12 @@
 
     <ItemGroup>
         <None Include="nuget.png" Pack="true" PackagePath="icon.png" />
+        <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
         <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
-        <PackageReference Include="ReactiveUI.Fody" Version="13.0.27" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2417-preview" />
+        <PackageReference Include="ReactiveUI.Fody" Version="13.1.1" />
+        <PackageReference Include="Shiny.Core" Version="2.0.0.2476-preview" />
         <PackageReference Include="XF.Material" Version="1.7.7" />
-        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.9" />
+        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.10" />
     </ItemGroup>
 
 </Project>

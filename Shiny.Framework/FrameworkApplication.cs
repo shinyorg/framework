@@ -22,17 +22,8 @@ namespace Shiny
         }
 
 
+
         protected override IContainerExtension CreateContainerExtension()
-        {
-            var container = new Container(this.CreateContainerRules());
-            ShinyHost.Populate((serviceType, func, lifetime) =>
-                container.RegisterDelegate(
-                    serviceType,
-                    _ => func(),
-                    Reuse.Singleton // HACK: I know everything is singleton
-                )
-            );
-            return new DryIocContainerExtension(container);
-        }
+            => new DryIocContainerExtension(FrameworkStartup.Container);
     }
 }
