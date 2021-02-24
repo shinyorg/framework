@@ -1,10 +1,8 @@
-﻿using DryIoc;
+﻿using System;
+using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
-
 using Microsoft.Extensions.DependencyInjection;
-using Shiny.Impl;
 
-using System;
 
 namespace Shiny
 {
@@ -12,8 +10,8 @@ namespace Shiny
     {
         public override void ConfigureServices(IServiceCollection services, IPlatform platform)
         {
-            services.AddSingleton<IDialogs, XfMaterialDialogs>();
-            services.AddSingleton<GlobalExceptionHandler>();
+            services.UseXfMaterialDialogs();
+            services.UseGlobalCommandExceptionHandler();
         }
 
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using DryIoc;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Mvvm;

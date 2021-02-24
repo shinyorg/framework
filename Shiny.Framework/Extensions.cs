@@ -2,16 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Prism.Navigation;
 using ReactiveUI;
+using Shiny.Impl;
 
 
 namespace Shiny
 {
     public static class Extensions
     {
+        public static void UseXfMaterialDialogs(this IServiceCollection services)
+            => services.AddSingleton<IDialogs, XfMaterialDialogs>();
+
+        public static void UseGlobalCommandExceptionHandler(this IServiceCollection services)
+            => services.AddSingleton<GlobalExceptionHandler>();
+
+        public static void UseResxLocalization(this IServiceCollection services, Assembly assembly, string resourceName)
+            => services.AddSingleton<ILocalize>(new ResxLocalize(resourceName, assembly));
+
+
         public static async Task<AccessState> OpenAppSettingsIf(this IDialogs dialogs, Func<Task<AccessState>> accessRequest, string deniedMessageKey, string restrictedMessageKey)
         {
             var result = await accessRequest.Invoke();
