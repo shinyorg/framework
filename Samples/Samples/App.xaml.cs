@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.Ioc;
-using Prism.Mvvm;
 using Shiny;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,12 +13,6 @@ namespace Samples
     {
         protected override async void Initialize()
         {
-            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
-            {
-                var viewModelTypeName = viewType.FullName.Replace("Page", "ViewModel");
-                var viewModelType = Type.GetType(viewModelTypeName);
-                return viewModelType;
-            });
             base.Initialize();
             this.InitializeComponent();
             await this.NavigationService.Navigate("NavigationPage/MainPage");
@@ -29,7 +22,7 @@ namespace Samples
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
         }
     }
 }
