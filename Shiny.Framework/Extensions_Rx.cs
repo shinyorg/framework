@@ -10,6 +10,7 @@ using ReactiveUI;
 using Shiny.Impl;
 using Shiny.Infrastructure;
 
+
 namespace Shiny
 {
     public static partial class Extensions
@@ -22,6 +23,15 @@ namespace Shiny
 
         public static void UseResxLocalization(this IServiceCollection services, Assembly assembly, string resourceName)
             => services.AddSingleton<ILocalize>(new ResxLocalize(resourceName, assembly));
+
+
+        public static IObservable<string> ObserveTimeAgo<T>(this T npc, Expression<Func<T, DateTimeOffset>> expression, Func<TimeSpan, string> transformer, TimeSpan? interval = null) where T : INotifyPropertyChanged
+            => npc.WhenAnyProperty(expression).Select(x => x.ObserveTimeAgo(transformer, interval)).Switch();
+
+        public static IObservable<string> ObserveTimeAgo(this DateTimeOffset dt, Func<TimeSpan, string> transformer, TimeSpan? intervalTime = null) => Observable
+            .Interval(intervalTime ?? TimeSpan.FromSeconds(10))
+            .Select(_ => DateTimeOffset.UtcNow.Subtract(dt))
+            .Select(x => transformer(x));
 
 
         public static IDisposable ApplyValueRangeConstraint<T>(this T npc, Expression<Func<T, int>> expression, int min, int max) where T : INotifyPropertyChanged

@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XF.Material.Forms.UI.Dialogs;
-using Shiny.Settings;
 
 
 namespace Shiny.Impl
 {
     public class XfMaterialDialogs : IDialogs
     {
-        readonly ISettings settings;
-        public XfMaterialDialogs(ISettings settings) => this.settings = settings;
-
-
         public virtual Task Alert(string message, string title = "Confirm")
             => MaterialDialog.Instance.AlertAsync(message, title);
 
@@ -56,8 +51,10 @@ namespace Shiny.Impl
             IMaterialModalPage? dialog = null;
             try
             {
-                // TODO: snackbar
-                dialog = await MaterialDialog.Instance.LoadingDialogAsync(message);
+                dialog = useSnackbar
+                    ? await MaterialDialog.Instance.LoadingSnackbarAsync(message)
+                    : await MaterialDialog.Instance.LoadingDialogAsync(message);
+
                 result = await task();
                 await dialog.DismissAsync();
             }
@@ -89,7 +86,7 @@ namespace Shiny.Impl
         {
             var result = await MaterialDialog.Instance.SnackbarAsync(message, actionButtonText, durationMillis);
             if (result)
-                await this.settings.OpenAppSettings();
+                Xamarin.Essentials.AppInfo.ShowSettingsUI();
         }
     }
 }
