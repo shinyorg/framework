@@ -64,5 +64,20 @@ namespace Shiny
                 () => this.IsBusy = false
             )
             .DisposeWith(this.DeactivateWith);
+
+
+        ILocalize? localize;
+        public ILocalize Localize
+        {
+            get
+            {
+                this.localize ??= ShinyHost.Resolve<ILocalize>();
+                return this.localize;
+            }
+        }
+
+
+        public string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
+        public string this[string key] => this.Localize[key];
     }
 }
