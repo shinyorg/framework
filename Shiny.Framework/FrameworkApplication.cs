@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.DryIoc;
-using Prism.Ioc;
 
 
 namespace Shiny
@@ -11,9 +10,5 @@ namespace Shiny
         {
             XF.Material.Forms.Material.Init(this);
         }
-
-
-        protected override IContainerExtension CreateContainerExtension()
-            => new DryIocContainerExtension(FrameworkStartup.Container);
     }
 }
