@@ -36,11 +36,11 @@
         <None Include="nuget.png" Pack="true" PackagePath="icon.png" />
         <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
         <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
-        <PackageReference Include="ReactiveUI.Fody" Version="13.2.2" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2542-preview" />
+        <PackageReference Include="ReactiveUI.Fody" Version="13.2.10" />
+        <PackageReference Include="Shiny.Core" Version="2.0.0.2579-preview" />
         <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
-        <PackageReference Include="XF.Material" Version="1.7.7" />
-        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.10" />
+        <PackageReference Include="XF.Material" Version="1.7.8" />
+        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
     </ItemGroup>
 
 </Project>
