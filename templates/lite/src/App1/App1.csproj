@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+        <Nullable>enable</Nullable>
+        <LangVersion>8.0</LangVersion>
+        <EmitCompilerGeneratedFiles>True</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Shiny" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Beacons" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.BluetoothLE" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Framework" Version="1.0.0.40" />
+        <PackageReference Include="Shiny.Integrations.Sqlite" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Locations" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Logging.AppCenter" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Net.Http" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Nfc" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Notifications" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Push.AzureNotificationHubs" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Shiny.Sensors" Version="2.0.0.2579-preview" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    </ItemGroup>
+</Project>

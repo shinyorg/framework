@@ -53,6 +53,30 @@ namespace Shiny
         public bool IsInternetAvailable { [ObservableAsProperty] get; }
 
 
+        IDialogs? dialogs;
+        public IDialogs Dialogs
+        {
+            get
+            {
+                this.dialogs ??= ShinyHost.Resolve<IDialogs>();
+                return this.dialogs;
+            }
+        }
+
+
+        ILocalize? localize;
+        public ILocalize Localize
+        {
+            get
+            {
+                this.localize ??= ShinyHost.Resolve<ILocalize>();
+                return this.localize;
+            }
+        }
+
+        public string this[string key] => this.Localize[key];
+
+
         protected void BindBusyCommand(ICommand command)
             => this.BindBusyCommand((IReactiveCommand)command);
 

@@ -1,0 +1,12 @@
+{
+    "author": "Allan Ritchie",
+    "classifications": [ "Mobile" ], 
+    "name": "Shiny Starter Project",
+    "identity": "Shiny.Template",         
+    "shortName": "shiny",
+    "tags": {
+      "language": "C#"
+    },
+    "sourceName": "App1",
+    "preferNameDirectory":"true"
+  }
