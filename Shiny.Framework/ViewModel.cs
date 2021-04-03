@@ -53,6 +53,22 @@ namespace Shiny
         public bool IsInternetAvailable { [ObservableAsProperty] get; }
 
 
+        protected void BindBusyCommand(ICommand command)
+            => this.BindBusyCommand((IReactiveCommand)command);
+
+
+        protected void BindBusyCommand(IReactiveCommand command) =>
+            command.IsExecuting.Subscribe(
+                x => this.IsBusy = x,
+                _ => this.IsBusy = false,
+                () => this.IsBusy = false
+            )
+            .DisposeWith(this.DeactivateWith);
+
+
+        public string this[string key] => this.Localize[key];
+        public string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
+
         IDialogs? dialogs;
         public IDialogs Dialogs
         {
@@ -73,35 +89,5 @@ namespace Shiny
                 return this.localize;
             }
         }
-
-        public string this[string key] => this.Localize[key];
-
-
-        protected void BindBusyCommand(ICommand command)
-            => this.BindBusyCommand((IReactiveCommand)command);
-
-
-        protected void BindBusyCommand(IReactiveCommand command) =>
-            command.IsExecuting.Subscribe(
-                x => this.IsBusy = x,
-                _ => this.IsBusy = false,
-                () => this.IsBusy = false
-            )
-            .DisposeWith(this.DeactivateWith);
-
-
-        ILocalize? localize;
-        public ILocalize Localize
-        {
-            get
-            {
-                this.localize ??= ShinyHost.Resolve<ILocalize>();
-                return this.localize;
-            }
-        }
-
-
-        public string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
-        public string this[string key] => this.Localize[key];
     }
 }
