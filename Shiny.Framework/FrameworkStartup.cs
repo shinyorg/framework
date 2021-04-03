@@ -2,6 +2,8 @@
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using Prism.DryIoc;
+using Prism.Ioc;
 
 
 namespace Shiny
@@ -18,17 +20,9 @@ namespace Shiny
         internal static IContainer? Container { get; private set; }
         public override IServiceProvider CreateServiceProvider(IServiceCollection services)
         {
-            var container = new Container(Rules
-                .Default
-                .WithConcreteTypeDynamicRegistrations(reuse: Reuse.Transient)
-                .With(Made.Of(FactoryMethod.ConstructorWithResolvableArguments))
-                .WithFuncAndLazyWithoutRegistration()
-                .WithTrackingDisposableTransients()
-                .WithoutFastExpressionCompiler()
-                .WithFactorySelector(Rules.SelectLastRegisteredFactory())
-            );
+            ContainerLocator.SetContainerExtension(() => new DryIocContainerExtension());
+            var container = ContainerLocator.Container.GetContainer();
             DryIocAdapter.Populate(container, services);
-            Container = container;
             return container.GetServiceProvider();
         }
     }
