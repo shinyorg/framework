@@ -3,6 +3,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.Logging;
 using Prism.AppModel;
 using Prism.Navigation;
 using ReactiveUI;
@@ -30,6 +31,7 @@ namespace Shiny
             this.deactivateWith?.Dispose();
             this.deactivateWith = null;
         }
+
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters) => this.Deactivate();
         public virtual void Initialize(INavigationParameters parameters) { }
@@ -66,8 +68,21 @@ namespace Shiny
             .DisposeWith(this.DeactivateWith);
 
 
-        public string this[string key] => this.Localize[key];
-        public string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
+        public virtual string this[string key] => this.Localize[key];
+        public virtual string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
+
+
+        ILogger? logger;
+        protected ILogger Logger
+        {
+            get
+            {
+                this.logger ??= ShinyHost.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName);
+                return this.logger;
+            }
+            set => this.logger = value;
+        }
+
 
         IDialogs? dialogs;
         public IDialogs Dialogs
@@ -77,6 +92,7 @@ namespace Shiny
                 this.dialogs ??= ShinyHost.Resolve<IDialogs>();
                 return this.dialogs;
             }
+            protected set => this.dialogs = value;
         }
 
 
@@ -88,6 +104,7 @@ namespace Shiny
                 this.localize ??= ShinyHost.Resolve<ILocalize>();
                 return this.localize;
             }
+            protected set => this.localize = value;
         }
     }
 }
