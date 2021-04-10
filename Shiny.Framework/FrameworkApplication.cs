@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Prism.DryIoc;
+using Prism.Navigation;
 
 
 namespace Shiny
 {
     public abstract class FrameworkApplication : PrismApplication
     {
-        protected override void OnInitialized()
+        protected abstract Task Run(INavigationService navigator);
+
+
+        protected override async void OnInitialized()
         {
             XF.Material.Forms.Material.Init(this);
+            await this.Run(this.NavigationService);
         }
     }
 }

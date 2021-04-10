@@ -13528,6 +13528,8 @@ namespace Samples.Droid
 			global::XF.Material.Resource.Color.abc_tint_switch_track = global::Samples.Droid.Resource.Color.abc_tint_switch_track;
 			global::XF.Material.Resource.Color.accent_material_dark = global::Samples.Droid.Resource.Color.accent_material_dark;
 			global::XF.Material.Resource.Color.accent_material_light = global::Samples.Droid.Resource.Color.accent_material_light;
+			global::XF.Material.Resource.Color.androidx_core_ripple_material_light = global::Samples.Droid.Resource.Color.androidx_core_ripple_material_light;
+			global::XF.Material.Resource.Color.androidx_core_secondary_text_default_material_light = global::Samples.Droid.Resource.Color.androidx_core_secondary_text_default_material_light;
 			global::XF.Material.Resource.Color.background_floating_material_dark = global::Samples.Droid.Resource.Color.background_floating_material_dark;
 			global::XF.Material.Resource.Color.background_floating_material_light = global::Samples.Droid.Resource.Color.background_floating_material_light;
 			global::XF.Material.Resource.Color.background_material_dark = global::Samples.Droid.Resource.Color.background_material_dark;
@@ -14382,8 +14384,12 @@ namespace Samples.Droid
 			global::XF.Material.Resource.String.bottom_sheet_behavior = global::Samples.Droid.Resource.String.bottom_sheet_behavior;
 			global::XF.Material.Resource.String.character_counter_content_description = global::Samples.Droid.Resource.String.character_counter_content_description;
 			global::XF.Material.Resource.String.character_counter_pattern = global::Samples.Droid.Resource.String.character_counter_pattern;
+			global::XF.Material.Resource.String.copy_toast_msg = global::Samples.Droid.Resource.String.copy_toast_msg;
 			global::XF.Material.Resource.String.fab_transformation_scrim_behavior = global::Samples.Droid.Resource.String.fab_transformation_scrim_behavior;
 			global::XF.Material.Resource.String.fab_transformation_sheet_behavior = global::Samples.Droid.Resource.String.fab_transformation_sheet_behavior;
+			global::XF.Material.Resource.String.fallback_menu_item_copy_link = global::Samples.Droid.Resource.String.fallback_menu_item_copy_link;
+			global::XF.Material.Resource.String.fallback_menu_item_open_in_browser = global::Samples.Droid.Resource.String.fallback_menu_item_open_in_browser;
+			global::XF.Material.Resource.String.fallback_menu_item_share_link = global::Samples.Droid.Resource.String.fallback_menu_item_share_link;
 			global::XF.Material.Resource.String.hello = global::Samples.Droid.Resource.String.hello;
 			global::XF.Material.Resource.String.hide_bottom_view_on_scroll_behavior = global::Samples.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::XF.Material.Resource.String.mtrl_chip_close_icon_content_description = global::Samples.Droid.Resource.String.mtrl_chip_close_icon_content_description;
@@ -15649,6 +15655,7 @@ namespace Samples.Droid
 			global::XF.Material.Resource.Styleable.View_paddingEnd = global::Samples.Droid.Resource.Styleable.View_paddingEnd;
 			global::XF.Material.Resource.Styleable.View_paddingStart = global::Samples.Droid.Resource.Styleable.View_paddingStart;
 			global::XF.Material.Resource.Styleable.View_theme = global::Samples.Droid.Resource.Styleable.View_theme;
+			global::XF.Material.Resource.Xml.image_share_filepaths = global::Samples.Droid.Resource.Xml.image_share_filepaths;
 			global::XF.Material.Resource.Xml.xamarin_essentials_fileprovider_file_paths = global::Samples.Droid.Resource.Xml.xamarin_essentials_fileprovider_file_paths;
 		}
 		

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Prism.Ioc;
+using Prism.Navigation;
 using Shiny;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,11 +13,10 @@ namespace Samples
 {
     public partial class App : FrameworkApplication
     {
-        protected override async void Initialize()
+        protected override Task Run(INavigationService navigator)
         {
-            base.Initialize();
             this.InitializeComponent();
-            await this.NavigationService.Navigate("NavigationPage/MainPage");
+            return navigator.Navigate("NavigationPage/MainPage");
         }
 
 

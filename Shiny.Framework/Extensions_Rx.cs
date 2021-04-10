@@ -6,6 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ReactiveUI;
 using Shiny.Impl;
 using Shiny.Infrastructure;
@@ -16,7 +17,7 @@ namespace Shiny
     public static partial class Extensions
     {
         public static void UseXfMaterialDialogs(this IServiceCollection services)
-            => services.AddSingleton<IDialogs, XfMaterialDialogs>();
+            => services.TryAddSingleton<IDialogs, XfMaterialDialogs>();
 
         public static void UseGlobalCommandExceptionHandler(this IServiceCollection services)
             => services.AddSingleton<GlobalExceptionHandler>();
