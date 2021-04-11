@@ -2,9 +2,6 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid10.0</TargetFrameworks>
-        <LangVersion>8.0</LangVersion>
-        <Nullable>enable</Nullable>
-        <DefineConstants Condition=" $(TargetFramework.StartsWith('monoandroid')) ">$(DefineConstants);__ANDROID__</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>

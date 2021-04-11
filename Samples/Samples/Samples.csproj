@@ -16,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shiny.Framework\Shiny.Framework.csproj" />
+    <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
   </ItemGroup>
 </Project>

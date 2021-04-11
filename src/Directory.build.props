@@ -1,23 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project>
 
     <PropertyGroup>
-        <Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism easier - not intended for public consumption</Description>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <RootNamespace>Shiny</RootNamespace>
         <Authors>Allan Ritchie</Authors>
-        <Owners>aritchie</Owners>
+        <Owners>aritchie; shinylib</Owners>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <ContinuousIntegrationBuild>$(ContinuousIntegrationBuild)</ContinuousIntegrationBuild>
         <DisableExtraReferences>False</DisableExtraReferences>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
-        <PackageIcon>icon.png</PackageIcon>
         <PackageReleaseNotes>https://github.com/shinyorg/shiny/blob/master/ChangeLog.md</PackageReleaseNotes>
         <PackageTags>xamarin shiny</PackageTags>
         <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.0.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
         <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
+        <DefineConstants Condition=" $(TargetFramework.StartsWith('monoandroid')) ">$(DefineConstants);__ANDROID__</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -33,14 +30,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="nuget.png" Pack="true" PackagePath="icon.png" />
-        <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
-        <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
-        <PackageReference Include="ReactiveUI.Fody" Version="13.2.18" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2579-preview" />
-        <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
-        <PackageReference Include="XF.Material" Version="1.7.8" />
-        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
+        <None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="nuget.png" />
     </ItemGroup>
 
 </Project>
