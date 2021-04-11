@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Shiny.Stores;
@@ -25,6 +26,7 @@ namespace Shiny.Msal
         readonly IPublicClientApplication authClient;
         readonly MsalConfiguration config;
         readonly IPlatform platform;
+        readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
 
 
         public MsalService(MsalConfiguration config, IPlatform platform)
@@ -108,11 +110,26 @@ namespace Shiny.Msal
 
         public async Task TryRefresh()
         {
-            var accounts = await this.authClient.GetAccountsAsync();
-            var firstAccount = accounts.FirstOrDefault();
-            var authResult = await this.authClient.AcquireTokenSilent(this.config.Scopes, firstAccount).ExecuteAsync();
+            if (this.ExpiresOn > DateTimeOffset.UtcNow)
+                return;
 
-            this.OnLogin(authResult);
+            try
+            {
+                // ensure httpclient isn't called for multiple refresh
+                await this.semaphore.WaitAsync();
+                if (this.ExpiresOn > DateTimeOffset.UtcNow)
+                    return;
+
+                var accounts = await this.authClient.GetAccountsAsync();
+                var firstAccount = accounts.FirstOrDefault();
+                var authResult = await this.authClient.AcquireTokenSilent(this.config.Scopes, firstAccount).ExecuteAsync();
+
+                this.OnLogin(authResult);
+            }
+            finally
+            {
+                this.semaphore.Release();
+            }
         }
 
 
