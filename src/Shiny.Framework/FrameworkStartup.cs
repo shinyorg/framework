@@ -1,5 +1,4 @@
 ﻿using System;
-using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,7 +30,6 @@ namespace Shiny
         protected abstract void Configure(ILoggingBuilder builder, IServiceCollection services);
 
 
-        internal static IContainer? Container { get; private set; }
         public override IServiceProvider CreateServiceProvider(IServiceCollection services)
         {
             ContainerLocator.SetContainerExtension(() => new DryIocContainerExtension());
