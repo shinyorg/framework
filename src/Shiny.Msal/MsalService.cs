@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Shiny.Msal
         Task<bool> SignIn();
         Task SignOut();
         Task TryRefresh();
+        JwtSecurityToken ReadJwtFromIdToken();
     }
 
 
@@ -39,7 +41,7 @@ namespace Shiny.Msal
                 : "msauth.{AppId}://auth";
 
             this.authClient = PublicClientApplicationBuilder.Create(config.ClientId)
-                .WithIosKeychainSecurityGroup(config.AppId)
+                .WithIosKeychainSecurityGroup(platform.AppIdentifier)
                 .WithRedirectUri(redirectUri)
                 .WithAuthority(config.Authority ?? "https://login.microsoftonline.com/common")
                 .Build();
@@ -130,6 +132,17 @@ namespace Shiny.Msal
             {
                 this.semaphore.Release();
             }
+        }
+
+
+        public JwtSecurityToken ReadJwtFromIdToken()
+        {
+            if (this.IdToken.IsEmpty())
+                throw new ArgumentException("IdToken is not set");
+
+            var handler = new JwtSecurityTokenHandler();
+            var sec = handler.ReadJwtToken(this.IdToken);
+            return sec;
         }
 
 

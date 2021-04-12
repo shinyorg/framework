@@ -5,7 +5,6 @@ namespace Shiny.Msal
 {
     public class MsalConfiguration
     {
-        public string? AppId { get; set; }
         public string? ClientId { get; set; }
         public string[]? Scopes { get; set; }
         public string? Authority { get; set; }
