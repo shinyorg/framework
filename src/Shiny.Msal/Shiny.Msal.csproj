@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid10.0</TargetFrameworks>
+        <Descripton>Shiny MSAL makes dealing with MSAL configuration and calls easy</Descripton>
     </PropertyGroup>
 
     <ItemGroup>
