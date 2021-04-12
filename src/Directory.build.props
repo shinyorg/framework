@@ -8,6 +8,7 @@
         <ContinuousIntegrationBuild>$(ContinuousIntegrationBuild)</ContinuousIntegrationBuild>
         <DisableExtraReferences>False</DisableExtraReferences>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
         <PackageReleaseNotes>https://github.com/shinyorg/shiny/blob/master/ChangeLog.md</PackageReleaseNotes>
         <PackageTags>xamarin shiny</PackageTags>
@@ -30,7 +31,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="nuget.png" />
+        <None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="icon.png" />
     </ItemGroup>
 
 </Project>
