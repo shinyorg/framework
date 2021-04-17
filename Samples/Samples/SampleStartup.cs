@@ -9,6 +9,10 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
+            services.UseMsal(new MsalConfiguration(
+                Secrets.Values.MsalClientId,
+                Secrets.Values.MsalScopes.Split(';')
+            ));
         }
     }
 }

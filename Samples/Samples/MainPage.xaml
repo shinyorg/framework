@@ -6,6 +6,10 @@
 
     <StackLayout>
         <Button Text="HI" Command="{Binding Button}" />
+
+        <Button Text="MSAL Sign-In" Command="{Binding MsalSignIn}" />
+        <Button Text="MSAL Sign-Out" Command="{Binding MsalSignOut}" />
+        <Button Text="MSAL Refresh" Command="{Binding MsalRefresh}" />
     </StackLayout>
 
 </ContentPage>

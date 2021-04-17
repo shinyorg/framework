@@ -136,7 +136,7 @@
       <Name>Shiny.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Samples\Samples.csproj">
-      <Project>{63FAAE62-96EE-4BE9-9178-03A6C5807475}</Project>
+      <Project>{6DAC4A3F-4691-4217-BD37-9CC044616EF6}</Project>
       <Name>Samples</Name>
     </ProjectReference>
   </ItemGroup>

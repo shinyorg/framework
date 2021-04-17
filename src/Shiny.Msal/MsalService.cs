@@ -124,7 +124,9 @@ namespace Shiny.Msal
 
                 var accounts = await this.authClient.GetAccountsAsync();
                 var firstAccount = accounts.FirstOrDefault();
-                var authResult = await this.authClient.AcquireTokenSilent(this.config.Scopes, firstAccount).ExecuteAsync();
+                var authResult = await this.authClient
+                    .AcquireTokenSilent(this.config.Scopes, firstAccount)
+                    .ExecuteAsync();
 
                 this.OnLogin(authResult);
             }

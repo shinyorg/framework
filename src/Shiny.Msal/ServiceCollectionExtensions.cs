@@ -11,6 +11,7 @@ namespace Shiny
         {
             services.AddSingleton(configuration);
             services.TryAddSingleton<IMsalService, MsalService>();
+            services.AddSingleton<MsalAuthHttpClientHandler>();
         }
     }
 }

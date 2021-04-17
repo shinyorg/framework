@@ -1,12 +1,19 @@
 ﻿using Microsoft.Identity.Client;
 
 
-namespace Shiny.Msal
+namespace Shiny
 {
     public class MsalConfiguration
     {
-        public string? ClientId { get; set; }
-        public string[]? Scopes { get; set; }
+        public MsalConfiguration(string clientId, params string[] scopes)
+        {
+            this.ClientId = clientId;
+            this.Scopes = scopes;
+        }
+
+
+        public string ClientId { get; }
+        public string[] Scopes { get; }
         public string? Authority { get; set; }
         public Prompt? LoginPrompt { get; set; }
         public bool? UseEmbeddedWebView { get; set; }

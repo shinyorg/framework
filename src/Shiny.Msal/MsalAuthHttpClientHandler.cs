@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shiny.Msal
 {
-    public class AuthHttpClientHandler : HttpClientHandler
+    public class MsalAuthHttpClientHandler : HttpClientHandler
     {
         readonly IMsalService msal;
-        public AuthHttpClientHandler(IMsalService msal) => this.msal = msal;
+        public MsalAuthHttpClientHandler(IMsalService msal) => this.msal = msal;
 
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
