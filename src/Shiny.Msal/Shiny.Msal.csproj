@@ -7,8 +7,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Identity.Client" Version="4.29.0" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2579-preview" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.2" />
+        <PackageReference Include="Shiny.Core" Version="2.0.0.2593-preview" />
     </ItemGroup>
 
 </Project>

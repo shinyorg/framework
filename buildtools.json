@@ -16,6 +16,11 @@
                     "name": "MsalScopes",
                     "type": "String",
                     "defaultValue": null
+                },
+                {
+                    "name": "MsalSignatureHash",
+                    "type": "String",
+                    "defaultValue": null
                 }
             ]
         }

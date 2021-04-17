@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Shiny Framework</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.shinyorg.fwtest</string>
+	<string>com.shinyorg.framework</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
@@ -34,5 +34,18 @@
 	<string>Samples</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>msauth.com.shinyorg.framework://auth</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.shiny.framework</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
 </dict>
 </plist>

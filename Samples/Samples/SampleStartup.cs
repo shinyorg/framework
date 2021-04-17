@@ -12,7 +12,10 @@ namespace Samples
             services.UseMsal(new MsalConfiguration(
                 Secrets.Values.MsalClientId,
                 Secrets.Values.MsalScopes.Split(';')
-            ));
+            )
+            {
+                SignatureHash = Secrets.Values.MsalSignatureHash
+            });
         }
     }
 }

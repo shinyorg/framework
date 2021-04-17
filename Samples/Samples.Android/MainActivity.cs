@@ -3,7 +3,10 @@ using Android.App;
 using Android.Content.PM;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: Shiny.ShinyApplication(ShinyStartupTypeName = "Samples.SampleStartup", XamarinFormsAppTypeName = "Samples.App")]
+[assembly: Shiny.ShinyApplication(
+    ShinyStartupTypeName = "Samples.SampleStartup",
+    XamarinFormsAppTypeName = "Samples.App"
+)]
 
 
 namespace Samples.Droid
