@@ -36,15 +36,23 @@ namespace Shiny.Msal
             this.config = config;
             this.platform = platform;
 
-            var redirectUri = platform.GetType().FullName.Contains("Android")
-                ? "msauth://{AppId}/" + config.SignatureHash
-                : "msauth.{AppId}://auth";
+            var builder = PublicClientApplicationBuilder
+                .Create(config.ClientId)
+                .WithIosKeychainSecurityGroup(config.IosKeychainSecurityGroup ?? "com.microsoft.adalcache")
+                .WithAuthority(config.Authority ?? "https://login.microsoftonline.com/common");
 
-            this.authClient = PublicClientApplicationBuilder.Create(config.ClientId)
-                .WithIosKeychainSecurityGroup(platform.AppIdentifier)
-                .WithRedirectUri(redirectUri)
-                .WithAuthority(config.Authority ?? "https://login.microsoftonline.com/common")
-                .Build();
+            if (config.UseBroker)
+            {
+                var redirectUri = platform.GetType().FullName.Contains("Android")
+                    ? $"msauth://{platform.AppIdentifier}/{config.SignatureHash}"
+                    : $"msauth.{platform.AppIdentifier}://auth";
+
+                builder = builder
+                    .WithBroker()
+                    .WithRedirectUri(redirectUri);
+            }
+
+            this.authClient = builder.Build();
         }
 
 
@@ -87,6 +95,8 @@ namespace Shiny.Msal
                     .WithUseEmbeddedWebView(this.config.UseEmbeddedWebView ?? true)
 #if __ANDROID__
                     .WithParentActivityOrWindow(((IAndroidContext)this.platform).CurrentActivity)
+#elif XAMARIN_IOS
+                    .WithParentActivityOrWindow(this.GetTopViewController())
 #endif
                     .ExecuteAsync();
 
@@ -154,5 +164,29 @@ namespace Shiny.Msal
             this.IdToken = result?.IdToken;
             this.ExpiresOn = result?.ExpiresOn;
         }
+
+
+#if XAMARIN_IOS
+    protected virtual UIKit.UIWindow GetTopWindow() => UIKit
+        .UIApplication
+        .SharedApplication
+        .Windows
+        .Reverse()
+        .FirstOrDefault(x =>
+            x.WindowLevel == UIKit.UIWindowLevel.Normal &&
+            !x.Hidden
+        );
+
+
+    protected virtual UIKit.UIViewController GetTopViewController()
+    {
+        var viewController = UIKit.UIApplication.SharedApplication.KeyWindow.RootViewController;
+        while (viewController.PresentedViewController != null)
+            viewController = viewController.PresentedViewController;
+
+        return viewController;
+    }
+
+#endif
     }
 }

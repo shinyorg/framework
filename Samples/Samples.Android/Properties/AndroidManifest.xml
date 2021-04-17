@@ -7,9 +7,30 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="msauth" android:host="com.shinyorg.framework/r7mYTj3wJizNM6g5VHVdnmJWdqk%3D" />
+				<data android:scheme="msal29ba92d9-7c64-4448-bcb0-239a443016b4" android:host="auth" />
 			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="msauth" android:host="com.shinyorg.wish" android:path="r7mYTj3wJizNM6g5VHVdnmJWdqk=" />
+			</intent-filter>			
 		</activity>	
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+	<!--Android 11+-->
+	<queries>
+		<package android:name="com.azure.authenticator" />
+		<package android:name="com.shinyorg.framework" />
+		<package android:name="com.microsoft.windowsintune.companyportal" />
+	<intent>
+	<action android:name="android.intent.action.VIEW" />
+		<category android:name="android.intent.category.BROWSABLE" />
+		<data android:scheme="https" />
+	</intent>
+	<intent>
+		<action android:name="android.support.customtabs.action.CustomTabsService" />
+	</intent>
+	</queries>	
 </manifest>
