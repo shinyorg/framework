@@ -9,6 +9,8 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
+            services.UseGlobalCommandExceptionHandler();
+
             services.UseMsal(new MsalConfiguration(
                 Secrets.Values.MsalClientId,
                 Secrets.Values.MsalScopes.Split(';')
