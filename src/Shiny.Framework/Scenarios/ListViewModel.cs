@@ -10,7 +10,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Shiny.Scenarios
 {
-    public abstract class ListViewModel<T> : ViewModel
+    public abstract class ListViewModel<T> : ViewModel where T : class
     {
         protected ListViewModel()
         {
@@ -18,8 +18,12 @@ namespace Shiny.Scenarios
             this.BindBusyCommand(this.Load);
 
             this.WhenAnyValue(x => x.SelectedItem)
-                .Skip(1)
-                .Subscribe(this.OnSelectedItem)
+                .WhereNotNull()
+                .Subscribe(x =>
+                {
+                    this.SelectedItem = null;
+                    this.OnSelectedItem(x);
+                })
                 .DisposeWith(this.DestroyWith);
         }
 
@@ -43,7 +47,7 @@ namespace Shiny.Scenarios
         protected abstract Task<List<T>> GetData();
         public ICommand Load { get; }
         [Reactive] public List<T> List { get; protected set; }
-        [Reactive] public T SelectedItem { get; set; }
+        [Reactive] public T? SelectedItem { get; set; }
 
 
         public override void OnAppearing()

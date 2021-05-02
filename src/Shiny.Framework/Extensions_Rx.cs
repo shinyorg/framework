@@ -69,7 +69,6 @@ namespace Shiny
         //    where T : INotifyPropertyChanged
         //    => Observable.Create<ItemChanged<T, string>>(ob =>
         //    {
-        //        // TODO: watch for collection changes too
         //        var disp = new CompositeDisposable();
         //        foreach (var item in collection)
         //            disp.Add(item.WhenAnyProperty().Subscribe(ob.OnNext));
