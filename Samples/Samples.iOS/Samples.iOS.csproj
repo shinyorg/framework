@@ -124,7 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Shiny">
-      <Version>2.0.0.2593-preview</Version>
+      <Version>2.0.0.2639</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
@@ -146,7 +146,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
