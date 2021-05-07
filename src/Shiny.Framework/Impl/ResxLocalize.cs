@@ -19,7 +19,7 @@ namespace Shiny.Impl
         {
             var value = this.resources.GetString(key, culture);
             if (value == null)
-                return "KEY '{key}' not found";
+                return $"KEY '{key}' not found";
 
             return value;
         }
