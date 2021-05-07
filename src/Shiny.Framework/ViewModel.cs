@@ -14,10 +14,8 @@ using Shiny.Net;
 namespace Shiny
 {
     public abstract class ViewModel : ReactiveObject,
-                                      IInitialize,
                                       IInitializeAsync,
                                       INavigatedAware,
-                                      IPageLifecycleAware,
                                       IDestructible,
                                       IConfirmNavigationAsync
     {
@@ -33,11 +31,9 @@ namespace Shiny
         }
 
 
-        public virtual void OnNavigatedFrom(INavigationParameters parameters) => this.Deactivate();
-        public virtual void Initialize(INavigationParameters parameters) { }
         public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
-        public virtual void OnNavigatedTo(INavigationParameters parameters) { }
-        public virtual void OnAppearing()
+        public virtual void OnNavigatedFrom(INavigationParameters parameters) => this.Deactivate();
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
             ShinyHost
                 .Resolve<IConnectivity>()
@@ -46,7 +42,6 @@ namespace Shiny
                 .ToPropertyEx(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DeactivateWith);
         }
-        public virtual void OnDisappearing() { }
         public virtual void Destroy() => this.DestroyWith?.Dispose();
         public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
 
