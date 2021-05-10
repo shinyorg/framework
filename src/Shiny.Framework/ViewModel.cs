@@ -9,7 +9,7 @@ using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Shiny.Net;
-
+using Shiny.Stores;
 
 namespace Shiny
 {
@@ -61,6 +61,17 @@ namespace Shiny
                 () => this.IsBusy = false
             )
             .DisposeWith(this.DeactivateWith);
+
+
+        protected virtual void RememberUserState()
+        {
+            var binder = ShinyHost.Resolve<IObjectStoreBinder>();
+            binder.Bind(this);
+
+            this.DestroyWith.Add(Disposable.Create(() =>
+                binder.UnBind(this)
+            ));
+        }
 
 
         public virtual string this[string key] => this.Localize[key];
