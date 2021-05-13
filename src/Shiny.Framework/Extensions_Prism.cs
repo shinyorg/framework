@@ -27,7 +27,7 @@ namespace Shiny
             }
         }
 
-        public static ICommand NavigateCommand(this INavigationService navigation, string uri, Action<INavigationParameters> getParams = null, IObservable<bool> canExecute = null)
+        public static ICommand NavigateCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
             => ReactiveCommand.CreateFromTask(async () =>
             {
                 var p = new NavigationParameters();
@@ -36,7 +36,7 @@ namespace Shiny
             }, canExecute);
 
 
-        public static ICommand NavigateCommand<T>(this INavigationService navigation, string uri, Action<T, INavigationParameters> getParams = null, IObservable<bool> canExecute = null)
+        public static ICommand NavigateCommand<T>(this INavigationService navigation, string uri, Action<T, INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
             => ReactiveCommand.CreateFromTask<T>(async arg =>
             {
                 var p = new NavigationParameters();
@@ -44,6 +44,9 @@ namespace Shiny
                 await navigation.Navigate(uri, p);
             }, canExecute);
 
+
+        public static ICommand GeneralNavigateCommand(this INavigationService navigation, IObservable<bool>? canExecute = null)
+            => ReactiveCommand.CreateFromTask<string>(uri => navigation.Navigate(uri), canExecute);
 
 
         public static Task GoBack(this INavigationService navigation, bool toRoot = false, params (string, object)[] parameters)

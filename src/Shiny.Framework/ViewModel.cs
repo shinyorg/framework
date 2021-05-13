@@ -11,11 +11,13 @@ using ReactiveUI.Fody.Helpers;
 using Shiny.Net;
 using Shiny.Stores;
 
+
 namespace Shiny
 {
     public abstract class ViewModel : ReactiveObject,
                                       IInitializeAsync,
                                       INavigatedAware,
+                                      IPageLifecycleAware,
                                       IDestructible,
                                       IConfirmNavigationAsync
     {
@@ -32,7 +34,9 @@ namespace Shiny
 
 
         public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
-        public virtual void OnNavigatedFrom(INavigationParameters parameters) => this.Deactivate();
+        public virtual void OnAppearing() {}
+        public virtual void OnDisappearing() => this.Deactivate();
+        public virtual void OnNavigatedFrom(INavigationParameters parameters) {}
         public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
             ShinyHost
