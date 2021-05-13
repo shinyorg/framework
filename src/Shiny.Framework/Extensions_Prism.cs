@@ -18,6 +18,16 @@ namespace Shiny
             => (await navigation.NavigateAsync(uri, parameters)).Assert();
 
 
+        public static Task NavigateWithTabs(this INavigationService navigation, string tabbedPageName, params string[] pages)
+        {
+            var uri = tabbedPageName + "?";
+            foreach (var page in pages)
+                uri += $"{KnownNavigationParameters.CreateTab}={page}";
+
+            return navigation.Navigate(uri);
+        }
+
+
         public static void Assert(this INavigationResult result)
         {
             if (!result.Success)
