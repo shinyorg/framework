@@ -21,8 +21,13 @@ namespace Shiny
         public static Task NavigateWithTabs(this INavigationService navigation, string tabbedPageName, params string[] pages)
         {
             var uri = tabbedPageName + "?";
-            foreach (var page in pages)
-                uri += $"{KnownNavigationParameters.CreateTab}={page}";
+            for (var i = 0; i < pages.Length; i++)
+            {
+                if (i > 0)
+                    uri += "&";
+
+                uri += $"{KnownNavigationParameters.CreateTab}={pages[i]}";
+            }
 
             return navigation.Navigate(uri);
         }
