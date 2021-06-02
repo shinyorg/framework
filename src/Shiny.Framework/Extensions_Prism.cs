@@ -1,15 +1,51 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using Shiny;
 using ReactiveUI;
-
+using Shiny.Infrastructure;
 
 namespace Shiny
 {
     public static partial class Extensions
     {
+        public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
+        {
+            var p = viewModel.GetPropertyInfo(expression);
+            if (!p.CanWrite)
+                throw new ArgumentException("Cannot write property");
+
+            viewModel
+                .WhenAnyValue(expression)
+                .WhereNotNull()
+                .Subscribe(x =>
+                {
+                    p.SetValue(viewModel, null);
+                    action(x);
+                })
+                .DisposedBy(viewModel.DestroyWith);
+        }
+
+
+        public static Task NavigateModal(this INavigationService navigation, string uri, params (string, object)[] parameters)
+            => navigation.NavigateModal(uri, parameters.ToNavParams());
+
+
+        public static async Task NavigateModal(this INavigationService navigation, string uri, INavigationParameters parameters)
+            => (await navigation.NavigateAsync(uri, parameters, true, true)).Assert();
+
+
+        public static ICommand NavigateModalCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
+            => ReactiveCommand.CreateFromTask(async () =>
+            {
+                var p = new NavigationParameters();
+                getParams?.Invoke(p);
+                await navigation.NavigateModal(uri, p);
+            }, canExecute);
+
         public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
             => navigation.Navigate(uri, parameters.ToNavParams());
 
