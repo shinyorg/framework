@@ -10,7 +10,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
-        <PackageReleaseNotes>https://github.com/shinyorg/shiny/blob/master/ChangeLog.md</PackageReleaseNotes>
+        <PackageReleaseNotes>https://shinylib.net/release-notes</PackageReleaseNotes>
         <PackageTags>xamarin shiny</PackageTags>
         <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.0.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
