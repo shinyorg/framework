@@ -8,10 +8,11 @@
 
     <ItemGroup>
         <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
-        <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
-        <PackageReference Include="ReactiveUI.Fody" Version="13.2.18" />
-        <PackageReference Include="Shiny.Core" Version="2.0.0.2639" />
+        <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
+        <PackageReference Include="ReactiveUI.Fody" Version="13.3.2" />
+        <PackageReference Include="Shiny.Core" Version="2.1.0.2710-preview" />
         <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
         <PackageReference Include="XF.Material" Version="1.7.8" />
         <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
     </ItemGroup>
