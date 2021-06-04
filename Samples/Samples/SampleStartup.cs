@@ -11,13 +11,13 @@ namespace Samples
         {
             services.UseGlobalCommandExceptionHandler();
 
-            services.UseMsal(new MsalConfiguration(
-                Secrets.Values.MsalClientId,
-                Secrets.Values.MsalScopes.Split(';')
-            )
-            {
-                SignatureHash = Secrets.Values.MsalSignatureHash
-            });
+            //services.UseMsal(new MsalConfiguration(
+            //    Secrets.Values.MsalClientId,
+            //    Secrets.Values.MsalScopes.Split(';')
+            //)
+            //{
+            //    SignatureHash = Secrets.Values.MsalSignatureHash
+            //});
         }
     }
 }
