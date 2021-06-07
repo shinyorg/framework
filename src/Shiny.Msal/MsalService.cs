@@ -23,35 +23,47 @@ namespace Shiny.Msal
 
 
     [ObjectStoreBinder("secure")]
-    public class MsalService : NotifyPropertyChanged, IMsalService
+    public class MsalService : NotifyPropertyChanged,
+                               IMsalService,
+                               IShinyStartupTask
     {
-        readonly IPublicClientApplication authClient;
         readonly MsalConfiguration config;
         readonly IPlatform platform;
         readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+        IPublicClientApplication authClient;
 
 
         public MsalService(MsalConfiguration config, IPlatform platform)
         {
             this.config = config;
             this.platform = platform;
+        }
 
+
+        public void Start()
+        {
             var builder = PublicClientApplicationBuilder
-                .Create(config.ClientId)
-                .WithIosKeychainSecurityGroup(config.IosKeychainSecurityGroup ?? "com.microsoft.adalcache")
-                .WithAuthority(config.Authority ?? "https://login.microsoftonline.com/common");
+                .Create(this.config.ClientId)
+                .WithIosKeychainSecurityGroup(this.config.IosKeychainSecurityGroup ?? "com.microsoft.adalcache")
+                .WithAuthority(
+                    this.config.Authority ??
+                    $"https://login.microsoftonline.com/{this.config.TenantId}" ??
+                    "https://login.microsoftonline.com/common"
+                );
 
-            if (config.UseBroker)
+            if (this.config.UseBroker)
             {
-                var redirectUri = platform.GetType().FullName.Contains("Android")
-                    ? $"msauth://{platform.AppIdentifier}/{config.SignatureHash}"
-                    : $"msauth.{platform.AppIdentifier}://auth";
+                if (this.platform.IsAndroid() && this.config.SignatureHash.IsEmpty())
+                    throw new ArgumentException("UseBroker requires SignatureHash be set on Android");
+
+                var redirectUri = this.platform.IsAndroid()
+                    ? $"msauth://{this.platform.AppIdentifier}/{this.config.SignatureHash}"
+                    : $"msauth.{this.platform.AppIdentifier}://auth";
 
                 builder = builder
                     .WithBroker()
                     .WithRedirectUri(redirectUri);
             }
-
             this.authClient = builder.Build();
         }
 

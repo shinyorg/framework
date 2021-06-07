@@ -13,12 +13,14 @@ namespace Shiny
 
 
         public bool UseBroker { get; set; }
+        public string? SignatureHash { get; set; }
+
         public string ClientId { get; }
+        public string? TenantId { get; set; }
         public string[] Scopes { get; }
         public string? Authority { get; set; }
         public Prompt? LoginPrompt { get; set; }
         public bool? UseEmbeddedWebView { get; set; }
-        public string? SignatureHash { get; set; }
         public string? IosKeychainSecurityGroup { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Samples
 {
     public class MainViewModel : ViewModel
     {
-        public MainViewModel(IDialogs dialogs, IMsalService? msal = null)
+        public MainViewModel(IDialogs dialogs, IPlatform platform, IMsalService? msal = null)
         {
             this.Title = "Framework";
             this.Button = ReactiveCommand.CreateFromTask(async () => await dialogs.Alert("HI"));

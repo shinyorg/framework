@@ -16,7 +16,9 @@ namespace Samples
                 Secrets.Values.MsalScopes.Split(';')
             )
             {
-                SignatureHash = Secrets.Values.MsalSignatureHash
+                //TenantId = Secrets.Values.MsalTenantId,
+                //UseBroker = true,
+                //SignatureHash = Secrets.Values.MsalSignatureHash
             });
         }
     }
