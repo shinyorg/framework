@@ -5,11 +5,21 @@
              Title="{Binding Title}">
 
     <StackLayout>
-        <Button Text="HI" Command="{Binding Button}" />
+        <Button Text="HI"
+                Command="{Binding Button}"
+                Style="{StaticResource DefaultButton}"/>
 
-        <Button Text="MSAL Sign-In" Command="{Binding MsalSignIn}" />
-        <Button Text="MSAL Sign-Out" Command="{Binding MsalSignOut}" />
-        <Button Text="MSAL Refresh" Command="{Binding MsalRefresh}" />
+        <Button Text="MSAL Sign-In"
+                Command="{Binding MsalSignIn}"
+                Style="{StaticResource DefaultButton}"/>
+
+        <Button Text="MSAL Sign-Out"
+                Command="{Binding MsalSignOut}"
+                Style="{StaticResource DefaultButton}"/>
+
+        <Button Text="MSAL Refresh"
+                Command="{Binding MsalRefresh}"
+                Style="{StaticResource DefaultButton}" />
     </StackLayout>
 
 </ContentPage>

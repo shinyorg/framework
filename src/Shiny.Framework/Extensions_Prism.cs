@@ -47,6 +47,7 @@ namespace Shiny
                 await navigation.NavigateModal(uri, p);
             }, canExecute);
 
+
         public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
             => navigation.Navigate(uri, parameters.ToNavParams());
 

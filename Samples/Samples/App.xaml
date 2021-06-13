@@ -4,6 +4,11 @@
                             xmlns:shiny="clr-namespace:Shiny;assembly=Shiny.Framework"
                             x:Class="Samples.App">
     <Application.Resources>
-
+        <Style x:Key="DefaultButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Black" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        </Style>
     </Application.Resources>
 </shiny:FrameworkApplication>

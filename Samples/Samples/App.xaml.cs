@@ -4,9 +4,10 @@ namespace Samples
 {
     public partial class App : Shiny.FrameworkApplication
     {
-        public App()
+        protected override void Initialize()
         {
             this.InitializeComponent();
+            base.Initialize();
         }
     }
 }
