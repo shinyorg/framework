@@ -9,12 +9,13 @@ namespace Shiny
 {
     public abstract class FrameworkApplication : PrismApplication
     {
+        protected abstract Task RunApp(INavigationService navigator);
+
         protected override async void OnInitialized()
         {
             XF.Material.Forms.Material.Init(this);
-            await FrameworkStartup.Current.RunApp(this.NavigationService);
+            await this.RunApp(this.NavigationService);
         }
-
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
             => FrameworkStartup.Current.ConfigureApp(containerRegistry);
