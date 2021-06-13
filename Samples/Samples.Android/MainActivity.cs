@@ -16,7 +16,12 @@ namespace Samples.Droid
         Icon = "@mipmap/icon",
         Theme = "@style/MainTheme",
         MainLauncher = true,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize
+        ConfigurationChanges =
+            ConfigChanges.ScreenSize |
+            ConfigChanges.Orientation |
+            ConfigChanges.UiMode |
+            ConfigChanges.ScreenLayout |
+            ConfigChanges.SmallestScreenSize
     )]
     public partial class MainActivity : FormsAppCompatActivity
     {

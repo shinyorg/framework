@@ -12,7 +12,7 @@
         <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
         <PackageReleaseNotes>https://shinylib.net/release-notes</PackageReleaseNotes>
         <PackageTags>xamarin shiny</PackageTags>
-        <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.0.0</ShinyVersion>
+        <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.1.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
         <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
         <DefineConstants Condition=" $(TargetFramework.StartsWith('monoandroid')) ">$(DefineConstants);__ANDROID__</DefineConstants>
