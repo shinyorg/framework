@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Shiny.Net;
+using Shiny.Stores;
 
 
 namespace Shiny
@@ -30,8 +32,6 @@ namespace Shiny
         CompositeDisposable? deactivateWith;
         protected internal CompositeDisposable DeactivateWith => this.deactivateWith ??= new CompositeDisposable();
         protected internal CompositeDisposable DestroyWith { get; } = new CompositeDisposable();
-        public virtual string this[string key] => this.Localize[key];
-        public virtual string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
 
 
         ILogger? logger;
@@ -82,5 +82,33 @@ namespace Shiny
             this.Deactivate();
             this.DestroyWith?.Dispose();
         }
+
+
+        protected void BindBusyCommand(ICommand command)
+            => this.BindBusyCommand((IReactiveCommand)command);
+
+
+        protected void BindBusyCommand(IReactiveCommand command) =>
+            command.IsExecuting.Subscribe(
+                x => this.IsBusy = x,
+                _ => this.IsBusy = false,
+                () => this.IsBusy = false
+            )
+            .DisposeWith(this.DeactivateWith);
+
+
+        protected virtual void RememberUserState()
+        {
+            var binder = ShinyHost.Resolve<IObjectStoreBinder>();
+            binder.Bind(this);
+
+            this.DestroyWith.Add(Disposable.Create(() =>
+                binder.UnBind(this)
+            ));
+        }
+
+
+        public virtual string this[string key] => this.Localize[key];
+        public virtual string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
     }
 }
