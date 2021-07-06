@@ -13,7 +13,8 @@ namespace Shiny
             await FrameworkStartup.Current.RunApp(this.NavigationService);
         }
 
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-            => FrameworkStartup.Current.ConfigureApp(containerRegistry);
+            => FrameworkStartup.Current.ConfigureApp(this, containerRegistry);
     }
 }

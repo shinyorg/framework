@@ -7,6 +7,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Navigation;
 
+using Xamarin.Forms;
 
 namespace Shiny
 {
@@ -29,7 +30,8 @@ namespace Shiny
         /// Configure all of your viewmodels and navigation here as well as any foreground only services
         /// </summary>
         /// <param name="containerRegistry"></param>
-        public abstract void ConfigureApp(IContainerRegistry containerRegistry);
+        /// <param name="app"></param>
+        public abstract void ConfigureApp(Application app, IContainerRegistry containerRegistry);
 
         /// <summary>
         /// Configure your Shiny/Background services and logging here
@@ -59,5 +61,15 @@ namespace Shiny
             DryIocAdapter.Populate(container, services);
             return container.GetServiceProvider();
         }
+
+
+        ///// <summary>
+        ///// Call this if your app uses XAML and you don't have it calling InitializeComponent internally
+        ///// </summary>
+        ///// <param name="app"></param>
+        //protected void InitializeApp(Application app)
+        //{
+        //    global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(app, app.GetType());
+        //}
     }
 }

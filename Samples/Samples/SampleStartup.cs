@@ -34,7 +34,7 @@ namespace Samples
             => navigator.Navigate("NavigationPage/MainPage");
 
 
-        public override void ConfigureApp(IContainerRegistry containerRegistry)
+        public override void ConfigureApp(Application app, IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
