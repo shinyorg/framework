@@ -9,8 +9,12 @@ namespace Shiny
 {
     public static partial class Extensions
     {
+        internal static bool UsingXfMaterialDialogs { get; private set; }
         public static void UseXfMaterialDialogs(this IServiceCollection services)
-            => services.TryAddSingleton<IDialogs, XfMaterialDialogs>();
+        {
+            UsingXfMaterialDialogs = true;
+            services.TryAddSingleton<IDialogs, XfMaterialDialogs>();
+        }
 
         public static void UseGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
         {

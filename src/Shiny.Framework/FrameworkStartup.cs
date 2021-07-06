@@ -6,8 +6,8 @@ using Microsoft.Extensions.Logging;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Navigation;
-
 using Xamarin.Forms;
+
 
 namespace Shiny
 {
@@ -50,7 +50,6 @@ namespace Shiny
             Current = this;
             this.Platform = platform;
             this.Configure(this.builder!, services);
-            services.UseXfMaterialDialogs();
         }
 
 

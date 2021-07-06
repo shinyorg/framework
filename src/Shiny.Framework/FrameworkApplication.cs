@@ -9,7 +9,9 @@ namespace Shiny
     {
         protected override async void OnInitialized()
         {
-            XF.Material.Forms.Material.Init(this);
+            if (Extensions.UsingXfMaterialDialogs)
+                XF.Material.Forms.Material.Init(this);
+
             await FrameworkStartup.Current.RunApp(this.NavigationService);
         }
 

@@ -16,6 +16,7 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
+            services.UseXfMaterialDialogs();
             services.UseGlobalCommandExceptionHandler();
 
             //services.UseMsal(new MsalConfiguration(
