@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using Prism.Navigation;
@@ -31,8 +32,29 @@ namespace Shiny
 
         CompositeDisposable? deactivateWith;
         protected internal CompositeDisposable DeactivateWith => this.deactivateWith ??= new CompositeDisposable();
-        protected internal CompositeDisposable DestroyWith { get; } = new CompositeDisposable();
 
+        CompositeDisposable? destroyWith;
+        protected internal CompositeDisposable DestroyWith => this.destroyWith ??= new CompositeDisposable();
+
+        CancellationTokenSource? deactiveToken;
+        protected CancellationToken DeactiveToken
+        {
+            get
+            {
+                this.deactiveToken ??= new CancellationTokenSource();
+                return this.deactiveToken.Token;
+            }
+        }
+
+        CancellationTokenSource? destroyToken;
+        protected CancellationToken DestroyToken
+        {
+            get
+            {
+                this.destroyToken ??= new CancellationTokenSource();
+                return this.destroyToken.Token;
+            }
+        }
 
         ILogger? logger;
         protected ILogger Logger
@@ -72,6 +94,10 @@ namespace Shiny
 
         protected virtual void Deactivate()
         {
+            this.deactiveToken?.Cancel();
+            this.deactiveToken?.Dispose();
+            this.deactiveToken = null;
+
             this.deactivateWith?.Dispose();
             this.deactivateWith = null;
         }
@@ -79,8 +105,11 @@ namespace Shiny
 
         public virtual void Destroy()
         {
+            this.destroyToken?.Cancel();
+            this.destroyToken?.Dispose();
+
             this.Deactivate();
-            this.DestroyWith?.Dispose();
+            this.destroyWith?.Dispose();
         }
 
 

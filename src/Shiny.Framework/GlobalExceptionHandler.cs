@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 
@@ -21,6 +22,7 @@ namespace Shiny
         public ErrorAlertType AlertType { get; set; } = ErrorAlertType.NoLocalize;
         public string LocalizeErrorTitleKey { get; set; } = "Error";
         public string LocalizeErrorBodyKey { get; set; } = "ErrorDetail";
+        public bool IgnoreTokenCancellations { get; set; } = true;
         public bool LogError { get; set; } = true;
     }
 
@@ -47,9 +49,21 @@ namespace Shiny
         public void OnError(Exception error) { }
 
 
+        protected virtual bool ShouldIgnore(GlobalExceptionHandlerConfig cfg, Exception value)
+        {
+            if (cfg.IgnoreTokenCancellations && value is TaskCanceledException)
+                return true;
+
+            return false;
+        }
+
+
         public async void OnNext(Exception value)
         {
             var cfg = GlobalExceptionHandlerConfig.Instance;
+            if (this.ShouldIgnore(cfg, value))
+                return;
+
             if (cfg.LogError)
                 this.logger.LogError(value, "Error in view");
 
