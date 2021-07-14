@@ -19,33 +19,22 @@ namespace Shiny
 
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            this.navFromSubj?.OnNext(parameters);
-        }
+            => this.navSubj?.OnNext((parameters, false));
 
 
         public virtual void OnNavigatedTo(INavigationParameters parameters)
+            => this.navSubj?.OnNext((parameters, true));
+
+
+        public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
+            => Task.FromResult(true);
+
+
+        Subject<(INavigationParameters, bool)>? navSubj;
+        public IObservable<(INavigationParameters Paramters, bool NavigatedTo)> WhenNavigation()
         {
-            this.navToSubj?.OnNext(parameters);
-        }
-
-
-        public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
-
-
-        Subject<INavigationParameters>? navToSubj;
-        public IObservable<INavigationParameters> WhenNavigatedTo()
-        {
-            navToSubj ??= new Subject<INavigationParameters>();
-            return navToSubj.DisposedBy(this.DestroyWith);
-        }
-
-
-        Subject<INavigationParameters>? navFromSubj;
-        public IObservable<INavigationParameters> WhenNavigatedFrom()
-        {
-            navFromSubj ??= new Subject<INavigationParameters>();
-            return navFromSubj.DisposedBy(this.DestroyWith);
+            navSubj ??= new Subject<(INavigationParameters, bool)>();
+            return navSubj.DisposedBy(this.DestroyWith);
         }
     }
 }
