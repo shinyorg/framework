@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Prism;
+using ReactiveUI;
 
 
 namespace Shiny
@@ -33,7 +34,22 @@ namespace Shiny
         });
 
 
-        public bool IsActive { get; set; }
-        public event EventHandler IsActiveChanged;
+        bool active;
+        public bool IsActive
+        {
+            get => this.active;
+            set
+            {
+                if (this.active != value)
+                {
+                    this.active = value;
+                    this.RaisePropertyChanged();
+                    this.IsActiveChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
+
+        public event EventHandler? IsActiveChanged;
     }
 }
