@@ -1,17 +1,18 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+
 using ReactiveUI;
+
 using Shiny;
 using Shiny.Msal;
 
+
 namespace Samples
 {
-    public class MainViewModel : ViewModel
+    public class MsalViewModel : TabViewModel
     {
-        public MainViewModel(IDialogs dialogs, IPlatform platform, IMsalService? msal = null)
+        public MsalViewModel(IDialogs dialogs,  IMsalService? msal = null)
         {
-            this.Title = "Framework";
-            this.Button = ReactiveCommand.CreateFromTask(async () => await dialogs.Alert("HI"));
-
             this.MsalSignIn = ReactiveCommand.CreateFromTask(async () =>
             {
                 var result = await msal.SignIn();
@@ -32,9 +33,14 @@ namespace Samples
         }
 
 
-        public ICommand Button { get; }
         public ICommand MsalSignIn { get; }
         public ICommand MsalSignOut { get; }
         public ICommand MsalRefresh { get; }
+
+
+        protected override void OnActiveChanged(bool active)
+        {
+            Console.WriteLine("MSAL ViewModel Active: " + active);
+        }
     }
 }

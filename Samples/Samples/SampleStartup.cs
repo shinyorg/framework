@@ -38,7 +38,10 @@ namespace Samples
         public override void ConfigureApp(Application app, IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
+            containerRegistry.RegisterForNavigation<TabbedPage>();
+            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<MsalPage, MsalViewModel>();
+            containerRegistry.RegisterForNavigation<DialogsPage, DialogsViewModel>();
         }
     }
 }

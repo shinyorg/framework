@@ -3,9 +3,9 @@
 
 namespace Samples
 {
-    public partial class MainPage : TabbedPage
+    public partial class MsalPage : ContentPage
     {
-        public MainPage()
+        public MsalPage()
         {
             this.InitializeComponent();
         }
