@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Description>The Shiny Core containing all of the major functionality like hosting, logging, connectivity, environment, IO, power, settings, and jobs as well as many other utilities</Description>
+        <TargetFrameworks>netstandard2.0;xamarin.ios10;$(AndroidTargetFramework)</TargetFrameworks>
+        <TargetFrameworks Condition=" $(OS) == 'WINDOWS_NT' ">$(UwpTargetFramework);$(TargetFrameworks)</TargetFrameworks>
+        <ShinyLibVersion>2.2.0.2818-preview</ShinyLibVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="**\Platforms\**\*.cs" />
+        <Compile Remove="**\Platforms\**\*.cs" />
+        <PackageReference Include="Shiny.Core" Version="$(ShinyLibVersion)" />
+        <PackageReference Include="Shiny.Push" Version="$(ShinyLibVersion)" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+        <Compile Include="**\Platforms\Shared\**\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" $(TargetFramework.Contains('android')) ">
+        <Compile Include="**\Platforms\Shared\**\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap')) ">
+        <Compile Include="**\Platforms\Shared\**\*.cs" />
+    </ItemGroup>
+
+    <ItemGroup Condition=" $(TargetFramework.Contains('ios')) ">
+        <Compile Include="**\Platforms\Shared\**\*.cs" />
+    </ItemGroup>
+</Project>
