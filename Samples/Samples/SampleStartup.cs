@@ -18,6 +18,7 @@ namespace Samples
         {
             services.UseXfMaterialDialogs();
             services.UseGlobalCommandExceptionHandler();
+            services.UseUserDialogs();
 
             //services.UseMsal(new MsalConfiguration(
             //    Secrets.Values.MsalClientId,
@@ -42,6 +43,7 @@ namespace Samples
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<MsalPage, MsalViewModel>();
             containerRegistry.RegisterForNavigation<DialogsPage, DialogsViewModel>();
+            containerRegistry.RegisterForNavigation<UserDialogsPage, UserDialogsViewModel>();
         }
     }
 }

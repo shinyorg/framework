@@ -13,7 +13,7 @@ namespace Shiny
 {
     public static partial class Extensions
     {
-        public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
+        public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : BaseViewModel
         {
             var p = viewModel.GetPropertyInfo(expression);
             if (!p.CanWrite)
