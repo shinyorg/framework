@@ -45,6 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -93,10 +94,6 @@
     <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj">
       <Project>{0a10f54f-6e81-401f-bb5b-d176ad44fa4b}</Project>
       <Name>Shiny.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Shiny.Microsoft.DataSync.Client\Shiny.Microsoft.DataSync.Client.csproj">
-      <Project>{34ec2049-3629-4535-b18f-fb24bf494d29}</Project>
-      <Name>Shiny.Microsoft.DataSync.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Shiny.UserDialogs\Shiny.UserDialogs.csproj">
       <Project>{9518e2f1-62d9-472b-a6af-e3449b91cd5f}</Project>

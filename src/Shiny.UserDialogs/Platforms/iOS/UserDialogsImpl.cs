@@ -43,6 +43,7 @@ namespace Shiny.UserDialogs
             return () => { }; // TODO: trigger a global wait for dismiss to complete before allowing another dialog
         });
 
+
         public IObservable<PromptResult> Prompt(PromptOptions options)
         {
             throw new NotImplementedException();
