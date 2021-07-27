@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Reactive.Linq;
 
 using UIKit;
 
@@ -22,15 +23,25 @@ namespace Shiny.UserDialogs
             throw new NotImplementedException();
         }
 
-        public IObservable<Unit> Alert(AlertOptions options)
+        public IObservable<Unit> Alert(AlertOptions options) => Observable.Create<Unit>(ob =>
         {
-            throw new NotImplementedException();
-        }
+            // TODO: create on main thread
+            var alert = UIAlertController.Create(options.Title ?? String.Empty, options.Message, UIAlertControllerStyle.Alert);
+            if (options.DismissText != null)
+                alert.AddAction(UIAlertAction.Create(options.DismissText, UIAlertActionStyle.Default, _ => ob.Respond(Unit.Default)));
 
-        public IObservable<bool> Confirm(ConfirmOptions options)
+            return () => alert.DismissViewController(true, () => { }); // TODO: trigger a global wait for dismiss to complete before allowing another dialog
+        });
+
+
+        public IObservable<bool> Confirm(ConfirmOptions options) => Observable.Create<bool>(ob =>
         {
-            throw new NotImplementedException();
-        }
+            var dlg = UIAlertController.Create(options.Title ?? String.Empty, options.Message, UIAlertControllerStyle.Alert);
+            dlg.AddAction(UIAlertAction.Create(options.NegativeText, UIAlertActionStyle.Cancel, _ => ob.Respond(false)));
+            dlg.AddAction(UIAlertAction.Create(options.PositiveText, UIAlertActionStyle.Default, _ => ob.Respond(true)));
+
+            return () => { }; // TODO: trigger a global wait for dismiss to complete before allowing another dialog
+        });
 
         public IObservable<PromptResult> Prompt(PromptOptions options)
         {
@@ -38,71 +49,68 @@ namespace Shiny.UserDialogs
         }
 
 
-//        public override IDisposable ActionSheet(ActionSheetConfig config) => this.Present(() => this.CreateNativeActionSheet(config));
+
+        //        public override IDisposable ActionSheet(ActionSheetConfig config) => this.Present(() => this.CreateNativeActionSheet(config));
 
 
-//        public override IDisposable Confirm(ConfirmConfig config) => this.Present(() =>
-//        {
-//            var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
-//            dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x => config.OnAction?.Invoke(false)));
-//            dlg.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnAction?.Invoke(true)));
-//            return dlg;
-//        });
+        //        public override IDisposable Confirm(ConfirmConfig config) => this.Present(() =>
+        //        {
+        //            var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
+        //            dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x => config.OnAction?.Invoke(false)));
+        //            dlg.AddAction(UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x => config.OnAction?.Invoke(true)));
+        //            return dlg;
+        //        });
 
-//        public override IDisposable Prompt(PromptConfig config) => this.Present(() =>
-//        {
-//            var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
-//            UITextField txt = null;
+        //        public override IDisposable Prompt(PromptConfig config) => this.Present(() =>
+        //        {
+        //            var dlg = UIAlertController.Create(config.Title ?? String.Empty, config.Message, UIAlertControllerStyle.Alert);
+        //            UITextField txt = null;
 
-//            if (config.IsCancellable)
-//            {
-//                dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x =>
-//                    config.OnAction?.Invoke(new PromptResult(false, txt.Text)
-//                )));
-//            }
+        //            if (config.IsCancellable)
+        //            {
+        //                dlg.AddAction(UIAlertAction.Create(config.CancelText, UIAlertActionStyle.Cancel, x =>
+        //                    config.OnAction?.Invoke(new PromptResult(false, txt.Text)
+        //                )));
+        //            }
 
-//            var btnOk = UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x =>
-//                config.OnAction?.Invoke(new PromptResult(true, txt.Text)
-//            ));
-//            dlg.AddAction(btnOk);
+        //            var btnOk = UIAlertAction.Create(config.OkText, UIAlertActionStyle.Default, x =>
+        //                config.OnAction?.Invoke(new PromptResult(true, txt.Text)
+        //            ));
+        //            dlg.AddAction(btnOk);
 
-//            dlg.AddTextField(x =>
-//            {
-//                txt = x;
-//                this.SetInputType(txt, config.InputType);
-//                txt.Placeholder = config.Placeholder ?? String.Empty;
-//                txt.Text = config.Text ?? String.Empty;
-//                txt.AutocorrectionType = (UITextAutocorrectionType)config.AutoCorrectionConfig;
+        //            dlg.AddTextField(x =>
+        //            {
+        //                txt = x;
+        //                this.SetInputType(txt, config.InputType);
+        //                txt.Placeholder = config.Placeholder ?? String.Empty;
+        //                txt.Text = config.Text ?? String.Empty;
+        //                txt.AutocorrectionType = (UITextAutocorrectionType)config.AutoCorrectionConfig;
 
-//                if (config.MaxLength != null)
-//                {
-//                    txt.ShouldChangeCharacters = (field, replacePosition, replacement) =>
-//                    {
-//                        var updatedText = new StringBuilder(field.Text);
-//                        updatedText.Remove((int)replacePosition.Location, (int)replacePosition.Length);
-//                        updatedText.Insert((int)replacePosition.Location, replacement);
-//                        return updatedText.ToString().Length <= config.MaxLength.Value;
-//                    };
-//                }
+        //                if (config.MaxLength != null)
+        //                {
+        //                    txt.ShouldChangeCharacters = (field, replacePosition, replacement) =>
+        //                    {
+        //                        var updatedText = new StringBuilder(field.Text);
+        //                        updatedText.Remove((int)replacePosition.Location, (int)replacePosition.Length);
+        //                        updatedText.Insert((int)replacePosition.Location, replacement);
+        //                        return updatedText.ToString().Length <= config.MaxLength.Value;
+        //                    };
+        //                }
 
-//                if (config.OnTextChanged != null)
-//                {
-//                    txt.AddTarget((sender, e) => ValidatePrompt(txt, btnOk, config), UIControlEvent.EditingChanged);
-//                    ValidatePrompt(txt, btnOk, config);
-//                }
-//            });
-//            return dlg;
-//        });
+        //                if (config.OnTextChanged != null)
+        //                {
+        //                    txt.AddTarget((sender, e) => ValidatePrompt(txt, btnOk, config), UIControlEvent.EditingChanged);
+        //                    ValidatePrompt(txt, btnOk, config);
+        //                }
+        //            });
+        //            return dlg;
+        //        });
 
 
-//        static void ValidatePrompt(UITextField txt, UIAlertAction btn, PromptConfig config)
-//        {
-//            var args = new PromptTextChangedArgs { Value = txt.Text };
-//            config.OnTextChanged(args);
-//            btn.Enabled = args.IsValid;
-//            if (!txt.Text.Equals(args.Value))
-//                txt.Text = args.Value;
-//        }
+        //static void ValidatePrompt(UITextField txt, UIAlertAction btn, PromptOptions options)
+        //{
+        //    btn.Enabled = options?.CanSubmit(txt.Text) ?? true;
+        //}
 
 
         //protected virtual UIAlertController CreateNativeActionSheet(ActionSheetConfig config)
