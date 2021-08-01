@@ -8,7 +8,7 @@
     <ItemGroup>
         <None Include="**\Platforms\**\*.cs" />
         <Compile Remove="**\Platforms\**\*.cs" />
-        <PackageReference Include="Shiny.Core" Version="$(ShinyLibVersion)" />
+        <PackageReference Include="Shiny.Core" Version="2.2.0.2829" />
     </ItemGroup>
 
     <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
