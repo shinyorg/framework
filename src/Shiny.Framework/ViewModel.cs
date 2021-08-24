@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using Prism;
 using Prism.AppModel;
 using Prism.Navigation;
+using ReactiveUI.Fody.Helpers;
 
 
 namespace Shiny
 {
     public abstract class ViewModel : BaseViewModel,
+                                      IActiveAware,
                                       IInitializeAsync,
                                       INavigatedAware,
                                       IPageLifecycleAware,
@@ -36,5 +39,12 @@ namespace Shiny
             navSubj ??= new Subject<(INavigationParameters, bool)>();
             return navSubj.DisposedBy(this.DestroyWith);
         }
+
+
+        /// <summary>
+        /// This is not fired and only an artifact from Prism
+        /// </summary>
+        public event EventHandler? IsActiveChanged;
+        [Reactive] public bool IsActive { get; set; }
     }
 }
