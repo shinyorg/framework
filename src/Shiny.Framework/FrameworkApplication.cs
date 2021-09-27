@@ -1,5 +1,4 @@
-﻿using System;
-using Prism.DryIoc;
+﻿using Prism.DryIoc;
 using Prism.Ioc;
 
 
@@ -7,8 +6,12 @@ namespace Shiny
 {
     public abstract class FrameworkApplication : PrismApplication
     {
+        public static bool FirstRun { get; private set; } = true;
+
+
         protected override async void OnInitialized()
         {
+            FirstRun = false;
             if (Extensions.UsingXfMaterialDialogs)
                 XF.Material.Forms.Material.Init(this);
 
@@ -16,7 +19,17 @@ namespace Shiny
         }
 
 
+        protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)
+        {
+            if (FirstRun)
+                base.RegisterRequiredTypes(containerRegistry);
+        }
+
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-            => FrameworkStartup.Current.ConfigureApp(this, containerRegistry);
+        {
+            if (FirstRun)
+                FrameworkStartup.Current.ConfigureApp(this, containerRegistry);
+        }
     }
 }
