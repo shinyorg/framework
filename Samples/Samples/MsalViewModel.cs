@@ -9,7 +9,7 @@ using Shiny.Msal;
 
 namespace Samples
 {
-    public class MsalViewModel : TabViewModel
+    public class MsalViewModel : ViewModel
     {
         public MsalViewModel(IDialogs dialogs,  IMsalService? msal = null)
         {
@@ -30,17 +30,15 @@ namespace Samples
                 await msal.TryRefresh();
                 await dialogs.Snackbar("Refresh success");
             });
+
+            this.WhenAnyValue(x => x.IsActive)
+                .Subscribe(active => Console.WriteLine("MSAL ViewModel Active: " + active))
+                .DisposedBy(this.DestroyWith);
         }
 
 
         public ICommand MsalSignIn { get; }
         public ICommand MsalSignOut { get; }
         public ICommand MsalRefresh { get; }
-
-
-        protected override void OnActiveChanged(bool active)
-        {
-            Console.WriteLine("MSAL ViewModel Active: " + active);
-        }
     }
 }

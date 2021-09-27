@@ -10,7 +10,7 @@ using Shiny.UserDialogs;
 
 namespace Samples
 {
-    public class UserDialogsViewModel : TabViewModel
+    public class UserDialogsViewModel : ViewModel
     {
         public UserDialogsViewModel(IUserDialogs dialogs)
         {

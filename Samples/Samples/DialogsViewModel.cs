@@ -6,20 +6,17 @@ using Shiny;
 
 namespace Samples
 {
-    public class DialogsViewModel : TabViewModel
+    public class DialogsViewModel : ViewModel
     {
         public DialogsViewModel(IDialogs dialogs)
         {
             this.Button = ReactiveCommand.CreateFromTask(async () => await dialogs.Alert("HI"));
+            this.WhenAnyValue(x => x.IsActive)
+                .Subscribe(active => Console.WriteLine("Dialogs ViewModel Active: " + active))
+                .DisposedBy(this.DestroyWith);
         }
 
 
         public ICommand Button { get; }
-
-        protected override void OnActiveChanged(bool active)
-        {
-            base.OnActiveChanged(active);
-            Console.WriteLine("Dialogs ViewModel Active: " + active);
-        }
     }
 }
