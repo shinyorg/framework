@@ -133,9 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Shiny">
-      <Version>2.3.0.2906</Version>
+      <Version>2.4.0.2960</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -155,7 +155,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" TriggeredFromHotReload="False" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

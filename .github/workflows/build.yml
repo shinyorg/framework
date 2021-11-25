@@ -25,7 +25,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: 6.0.100
 
     - name: Generate Build Number
       id: buildnumber
@@ -34,7 +34,7 @@ jobs:
         token: ${{secrets.github_token}}
 
     - name: Build
-      run: msbuild Build.sln /restore -m -property:Configuration=Release -property:BUILD_BUILDNUMBER=${{steps.buildnumber.outputs.build_number}}
+      run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:BUILD_BUILDNUMBER=${{steps.buildnumber.outputs.build_number}}
 
     - name: Post NuGet Artifacts
       uses: actions/upload-artifact@v2

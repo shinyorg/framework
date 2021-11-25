@@ -15,16 +15,6 @@
         <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.3.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
         <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
-        <DefineConstants Condition=" $(TargetFramework.StartsWith('monoandroid')) ">$(DefineConstants);__ANDROID__</DefineConstants>
-        <ExtrasUwpMetaPackageVersion>6.2.12</ExtrasUwpMetaPackageVersion>
-        <UwpTargetFramework>uap10.0.17763</UwpTargetFramework>
-        <AndroidTargetFramework>monoandroid10.0</AndroidTargetFramework>
-        <ShinyLibVersion>2.2.0.2818-preview</ShinyLibVersion>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>full</DebugType>
-        <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
