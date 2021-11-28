@@ -2,6 +2,7 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using Prism.Navigation;
@@ -37,7 +38,7 @@ namespace Shiny
         protected internal CompositeDisposable DestroyWith => this.destroyWith ??= new CompositeDisposable();
 
         CancellationTokenSource? deactiveToken;
-        protected CancellationToken DeactiveToken
+        protected CancellationToken DeactivateToken
         {
             get
             {
@@ -124,6 +125,13 @@ namespace Shiny
                 () => this.IsBusy = false
             )
             .DisposeWith(this.DeactivateWith);
+
+
+        protected ICommand LoadingCommand(
+            Func<Task> action, 
+            string loadingText = "Loading...", 
+            bool useSnackbar = false
+         ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar));
 
 
         protected virtual void RememberUserState()
