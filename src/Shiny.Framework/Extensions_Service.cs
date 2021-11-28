@@ -19,7 +19,7 @@ namespace Shiny
         }
 
 
-        public static void UseNavigationDelegate(this IServiceCollection services)
+        public static void UseGlobalNavigation(this IServiceCollection services)
         {
             services.AddSingleton<IGlobalNavigationService, GlobalNavigationService>();
             if (!services.Any(x => x.ServiceType == typeof(IApplicationProvider)))

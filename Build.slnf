@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "Shiny.Framework.sln",
+    "projects": [
+      "src\\Shiny.Framework\\Shiny.Framework.csproj",
+      "src\\Shiny.Msal\\Shiny.Msal.csproj"
+    ]
+  }
+}
