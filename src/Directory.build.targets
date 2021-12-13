@@ -7,7 +7,7 @@
 		<Compile Remove="**\Platforms\**\*.cs" />
 
 		<None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="icon.png" />
-		<None Include="$(MSBuildThisFileDirectory)nuget.txt" Pack="true" PackagePath="readme.txt" />
+		<!--<None Include="$(MSBuildThisFileDirectory)nuget.txt" Pack="true" PackagePath="readme.txt" />-->
 		<!--<None Include="..\..\readme.md" Pack="true" PackagePath="\" />-->
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Include="Shiny.Core" Version="2.4.1.2971" />
