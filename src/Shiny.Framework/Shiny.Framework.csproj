@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
@@ -11,7 +11,6 @@
         <PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
         <PackageReference Include="ReactiveUI" Version="17.1.9" />
         <PackageReference Include="ReactiveUI.Fody" Version="17.1.9" />
-        <PackageReference Include="Shiny.Core" Version="2.4.1.2971" />
         <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2244" />
         <PackageReference Include="XF.Material" Version="1.7.8" />

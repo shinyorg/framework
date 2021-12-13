@@ -1,29 +1,5 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
-
     <PropertyGroup>
-        <Description></Description>
         <TargetFrameworks>netstandard2.0;xamarin.ios10;$(AndroidTargetFramework)</TargetFrameworks>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="**\Platforms\**\*.cs" />
-        <Compile Remove="**\Platforms\**\*.cs" />
-        <PackageReference Include="Shiny.Core" Version="2.4.1.2971" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
-        <Compile Include="**\Platforms\Shared\**\*.cs" />
-    </ItemGroup>
-
-    <ItemGroup Condition=" $(TargetFramework.Contains('android')) ">
-        <Compile Include="**\Platforms\Shared\**\*.cs" />
-        <Compile Include="**\Platforms\Android\**\*.cs" />
-    </ItemGroup>
-
-
-    <ItemGroup Condition=" $(TargetFramework.Contains('ios')) ">
-        <Compile Include="**\Platforms\Shared\**\*.cs" />
-        <Compile Include="**\Platforms\iOS\**\*.cs" />
-    </ItemGroup>
-
 </Project>
