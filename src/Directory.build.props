@@ -15,6 +15,7 @@
         <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">1.3.0</ShinyVersion>
         <VersionPrefix>$(ShinyVersion)</VersionPrefix>
         <VersionPrefix Condition=" $(BUILD_BUILDNUMBER) != '' ">$(VersionPrefix).$(BUILD_BUILDNUMBER)</VersionPrefix>
+		<AndroidTargetFramework>monoandroid11.0</AndroidTargetFramework>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -24,7 +25,31 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
-    <ItemGroup>
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
+		<IsStandardBuild>true</IsStandardBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('ios'))">
+		<IsIosBuild>true</IsIosBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('android'))">
+		<AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>
+		<AndroidUseIntermediateDesignerFile>false</AndroidUseIntermediateDesignerFile>
+		<IsAndroidBuild>true</IsAndroidBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.StartsWith('uap'))">
+		<GenerateLibraryLayout>true</GenerateLibraryLayout>
+		<DisableEmbeddedXbf>false</DisableEmbeddedXbf>
+		<IsWindowsBuild>true</IsWindowsBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="icon.png" />
     </ItemGroup>
 
