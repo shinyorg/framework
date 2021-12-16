@@ -128,10 +128,11 @@ namespace Shiny
 
 
         protected ICommand LoadingCommand(
-            Func<Task> action, 
-            string loadingText = "Loading...", 
-            bool useSnackbar = false
-         ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar));
+            Func<Task> action,
+            string loadingText = "Loading...",
+            bool useSnackbar = false,
+            IObservable<bool>? canExecute = null
+         ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
 
 
         protected virtual void RememberUserState()
