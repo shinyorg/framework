@@ -18,17 +18,6 @@ namespace Samples
         {
             services.UseXfMaterialDialogs();
             services.UseGlobalCommandExceptionHandler();
-            services.UseUserDialogs();
-
-            //services.UseMsal(new MsalConfiguration(
-            //    Secrets.Values.MsalClientId,
-            //    Secrets.Values.MsalScopes.Split(';')
-            //)
-            //{
-            //    //TenantId = Secrets.Values.MsalTenantId,
-            //    //UseBroker = true,
-            //    //SignatureHash = Secrets.Values.MsalSignatureHash
-            //});
         }
 
 
@@ -41,9 +30,7 @@ namespace Samples
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<TabbedPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
-            containerRegistry.RegisterForNavigation<MsalPage, MsalViewModel>();
             containerRegistry.RegisterForNavigation<DialogsPage, DialogsViewModel>();
-            containerRegistry.RegisterForNavigation<UserDialogsPage, UserDialogsViewModel>();
         }
     }
 }

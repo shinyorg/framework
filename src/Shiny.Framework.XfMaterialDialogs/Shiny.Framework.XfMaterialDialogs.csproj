@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="XF.Material" Version="1.7.8" />
+		<PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Shiny.Framework.Core\Shiny.Framework.Core.csproj" />
+	</ItemGroup>
+</Project>

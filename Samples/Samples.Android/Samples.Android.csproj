@@ -95,17 +95,9 @@
       <Project>{0a10f54f-6e81-401f-bb5b-d176ad44fa4b}</Project>
       <Name>Shiny.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Shiny.UserDialogs\Shiny.UserDialogs.csproj">
-      <Project>{9518e2f1-62d9-472b-a6af-e3449b91cd5f}</Project>
-      <Name>Shiny.UserDialogs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Samples\Samples.csproj">
       <Project>{6DAC4A3F-4691-4217-BD37-9CC044616EF6}</Project>
       <Name>Samples</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Shiny.Msal\Shiny.Msal.csproj">
-      <Project>{9F7D71D8-CB9F-4766-89DA-767556077D32}</Project>
-      <Name>Shiny.Msal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -7,7 +7,7 @@ on:
         description: 'Log level'
         required: true
         default: 'warning'
-        
+
   push:
     branches: [ master, dev, preview ]
     paths:

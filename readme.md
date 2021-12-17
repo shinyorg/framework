@@ -13,11 +13,3 @@ Framework combines the best of MVVM using Prism & ReactiveUI while also combinin
 * Localization - a simple to use localization framework that can be used everywhere including your viewmodels!  Localization DONE RIGHT!
 * Global Navigator - allows you to inject a global navigator that you can use safely from your Shiny delegates.  Will ignore navigation requests when in the background
 * Global Command Exception Handler - do you like ReactiveCommand, so do I... this little service brings together Shiny's logging services + localization (from above) + dialogs (also from above) into one singular place
-
-
-## Shiny.Msal
-* A helper library that brings MSAL into DI easily
-* A great article for setting up MSAL with Xamarin - https://www.thewissen.io/implementing-msal-authentication-in-xamarin-forms/
-* https://docs.microsoft.com/en-ca/azure/active-directory/develop/msal-net-xamarin-android-considerations
-* https://docs.microsoft.com/en-ca/azure/active-directory/develop/msal-net-xamarin-ios-considerations
-* https://docs.microsoft.com/en-ca/azure/active-directory/develop/msal-net-use-brokers-with-xamarin-apps

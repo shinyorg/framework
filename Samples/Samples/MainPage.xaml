@@ -6,7 +6,5 @@
 
     <TabbedPage.Children>
         <samples:DialogsPage Title="Dialogs" />
-        <samples:MsalPage Title="MSAL" />
-        <samples:UserDialogsPage Title="User Dialogs" />
     </TabbedPage.Children>
 </TabbedPage>

@@ -15,20 +15,14 @@
     <ItemGroup>
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
         <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-        <PackageReference Include="Mobile.BuildTools" Version="2.0.245" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
-        <ProjectReference Include="..\..\src\Shiny.Msal\Shiny.Msal.csproj" />
-        <ProjectReference Include="..\..\src\Shiny.UserDialogs\Shiny.UserDialogs.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Update="DialogsPage.xaml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="MsalPage.xaml">
         <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       </EmbeddedResource>
       <EmbeddedResource Update="UserDialogsPage.xaml">

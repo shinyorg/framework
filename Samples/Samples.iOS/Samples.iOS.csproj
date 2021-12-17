@@ -148,14 +148,10 @@
       <Project>{6DAC4A3F-4691-4217-BD37-9CC044616EF6}</Project>
       <Name>Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Shiny.Msal\Shiny.Msal.csproj">
-      <Project>{9F7D71D8-CB9F-4766-89DA-767556077D32}</Project>
-      <Name>Shiny.Msal</Name>
-    </ProjectReference>
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" TriggeredFromHotReload="False" />
+      <UserProperties TriggeredFromHotReload="False" XamarinHotReloadUnhandledDeviceExceptionSamplesiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

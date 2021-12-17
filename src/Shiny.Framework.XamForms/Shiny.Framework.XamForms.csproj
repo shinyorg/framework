@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
+		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+		<PackageReference Include="XF.Material" Version="1.7.8" />
+        <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.14" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Shiny.Framework.Core\Shiny.Framework.Core.csproj" />
+	</ItemGroup>
+</Project>
