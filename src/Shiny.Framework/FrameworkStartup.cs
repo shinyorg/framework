@@ -13,9 +13,9 @@ namespace Shiny
 {
     public abstract class FrameworkStartup : ShinyStartup
     {
-        internal static FrameworkStartup Current { get; private set; }
+        internal static FrameworkStartup? Current { get; private set; }
 
-        protected IPlatform Platform { get; private set; }
+        protected IPlatform? Platform { get; private set; }
         ILoggingBuilder? builder;
 
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using XF.Material.Forms.UI.Dialogs;
@@ -10,36 +9,51 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
     public class XfMaterialDialogs : IDialogs
     {
         readonly IPlatform platform;
-        public XfMaterialDialogs(IPlatform platform)
-            => this.platform = platform;
+        public XfMaterialDialogs(IPlatform platform) => this.platform = platform;
 
 
-        public virtual Task Alert(string message, string title = "Confirm")
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(message, title));
-
-
-        public virtual async Task<bool> Confirm(string message, string title = "Confirm", string okText = "OK", string cancelText = "Cancel")
+        public virtual async Task<string?> ActionSheet(string title, string? acceptText = null, string? dismissText = null, params string[] actions)
         {
-            var result = await this.platform.InvokeOnMainThreadAsync(async () => await MaterialDialog.Instance.ConfirmAsync(message, title, okText, cancelText));
+            var task = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectChoiceAsync(
+                title,
+                actions.ToList(),
+                acceptText,
+                dismissText,
+                null,
+                true
+            ));
+            if (task >= 0)
+                return actions.ElementAt(task);
+
+            return null;
+        }
+
+
+        public virtual Task Alert(string message, string? title = null, string? dismissText = null)
+            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(message, title, dismissText ?? "OK"));
+
+
+        public virtual async Task<bool> Confirm(string message, string? title = null, string? acceptText = null, string? dismissText = null)
+        {
+            var result = await this.platform.InvokeOnMainThreadAsync(async () => await MaterialDialog.Instance.ConfirmAsync(
+                message,
+                title,
+                acceptText,
+                dismissText
+            ));
             return result ?? false;
         }
 
 
-        public virtual Task<string?> Input(string message, string? title = null)
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.InputAsync(title, message));
-
-
-        public virtual async Task<string?> ActionSheet(string title, bool allowCancel, params string[] actions)
-        {
-            var task = allowCancel
-                ? await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectChoiceAsync(title, actions.ToList()))
-                : await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectActionAsync(title, actions.ToList()));
-
-            if (task >= 0)
-                actions.ElementAt(task);
-
-            return null;
-        }
+        public Task<string?> Input(string question, string? title = null, string? acceptText = null, string? dismissText = null, string? placeholder = null, int? maxLength = null)
+            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.InputAsync(
+                title,
+                question,
+                null,
+                placeholder,
+                acceptText,
+                dismissText
+            ));
 
 
         public Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null)

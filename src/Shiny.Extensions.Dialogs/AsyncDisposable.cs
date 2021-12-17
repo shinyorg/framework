@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Shiny
+
+namespace Shiny.Extensions.Dialogs
 {
     public class AsyncDisposable : IAsyncDisposable
     {

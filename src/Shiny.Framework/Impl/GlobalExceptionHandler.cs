@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+
+using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
 
 
@@ -10,12 +12,12 @@ namespace Shiny
     public class GlobalExceptionHandler : IObserver<Exception>, IShinyStartupTask
     {
         readonly ILocalizationManager? localize;
-        readonly IDialogs? dialogs;
+        readonly IDialogs dialogs;
         readonly ILogger logger;
 
 
         public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger,
-                                      IDialogs? dialogs = null,
+                                      IDialogs dialogs,
                                       ILocalizationManager? localize = null)
         {
             this.dialogs = dialogs;

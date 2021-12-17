@@ -6,6 +6,7 @@ namespace Samples
     {
         protected override void Initialize()
         {
+            XF.Material.Forms.Material.Init(this);
             this.InitializeComponent();
             base.Initialize();
         }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
 using Shiny.Net;
 using Shiny.Stores;

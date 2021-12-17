@@ -11,6 +11,7 @@ namespace Shiny.Extensions.Localization
         readonly Dictionary<string, ILocalizationSource> sources = new();
 
 
+        // TODO: ie. a source could potential yield multiple resx files
         public LocalizationBuilder AddSource(ILocalizationSource source)
         {
             if (this.sources.ContainsKey(source.Name))
