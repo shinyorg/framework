@@ -10,13 +10,7 @@ namespace Shiny
 
 
         protected override async void OnInitialized()
-        {
-            FirstRun = false;
-            if (Extensions.UsingXfMaterialDialogs)
-                XF.Material.Forms.Material.Init(this);
-
-            await FrameworkStartup.Current.RunApp(this.NavigationService);
-        }
+            => await FrameworkStartup.Current.RunApp(this.NavigationService);
 
 
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)

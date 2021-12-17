@@ -29,77 +29,42 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
             => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.InputAsync(title, message));
 
 
-        public virtual Task ActionSheet(string title, bool allowCancel, params (string Key, Action Action)[] actions)
-        {
-            var dict = new Dictionary<string, Action>();
-            foreach (var action in actions)
-                dict.Add(action.Key, action.Action);
-
-            return this.ActionSheet(title, dict, allowCancel);
-        }
-
-
-        public virtual async Task ActionSheet(string title, IDictionary<string, Action> actions, bool allowCancel = false)
+        public virtual async Task<string?> ActionSheet(string title, bool allowCancel, params string[] actions)
         {
             var task = allowCancel
-                ? await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectChoiceAsync(title, actions.Keys.ToList()))
-                : await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectActionAsync(title, actions.Keys.ToList()));
+                ? await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectChoiceAsync(title, actions.ToList()))
+                : await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectActionAsync(title, actions.ToList()));
 
             if (task >= 0)
-                actions.Values.ElementAt(task).Invoke();
+                actions.ElementAt(task);
+
+            return null;
         }
 
 
-        public virtual async Task<T> LoadingTask<T>(Func<Task<T>> task, string message, bool useSnackbar = false)
-        {
-            var result = default(T);
-            IMaterialModalPage? dialog = null;
-            try
+        public Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null)
+            => this.platform.InvokeOnMainThreadAsync(async () =>
             {
-                dialog = useSnackbar
-                    ? await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingSnackbarAsync(message))
-                    : await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingDialogAsync(message));
+                if (actionText == null)
+                {
+                    await MaterialDialog.Instance.SnackbarAsync(message, durationMillis);
+                    return false;
+                }
+                return await MaterialDialog.Instance.SnackbarAsync(message, actionText, durationMillis);
+            });
 
-                result = await task();
-                await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync());
-            }
-            catch
-            {
-                if (dialog != null)
-                    await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync());
-                throw;
-            }
-            return result;
+
+        public async Task<IAsyncDisposable> LoadingSnackbar(string message)
+        {
+            var dialog = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingSnackbarAsync(message));
+            return AsyncDisposable.Create(async () => await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync()));
         }
 
 
-        public virtual Task LoadingTask(Func<Task> task, string message = "Loading", bool useSnackbar = false)
-            => this.LoadingTask<object?>(async () =>
-            {
-                await task();
-                return null;
-            },
-            message,
-            useSnackbar
-        );
-
-
-        public virtual Task Snackbar(string message, int durationMillis = 3000)
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SnackbarAsync(message, durationMillis));
-
-        public Task Snackbar(string message, int durationMillis = 3000, string? actionText = null, Action? action = null)
+        public async Task<IAsyncDisposable> LoadingDialog(string message)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IAsyncDisposable> LoadingSnackbar(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IAsyncDisposable> LoadingDialog(string message)
-        {
-            throw new NotImplementedException();
+            var dialog = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingDialogAsync(message));
+            return AsyncDisposable.Create(async () => await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync()));
         }
     }
 }

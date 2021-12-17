@@ -1,33 +1,33 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-        <LangVersion>8.0</LangVersion>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <DebugType>portable</DebugType>
-        <DebugSymbols>true</DebugSymbols>
-    </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
-        <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+	</ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\src\Shiny.Extensions.Dialogs.XfMaterial\Shiny.Extensions.Dialogs.XfMaterial.csproj" />
-        <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Shiny.Extensions.Dialogs.XfMaterial\Shiny.Extensions.Dialogs.XfMaterial.csproj" />
+		<ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Update="DialogsPage.xaml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Update="UserDialogsPage.xaml">
-        <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      </EmbeddedResource>
-    </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Enums.resx">
+			<Generator></Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Strings.resx">
+			<Generator></Generator>
+		</EmbeddedResource>
+	</ItemGroup>
+
 </Project>

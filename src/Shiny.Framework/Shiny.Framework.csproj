@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
 		<TargetFrameworks>netstandard2.1</TargetFrameworks>
+		<RootNamespace>Shiny</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

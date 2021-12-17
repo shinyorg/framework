@@ -14,6 +14,10 @@ on:
     - "src/**"
     - ".github/workflows/**"
 
+env:
+  ShinyVersion: 2.0.0
+  DotNetVersion: 6.0.100
+
 jobs:
   build:
 
@@ -28,7 +32,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: ${{ env.DotNetVersion }}
 
     - name: Generate Build Number
       id: buildnumber
@@ -36,8 +40,13 @@ jobs:
       with:
         token: ${{secrets.github_token}}
 
-    - name: Build
-      run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:BUILD_BUILDNUMBER=${{steps.buildnumber.outputs.build_number}}
+    - name: Build Preview
+      if: ${{ github.ref == 'refs/heads/preview' }}
+      run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}-preview
+
+    - name: Build Release
+      if: ${{ github.ref == 'refs/heads/master' }}
+      run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}
 
     - name: Post NuGet Artifacts
       uses: actions/upload-artifact@v2
@@ -46,5 +55,4 @@ jobs:
         path: '**/*.nupkg'
 
     - name: dotnet publish
-      if: ${{ github.ref == 'refs/heads/master' }}
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate

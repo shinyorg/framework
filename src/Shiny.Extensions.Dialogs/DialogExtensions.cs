@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 
 
-namespace Shiny.Dialogs
+namespace Shiny
 {
-    public static class Extensions
+    public static class DialogExtensions
     {
         public static async Task<T> LoadingTask<T>(this IDialogs dialogs, Func<Task<T>> task, string message, bool useSnackbar = false)
         {

@@ -136,7 +136,7 @@ namespace Shiny
             string loadingText = "Loading...",
             bool useSnackbar = false,
             IObservable<bool>? canExecute = null
-         ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
+        ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
 
 
         protected virtual void RememberUserState()
@@ -150,7 +150,6 @@ namespace Shiny
         }
 
 
-        public virtual string this[string key] => this.Localize[key];
-        public virtual string TranslateEnum<T>(T value) where T : Enum => this.Localize.GetEnum(value);
+        public virtual string? this[string key] => this.Localize[key];
     }
 }

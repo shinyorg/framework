@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Navigation;
 using Shiny;
+using Shiny.Extensions.Localization;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +18,13 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
-            //services.UseXfMaterialDialogs();
+            var manager = new LocalizationBuilder()
+                .AddResource("", this.GetType().Assembly)
+                .AddResource("", this.GetType().Assembly)
+                .Build();
+
+            services.AddSingleton(manager);
+            services.UseXfMaterialDialogs();
             services.UseGlobalCommandExceptionHandler();
         }
 

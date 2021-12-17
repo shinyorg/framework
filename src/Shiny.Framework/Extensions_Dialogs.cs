@@ -25,12 +25,15 @@ namespace Shiny
         }
 
 
-        public static Task SnackbarToOpenAppSettings(this IDialogs dialogs, string message, string actionText = "Open", int durationMillis = 3000)
-            => dialogs.Snackbar(
+        public static async Task SnackbarToOpenAppSettings(this IDialogs dialogs, string message, string actionText = "Open", int durationMillis = 3000)
+        {
+            var result = await dialogs.Snackbar(
                 message,
                 durationMillis,
-                actionText,
-                () => Xamarin.Essentials.AppInfo.ShowSettingsUI()
+                actionText
             );
+            if (result)
+                Xamarin.Essentials.AppInfo.ShowSettingsUI();
+        }
     }
 }
