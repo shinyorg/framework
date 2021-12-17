@@ -2,8 +2,10 @@
   "solution": {
     "path": "Shiny.Framework.sln",
     "projects": [
-      "src\\Shiny.Framework\\Shiny.Framework.csproj",
-      "src\\Shiny.Msal\\Shiny.Msal.csproj"
+      "src\\Shiny.Extensions.Dialogs.XfMaterial\\Shiny.Extensions.Dialogs.XfMaterial.csproj",
+      "src\\Shiny.Extensions.Dialogs\\Shiny.Extensions.Dialogs.csproj",
+      "src\\Shiny.Extensions.Localization\\Shiny.Extensions.Localization.csproj",
+      "src\\Shiny.Framework\\Shiny.Framework.csproj"
     ]
   }
 }
