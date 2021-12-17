@@ -6,7 +6,6 @@ namespace Shiny.Extensions.Localization
     {
         string this[string key] { get; }
         string GetString(string key, CultureInfo? culture = null);
-
-        ILocalize GetSection(string sectionName);
+        ILocalizationSource GetSection(string sectionName);
     }
 }

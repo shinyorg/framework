@@ -4,15 +4,17 @@ using System.Reflection;
 using System.Resources;
 
 
-namespace Shiny.Impl
+namespace Shiny.Extensions.Localization.Impl
 {
-    public class ResxLocalize : ILocalize
+    public class ResxLocalizationSource : ILocalizationSource
     {
         readonly ResourceManager resources;
 
-
-        public ResxLocalize(string baseName, Assembly assembly)
-            => this.resources = new ResourceManager(baseName, assembly);
+        public ResxLocalizationSource(string baseName, Assembly assembly)
+        {
+            this.Name = baseName;
+            this.resources = new ResourceManager(baseName, assembly);
+        }
 
 
         public string GetString(string key, CultureInfo? culture = null)
@@ -25,6 +27,8 @@ namespace Shiny.Impl
         }
 
 
+        public string Name { get; }
+        public void Load() {}
         public string this[string key] => this.GetString(key);
     }
 }

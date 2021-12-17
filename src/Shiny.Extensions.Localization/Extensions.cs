@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace Shiny.Extensions.Localization
 {
-    public static class BindExtensions
+    public static class Extensions
     {
-        public static void Bind(this ILocalize localize, object obj)
+        public static void Bind(this ILocalizationSource localize, object obj)
         {
             var props = obj
                 .GetType()

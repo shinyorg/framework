@@ -10,6 +10,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Shiny.Framework.Core\Shiny.Framework.Core.csproj" />
+		<ProjectReference Include="..\Shiny.Framework.Core\Shiny.Framework.Core.csproj" />
 	</ItemGroup>
 </Project>

@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Framework", "src\Shin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Framework.Core", "src\Shiny.Framework.Core\Shiny.Framework.Core.csproj", "{9EF91B30-BDEF-4CB2-8181-6E6455A4A132}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Framework.XamForms", "src\Shiny.Framework.XamForms\Shiny.Framework.XamForms.csproj", "{163E593C-AB62-4C44-B104-EB18788E3B94}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Framework.XfMaterialDialogs", "src\Shiny.Framework.XfMaterialDialogs\Shiny.Framework.XfMaterialDialogs.csproj", "{3B63FDE2-06BA-405B-9D74-56D2DF602496}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3BABA639-7803-4C8F-B597-9DE5EF755A31}"
@@ -35,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3BABA639-780
 		src\Directory.build.targets = src\Directory.build.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiny.Extensions.Localization", "src\Shiny.Extensions.Localization\Shiny.Extensions.Localization.csproj", "{DE5F623D-46DB-40CB-86A3-9A0F4556E0DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Extensions.Localization", "src\Shiny.Extensions.Localization\Shiny.Extensions.Localization.csproj", "{DE5F623D-46DB-40CB-86A3-9A0F4556E0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -201,30 +199,6 @@ Global
 		{9EF91B30-BDEF-4CB2-8181-6E6455A4A132}.Release|x64.Build.0 = Release|Any CPU
 		{9EF91B30-BDEF-4CB2-8181-6E6455A4A132}.Release|x86.ActiveCfg = Release|Any CPU
 		{9EF91B30-BDEF-4CB2-8181-6E6455A4A132}.Release|x86.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|ARM.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|x64.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Debug|x86.Build.0 = Debug|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|ARM.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|ARM.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|iPhone.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|x64.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|x64.Build.0 = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|x86.ActiveCfg = Release|Any CPU
-		{163E593C-AB62-4C44-B104-EB18788E3B94}.Release|x86.Build.0 = Release|Any CPU
 		{3B63FDE2-06BA-405B-9D74-56D2DF602496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B63FDE2-06BA-405B-9D74-56D2DF602496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B63FDE2-06BA-405B-9D74-56D2DF602496}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -284,7 +258,6 @@ Global
 		{DA2ED899-26A1-44CD-AF9C-D99501FF5AC7} = {F47D2060-9080-405A-9292-819A8C83A403}
 		{0A10F54F-6E81-401F-BB5B-D176AD44FA4B} = {3BABA639-7803-4C8F-B597-9DE5EF755A31}
 		{9EF91B30-BDEF-4CB2-8181-6E6455A4A132} = {3BABA639-7803-4C8F-B597-9DE5EF755A31}
-		{163E593C-AB62-4C44-B104-EB18788E3B94} = {3BABA639-7803-4C8F-B597-9DE5EF755A31}
 		{3B63FDE2-06BA-405B-9D74-56D2DF602496} = {3BABA639-7803-4C8F-B597-9DE5EF755A31}
 		{DE5F623D-46DB-40CB-86A3-9A0F4556E0DC} = {3BABA639-7803-4C8F-B597-9DE5EF755A31}
 	EndGlobalSection
