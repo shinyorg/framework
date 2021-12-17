@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Navigation;
+using Shiny.Extensions.Dialogs;
+using Shiny.Framework.Impl;
 using Xamarin.Forms;
 
 
@@ -50,6 +53,7 @@ namespace Shiny
             Current = this;
             this.Platform = platform;
             this.Configure(this.builder!, services);
+            services.TryAddSingleton<IDialogs, NativeDialogs>();
         }
 
 
