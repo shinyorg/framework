@@ -1,4 +1,5 @@
-﻿using Prism.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Prism.Services;
 using Shiny.Extensions.Dialogs;
 using System;
 using System.Threading.Tasks;
@@ -8,30 +9,33 @@ namespace Shiny.Framework.Impl
 {
     public class NativeDialogs : IDialogs
     {
-        readonly IPageDialogService prism;
-        public NativeDialogs(IPageDialogService prism) => this.prism = prism;
+        readonly Lazy<IPageDialogService> prism;
+        readonly IPlatform platform;
 
 
-        public async Task<string?> ActionSheet(string title, string? acceptText = null, string? dismissText = null, params string[] options)
+        public NativeDialogs(IServiceProvider services, IPlatform platform)
         {
-            var tcs = new TaskCompletionSource<string>();
-            await this.prism.DisplayActionSheetAsync(
+            this.prism = new Lazy<IPageDialogService>(() => services.GetRequiredService<IPageDialogService>());
+            this.platform = platform;
+        }
+
+
+        public Task<string?> ActionSheet(string title, string? acceptText = null, string? dismissText = null, params string[] options)
+            => this.platform.InvokeOnMainThreadAsync(() => this.prism.Value.DisplayActionSheetAsync(
                 title,
                 acceptText,
                 dismissText,
                 options
-            );
-            return await tcs.Task.ConfigureAwait(false);
-        }
+            ));
 
         public Task Alert(string message, string? title = null, string? dismissText = null)
-            => this.prism.DisplayAlertAsync(title, message, dismissText ?? "OK");
+            => this.platform.InvokeOnMainThreadAsync(() => this.prism.Value.DisplayAlertAsync(title, message, dismissText ?? "OK"));
 
         public Task<bool> Confirm(string message, string? title = null, string? okText = null, string? cancelText = null)
-            => this.prism.DisplayAlertAsync(title, message, okText, cancelText);
+            => this.prism.Value.DisplayAlertAsync(title, message, okText, cancelText);
 
         public Task<string?> Input(string question, string? title = null, string? acceptText = null, string? dismissText = null, string? placeholder = null, int? maxLength = null)
-            => this.prism.DisplayPromptAsync(title, question, acceptText, dismissText, placeholder, maxLength ?? -1);
+            => this.platform.InvokeOnMainThreadAsync(() => this.prism.Value.DisplayPromptAsync(title, question, acceptText, dismissText, placeholder, maxLength ?? -1));
 
         public Task<IAsyncDisposable> LoadingDialog(string message) => Task.FromResult(AsyncDisposable.Create(async () => { }));
         public Task<IAsyncDisposable> LoadingSnackbar(string message) => Task.FromResult(AsyncDisposable.Create(async () => { }));
