@@ -2,7 +2,6 @@
 
 These libraries were written by the author for the author and thus are not open to issues, enhancements, or anything in between.
 
-
 ## Shiny.Framework
 Framework combines the best of MVVM using Prism & ReactiveUI while also combining Shiny.  Find the sample at [https://github.com/shinyorg/samples/tree/main/Integration-Best-Prism-RXUI]
 
