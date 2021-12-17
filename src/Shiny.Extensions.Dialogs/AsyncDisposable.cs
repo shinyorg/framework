@@ -1,14 +1,14 @@
-﻿namespace Shiny;
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
-
-public class AsyncDisposable : IAsyncDisposable
+namespace Shiny
 {
-    public static IAsyncDisposable Create(Func<ValueTask> dispose) => new AsyncDisposable(dispose);
+    public class AsyncDisposable : IAsyncDisposable
+    {
+        public static IAsyncDisposable Create(Func<ValueTask> dispose) => new AsyncDisposable(dispose);
 
-    readonly Func<ValueTask> dispose;
-    public AsyncDisposable(Func<ValueTask> dispose) => this.dispose = dispose;
-    public ValueTask DisposeAsync() => this.dispose.Invoke();
+        readonly Func<ValueTask> dispose;
+        public AsyncDisposable(Func<ValueTask> dispose) => this.dispose = dispose;
+        public ValueTask DisposeAsync() => this.dispose.Invoke();
+    }
 }

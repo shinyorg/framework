@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Authors>Allan Ritchie</Authors>
         <Owners>aritchie; shinylib</Owners>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>9.0</LangVersion>
         <Nullable>enable</Nullable>
         <ContinuousIntegrationBuild>$(ContinuousIntegrationBuild)</ContinuousIntegrationBuild>
         <DisableExtraReferences>False</DisableExtraReferences>
