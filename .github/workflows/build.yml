@@ -43,11 +43,11 @@ jobs:
         token: ${{secrets.github_token}}
 
     - name: Build Preview
-      if: ${{ env.PreviewBuild }}
+      if: ${{ env.PreviewBuild == true }}
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}-preview
 
     - name: Build Release
-      if: ${{ !env.PreviewBuild }}
+      if: ${{ env.PreviewBuild == false }}
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}
 
     - name: Post NuGet Artifacts
@@ -56,6 +56,6 @@ jobs:
         name: nuget-artifacts
         path: '**/*.nupkg'
 
-    - name: dotnet publish
-      if: ${{ env.DeployNugets }}
+    - name: Publish NuGets
+      if: ${{ env.DeployNugets == true }}
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
