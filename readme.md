@@ -12,3 +12,19 @@ Framework combines the best of MVVM using Prism & ReactiveUI while also combinin
 * Localization - a simple to use localization framework that can be used everywhere including your viewmodels!  Localization DONE RIGHT!
 * Global Navigator - allows you to inject a global navigator that you can use safely from your Shiny delegates.  Will ignore navigation requests when in the background
 * Global Command Exception Handler - do you like ReactiveCommand, so do I... this little service brings together Shiny's logging services + localization (from above) + dialogs (also from above) into one singular place
+
+## Nugets
+
+|Release|NuGet|
+|-------|-----|
+|Stable|![Nuget](https://img.shields.io/nuget/v/shiny.framework?style=for-the-badge)|
+|Preview|![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/shiny.framework?style=for-the-badge)|
+
+
+## Builds
+
+|Branch|Status|
+|------|------|
+|Master|[![Build](https://github.com/shinyorg/framework/actions/workflows/build.yml/badge.svg)](https://github.com/shinyorg/framework/actions/workflows/build.yml)|
+|Dev|[![Build](https://github.com/shinyorg/framework/actions/workflows/build.yml/badge.svg?branch=dev)](https://github.com/shinyorg/framework/actions/workflows/build.yml)|
+|Preview|[![Build](https://github.com/shinyorg/framework/actions/workflows/build.yml/badge.svg?branch=preview)](https://github.com/shinyorg/framework/actions/workflows/build.yml)|

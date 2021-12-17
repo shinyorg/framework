@@ -17,6 +17,8 @@ on:
 env:
   ShinyVersion: 2.0.0
   DotNetVersion: 6.0.100
+  DeployNugets: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/preview' }}
+  PreviewBuild: ${{ github.ref == 'refs/heads/preview' }}
 
 jobs:
   build:
@@ -41,11 +43,11 @@ jobs:
         token: ${{secrets.github_token}}
 
     - name: Build Preview
-      if: ${{ github.ref == 'refs/heads/preview' }}
+      if: ${{ env.PreviewBuild }}
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}-preview
 
     - name: Build Release
-      if: ${{ github.ref != 'refs/heads/preview' }}
+      if: ${{ !env.PreviewBuild }}
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:ShinyVersion=${{env.ShinyVersion}}.${{steps.buildnumber.outputs.build_number}}
 
     - name: Post NuGet Artifacts
@@ -55,5 +57,5 @@ jobs:
         path: '**/*.nupkg'
 
     - name: dotnet publish
-      if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/preview' }}
+      if: ${{ env.DeployNugets }}
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
