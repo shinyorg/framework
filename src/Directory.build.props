@@ -28,26 +28,6 @@
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard'))">
-		<IsStandardBuild>true</IsStandardBuild>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.Contains('ios'))">
-		<IsIosBuild>true</IsIosBuild>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.Contains('android'))">
-		<AndroidGenerateResourceDesigner>false</AndroidGenerateResourceDesigner>
-		<AndroidUseIntermediateDesignerFile>false</AndroidUseIntermediateDesignerFile>
-		<IsAndroidBuild>true</IsAndroidBuild>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="$(TargetFramework.StartsWith('uap'))">
-		<GenerateLibraryLayout>true</GenerateLibraryLayout>
-		<DisableEmbeddedXbf>false</DisableEmbeddedXbf>
-		<IsWindowsBuild>true</IsWindowsBuild>
-	</PropertyGroup>
-
 	<ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)nuget.png" Pack="true" PackagePath="icon.png" />
     </ItemGroup>

@@ -17,7 +17,7 @@ namespace Shiny.Extensions.Localization.Impl
         }
 
 
-        public string GetString(string key, CultureInfo? culture = null)
+        public string? GetString(string key, CultureInfo? culture = null)
         {
             var value = this.resources.GetString(key, culture);
             if (value == null)
@@ -29,6 +29,6 @@ namespace Shiny.Extensions.Localization.Impl
 
         public string Name { get; }
         public void Load() {}
-        public string this[string key] => this.GetString(key);
+        public string? this[string key] => this.GetString(key);
     }
 }

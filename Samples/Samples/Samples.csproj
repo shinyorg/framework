@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
         <LangVersion>8.0</LangVersion>
         <Nullable>enable</Nullable>
@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Shiny.Extensions.Dialogs.XfMaterial\Shiny.Extensions.Dialogs.XfMaterial.csproj" />
         <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
     </ItemGroup>
 
