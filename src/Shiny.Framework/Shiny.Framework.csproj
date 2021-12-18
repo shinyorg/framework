@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="Xamarin.Forms" />
 		<PackageReference Include="Shiny.Core" />
+		<PackageReference Include="Shiny.Extensions.Localization" Version="2.0.0.119-preview" />
 		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
 		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
 		<PackageReference Include="ReactiveUI" Version="17.1.9" />
@@ -19,7 +20,6 @@
 	<ItemGroup>
 		<PackageReference Include="Shiny.Core" />
 		<ProjectReference Include="..\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj" />
-		<ProjectReference Include="..\Shiny.Extensions.Localization\Shiny.Extensions.Localization.csproj" />
 	</ItemGroup>
 
 </Project>
