@@ -4,7 +4,6 @@
     "projects": [
       "src\\Shiny.Extensions.Dialogs.XfMaterial\\Shiny.Extensions.Dialogs.XfMaterial.csproj",
       "src\\Shiny.Extensions.Dialogs\\Shiny.Extensions.Dialogs.csproj",
-      "src\\Shiny.Extensions.Localization\\Shiny.Extensions.Localization.csproj",
       "src\\Shiny.Framework\\Shiny.Framework.csproj"
     ]
   }

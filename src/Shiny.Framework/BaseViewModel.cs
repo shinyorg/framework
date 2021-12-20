@@ -87,7 +87,7 @@ namespace Shiny
 
 
         ILocalizationManager? localize;
-        public ILocalizationManager Localize
+        public ILocalizationManager LocalizationManager
         {
             get
             {
@@ -96,6 +96,11 @@ namespace Shiny
             }
             protected set => this.localize = value;
         }
+
+
+        public ILocalizationSource? Localize { get; private set; }
+        protected void SetLocalization(string section)
+            => this.Localize = this.LocalizationManager.GetSection(section);
 
 
         protected virtual void Deactivate()
@@ -151,6 +156,15 @@ namespace Shiny
         }
 
 
-        public virtual string? this[string key] => this.Localize[key];
+        public virtual string? this[string key]
+        {
+            get
+            {
+                if (this.Localize == null)
+                    return this.LocalizationManager[key];
+
+                return this.Localize[key];
+            }
+        }
     }
 }
