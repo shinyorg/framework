@@ -9,7 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="Xamarin.Forms" />
 		<PackageReference Include="Shiny.Core" />
-		<PackageReference Include="Shiny.Extensions.Localization" Version="2.0.0.119-preview" />
+		<PackageReference Include="Shiny.Extensions.Localization" Version="1.0.0.12-preview" />
 		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
 		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
 		<PackageReference Include="ReactiveUI" Version="17.1.9" />
