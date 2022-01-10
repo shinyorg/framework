@@ -10,6 +10,7 @@ namespace Shiny.Extensions.Dialogs
 
         readonly Func<ValueTask> dispose;
         public AsyncDisposable(Func<ValueTask> dispose) => this.dispose = dispose;
-        public ValueTask DisposeAsync() => this.dispose.Invoke();
+        public ValueTask DisposeAsync()
+            => this.dispose.Invoke();
     }
 }

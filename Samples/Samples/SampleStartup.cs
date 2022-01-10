@@ -5,7 +5,6 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Shiny;
 using Shiny.Extensions.Localization;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,7 +24,21 @@ namespace Samples
 
             services.AddSingleton(manager);
             services.UseXfMaterialDialogs();
-            services.UseGlobalCommandExceptionHandler();
+
+            services.UseGlobalCommandExceptionHandler(options =>
+            {
+#if DEBUG
+                options.AlertType = ErrorAlertType.FullError; // this will show the full error in a dialog during debug
+                options.LogError = false;
+#else
+                // you will need localization to be registered to use this
+                options.AlertType = ErrorAlertType.Localize; // you can use NoLocalize which will send a standard english message instead
+                options.LogError = true;
+                options.IgnoreTokenCancellations = true;
+                options.LocalizeErrorTitleKey = "YourLocalizationTitleKey";
+                options.LocalizeErrorBodyKey = "YourLocalizationErrorBodyMessageKey";
+#endif
+            });
         }
 
 
@@ -39,6 +52,7 @@ namespace Samples
             containerRegistry.RegisterForNavigation<TabbedPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
             containerRegistry.RegisterForNavigation<DialogsPage, DialogsViewModel>();
+            containerRegistry.RegisterForNavigation<OtherPage, OtherViewModel>();
         }
     }
 }

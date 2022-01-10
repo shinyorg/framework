@@ -2,12 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Samples.DialogsPage"
-             Title="{Binding [Strings:HelloWorld]}">
+             Title="Dialogs">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="{Binding [Strings:HelloWorld]}"
-                    Command="{Binding Button}"
-                    Style="{StaticResource DefaultButton}"/>
+            <Button Text="Action Sheet"
+                    Command="{Binding ActionSheet}" />
+
+            <Button Text="Alert"
+                    Command="{Binding Alert}" />
+
+            <Button Text="Confirm"
+                    Command="{Binding Confirm}" />
+
+            <Button Text="Input"
+                    Command="{Binding Input}" />
+
+            <Button Text="Loading"
+                    Command="{Binding Loading}" />
+
+            <Button Text="Loading Snackbar"
+                    Command="{Binding LoadingSnackbar}" />
+
+            <Button Text="Snackbar"
+                    Command="{Binding Snackbar}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
