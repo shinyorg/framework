@@ -13,7 +13,6 @@ using Shiny.Extensions.Localization;
 using Shiny.Net;
 using Shiny.Stores;
 
-
 namespace Shiny
 {
     public abstract class BaseViewModel : ReactiveObject, IDestructible
@@ -29,8 +28,22 @@ namespace Shiny
         }
 
 
-        [Reactive] public bool IsBusy { get; set; }
-        [Reactive] public string? Title { get; protected set; }
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { this.RaiseAndSetIfChanged(ref _isBusy, value); }
+        }
+
+        private string? _title;
+        public string? Title
+        {
+            get { return _title; }
+            protected set
+            {
+                this.RaiseAndSetIfChanged(ref _title, value);
+            }
+        }
         public bool IsInternetAvailable { [ObservableAsProperty] get; }
 
 
@@ -124,20 +137,10 @@ namespace Shiny
         }
 
 
-        protected void BindBusyCommand(ICommand command)
-            => this.BindBusyCommand((IReactiveCommand)command);
 
 
-        protected void BindBusyCommand(IReactiveCommand command) =>
-            command.IsExecuting.Subscribe(
-                x => this.IsBusy = x,
-                _ => this.IsBusy = false,
-                () => this.IsBusy = false
-            )
-            .DisposeWith(this.DeactivateWith);
 
-
-        protected ICommand LoadingCommand(
+        protected ICommand LoadingDialogCommand(
             Func<Task> action,
             string loadingText = "Loading...",
             bool useSnackbar = false,
