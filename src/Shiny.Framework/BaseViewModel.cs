@@ -160,10 +160,13 @@ namespace Shiny
         {
             get
             {
+                string value = "";
                 if (this.Localize == null)
-                    return this.LocalizationManager[key];
+                    value = this.LocalizationManager[key];
+                else
+                    value = this.Localize[key];
 
-                return this.Localize[key];
+                return value;
             }
         }
     }

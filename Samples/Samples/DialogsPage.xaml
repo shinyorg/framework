@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Samples.DialogsPage"
-             Title="{Binding [Test:One]}">
+             Title="{Binding [Strings:HelloWorld]}">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="HI"
+            <Button Text="{Binding [Strings:HelloWorld]}"
                     Command="{Binding Button}"
                     Style="{StaticResource DefaultButton}"/>
         </StackLayout>

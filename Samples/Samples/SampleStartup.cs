@@ -19,8 +19,8 @@ namespace Samples
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
             var manager = new LocalizationBuilder()
-                .AddResource("", this.GetType().Assembly)
-                .AddResource("", this.GetType().Assembly)
+                .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
+                .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
                 .Build();
 
             services.AddSingleton(manager);

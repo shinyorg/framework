@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using ReactiveUI;
 using Shiny;
+using Shiny.Extensions.Dialogs;
 
 
 namespace Samples
