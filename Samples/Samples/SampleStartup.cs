@@ -5,7 +5,6 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Shiny;
 using Shiny.Extensions.Localization;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,7 +23,8 @@ namespace Samples
                 .Build();
 
             services.AddSingleton(manager);
-            //services.UseXfMaterialDialogs();
+            services.UseXfMaterialDialogs();
+
             services.UseGlobalCommandExceptionHandler(options =>
             {
 #if DEBUG
