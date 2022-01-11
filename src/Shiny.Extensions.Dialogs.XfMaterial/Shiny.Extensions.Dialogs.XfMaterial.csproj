@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
+		<Description>XF Material dialog implementations for Shiny mobile applications</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
