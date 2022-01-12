@@ -172,5 +172,19 @@ namespace Shiny
                 return value;
             }
         }
+
+
+        protected void BindBusyCommand(ICommand command)
+            => this.BindBusyCommand((IReactiveCommand)command);
+
+
+        protected void BindBusyCommand(IReactiveCommand command) =>
+            command.IsExecuting.Subscribe(
+                x => this.IsBusy = x,
+                _ => this.IsBusy = false,
+                () => this.IsBusy = false
+            )
+            .DisposeWith(this.DeactivateWith);
+
     }
 }
