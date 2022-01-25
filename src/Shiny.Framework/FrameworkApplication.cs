@@ -1,6 +1,6 @@
 ﻿using Prism.DryIoc;
 using Prism.Ioc;
-
+using Prism;
 
 namespace Shiny
 {
