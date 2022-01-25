@@ -8,7 +8,8 @@ namespace Shiny
     {
         public static bool FirstRun { get; private set; } = true;
 
-
+        public FrameworkApplication() { }
+        public FrameworkApplication(IPlatformInitializer platformInitializer) : base(platformInitializer) { }
         protected override async void OnInitialized()
             => await FrameworkStartup.Current!.RunApp(this.NavigationService);
 
