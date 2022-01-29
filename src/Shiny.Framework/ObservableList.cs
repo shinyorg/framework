@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 
@@ -19,9 +18,9 @@ namespace Shiny
         public virtual void AddRange(IEnumerable<T> items)
         {
             foreach (var item in items)
-                this.Items.Add(item);
+                Items.Add(item);
 
-            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items));
         }
 
 
@@ -31,11 +30,11 @@ namespace Shiny
         /// <param name="items"></param>
         public virtual void ReplaceAll(IEnumerable<T> items)
         {
-            this.Clear();
+            Clear();
             foreach (var item in items)
-                this.Items.Add(item);
+                Items.Add(item);
 
-            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
     }
 }

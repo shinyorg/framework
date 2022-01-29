@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 
 namespace Shiny.Scenarios.Auth
@@ -11,26 +10,26 @@ namespace Shiny.Scenarios.Auth
     {
         protected LoginViewModel()
         {
-            this.Login = ReactiveCommand.CreateFromTask(
-                () => this.Process(this.Identifier, this.Password, this.Tenant),
+            Login = ReactiveCommand.CreateFromTask(
+                () => Process(Identifier, Password, Tenant),
                 this.WhenAny(
                     x => x.Tenant,
                     x => x.Identifier,
                     x => x.Password,
-                    (tenant, id, pass) => this.Validate(
+                    (tenant, id, pass) => Validate(
                         id.GetValue(),
                         pass.GetValue(),
                         tenant.GetValue()
                     )
                 )
             );
-            this.BindBusyCommand(this.Login);
+            BindBusyCommand(Login);
         }
 
 
         protected virtual bool Validate(string identifier, string password, string tenant)
         {
-            if (this.UseTenant && tenant.IsEmpty())
+            if (UseTenant && tenant.IsEmpty())
                 return false;
 
             if (identifier.IsEmpty())

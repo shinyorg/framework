@@ -1,24 +1,24 @@
-﻿using System;
-using System.Threading.Tasks;
-using Prism;
+﻿using Prism;
 using Prism.Common;
 using Prism.Ioc;
 using Prism.Navigation;
+using System;
+using System.Threading.Tasks;
 
 
 namespace Shiny.Impl
 {
-    class GlobalNavigationService : IGlobalNavigationService
+    internal class GlobalNavigationService : IGlobalNavigationService
     {
         private const string NavigationServiceName = "PageNavigationService";
-        readonly IContainerExtension container;
-        readonly IApplicationProvider provider;
+        private readonly IContainerExtension container;
+        private readonly IApplicationProvider provider;
 
 
         public GlobalNavigationService(IContainerExtension container, IApplicationProvider applicationProvider)
         {
             this.container = container;
-            this.provider = applicationProvider;
+            provider = applicationProvider;
         }
 
 
@@ -131,13 +131,12 @@ namespace Shiny.Impl
             return navService.NavigateAsync(uri, parameters, useModalNavigation, animated);
         }
 
-
-        INavigationService? GetNavigationService()
+        private INavigationService? GetNavigationService()
         {
             if (PrismApplicationBase.Current is null)
                 return null;
 
-            var navService = ((IContainerProvider)this.container).IsRegistered<INavigationService>(NavigationServiceName)
+            var navService = ((IContainerProvider)container).IsRegistered<INavigationService>(NavigationServiceName)
                 ? container.Resolve<INavigationService>(NavigationServiceName)
                 : container.Resolve<INavigationService>();
 
@@ -148,8 +147,7 @@ namespace Shiny.Impl
             return navService;
         }
 
-
-        Task<INavigationResult> PrismNotInitialized() => Task.FromResult<INavigationResult>(new NavigationResult
+        private Task<INavigationResult> PrismNotInitialized() => Task.FromResult<INavigationResult>(new NavigationResult
         {
             Success = false,
             Exception = new NavigationException("No Prism Application Exists", null)

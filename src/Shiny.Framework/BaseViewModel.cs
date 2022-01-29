@@ -1,10 +1,4 @@
-﻿using System;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Prism.Navigation;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -12,6 +6,12 @@ using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
 using Shiny.Net;
 using Shiny.Stores;
+using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Shiny
 {
@@ -24,7 +24,7 @@ namespace Shiny
                 .WhenInternetStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.IsInternetAvailable)
-                .DisposeWith(this.DestroyWith);
+                .DisposeWith(DestroyWith);
         }
 
 
@@ -46,94 +46,89 @@ namespace Shiny
         }
         public bool IsInternetAvailable { [ObservableAsProperty] get; }
 
+        private CompositeDisposable? deactivateWith;
+        protected internal CompositeDisposable DeactivateWith => deactivateWith ??= new CompositeDisposable();
 
-        CompositeDisposable? deactivateWith;
-        protected internal CompositeDisposable DeactivateWith => this.deactivateWith ??= new CompositeDisposable();
+        private CompositeDisposable? destroyWith;
+        protected internal CompositeDisposable DestroyWith => destroyWith ??= new CompositeDisposable();
 
-
-        CompositeDisposable? destroyWith;
-        protected internal CompositeDisposable DestroyWith => this.destroyWith ??= new CompositeDisposable();
-
-
-        CancellationTokenSource? deactiveToken;
+        private CancellationTokenSource? deactiveToken;
         protected CancellationToken DeactivateToken
         {
             get
             {
-                this.deactiveToken ??= new CancellationTokenSource();
-                return this.deactiveToken.Token;
+                deactiveToken ??= new CancellationTokenSource();
+                return deactiveToken.Token;
             }
         }
 
-        CancellationTokenSource? destroyToken;
+        private CancellationTokenSource? destroyToken;
         protected CancellationToken DestroyToken
         {
             get
             {
-                this.destroyToken ??= new CancellationTokenSource();
-                return this.destroyToken.Token;
+                destroyToken ??= new CancellationTokenSource();
+                return destroyToken.Token;
             }
         }
 
-        ILogger? logger;
+        private ILogger? logger;
         protected ILogger Logger
         {
             get
             {
-                this.logger ??= ShinyHost.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName);
-                return this.logger;
+                logger ??= ShinyHost.LoggerFactory.CreateLogger(GetType().AssemblyQualifiedName);
+                return logger;
             }
-            set => this.logger = value;
+            set => logger = value;
         }
 
-
-        IDialogs? dialogs;
+        private IDialogs? dialogs;
         public IDialogs Dialogs
         {
             get
             {
-                this.dialogs ??= ShinyHost.Resolve<IDialogs>();
-                return this.dialogs;
+                dialogs ??= ShinyHost.Resolve<IDialogs>();
+                return dialogs;
             }
-            protected set => this.dialogs = value;
+            protected set => dialogs = value;
         }
 
-
-        ILocalizationManager? localize;
+        private ILocalizationManager? localize;
         public ILocalizationManager LocalizationManager
         {
             get
             {
-                this.localize ??= ShinyHost.Resolve<ILocalizationManager>();
-                return this.localize;
+                localize ??= ShinyHost.Resolve<ILocalizationManager>();
+                return localize;
             }
-            protected set => this.localize = value;
+            protected set => localize = value;
         }
 
 
         public ILocalizationSource? Localize { get; private set; }
         protected void SetLocalization(string section)
-            => this.Localize = this.LocalizationManager.GetSection(section);
+            => Localize = LocalizationManager.GetSection(section);
 
 
         protected virtual void Deactivate()
         {
-            this.deactiveToken?.Cancel();
-            this.deactiveToken?.Dispose();
-            this.deactiveToken = null;
+            deactiveToken?.Cancel();
+            deactiveToken?.Dispose();
+            deactiveToken = null;
 
-            this.deactivateWith?.Dispose();
-            this.deactivateWith = null;
+            deactivateWith?.Dispose();
+            deactivateWith = null;
         }
 
 
         public virtual void Destroy()
         {
-            this.destroyToken?.Cancel();
-            this.destroyToken?.Dispose();
+            destroyToken?.Cancel();
+            destroyToken?.Dispose();
 
-            this.Deactivate();
-            this.destroyWith?.Dispose();
+            Deactivate();
+            destroyWith?.Dispose();
         }
 
 
@@ -145,7 +140,7 @@ namespace Shiny
             string loadingText = "Loading...",
             bool useSnackbar = false,
             IObservable<bool>? canExecute = null
-        ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
+        ) => ReactiveCommand.CreateFromTask(() => Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
 
 
         protected virtual void RememberUserState()
@@ -153,7 +148,7 @@ namespace Shiny
             var binder = ShinyHost.Resolve<IObjectStoreBinder>();
             binder.Bind(this);
 
-            this.DestroyWith.Add(Disposable.Create(() =>
+            DestroyWith.Add(Disposable.Create(() =>
                 binder.UnBind(this)
             ));
         }
@@ -164,10 +159,10 @@ namespace Shiny
             get
             {
                 string value = "";
-                if (this.Localize == null)
-                    value = this.LocalizationManager[key];
+                if (Localize == null)
+                    value = LocalizationManager[key];
                 else
-                    value = this.Localize[key];
+                    value = Localize[key];
 
                 return value;
             }
@@ -175,16 +170,16 @@ namespace Shiny
 
 
         protected void BindBusyCommand(ICommand command)
-            => this.BindBusyCommand((IReactiveCommand)command);
+            => BindBusyCommand((IReactiveCommand)command);
 
 
         protected void BindBusyCommand(IReactiveCommand command) =>
             command.IsExecuting.Subscribe(
-                x => this.IsBusy = x,
-                _ => this.IsBusy = false,
-                () => this.IsBusy = false
+                x => IsBusy = x,
+                _ => IsBusy = false,
+                () => IsBusy = false
             )
-            .DisposeWith(this.DeactivateWith);
+            .DisposeWith(DeactivateWith);
 
     }
 }

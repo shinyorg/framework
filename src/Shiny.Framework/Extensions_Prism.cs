@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Prism.Navigation;
+using ReactiveUI;
+using Shiny;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Navigation;
-using ReactiveUI;
-using Shiny;
-using Shiny.Infrastructure;
 
 
 namespace Shiny
@@ -151,8 +150,7 @@ namespace Shiny
             return parameters;
         }
 
-
-        static NavigationParameters ToNavParams(this (string Key, object Value)[] parameters)
+        private static NavigationParameters ToNavParams(this (string Key, object Value)[] parameters)
         {
             var navParams = new NavigationParameters();
             if (parameters != null && parameters.Any())

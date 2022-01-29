@@ -1,19 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using ReactiveUI;
-
 using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
+using System;
+using System.Threading.Tasks;
 
 
 namespace Shiny
 {
     public class GlobalExceptionHandler : IObserver<Exception>, IShinyStartupTask
     {
-        readonly ILocalizationManager? localize;
-        readonly IDialogs dialogs;
-        readonly ILogger logger;
+        private readonly ILocalizationManager? localize;
+        private readonly IDialogs dialogs;
+        private readonly ILogger logger;
 
 
         public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger,
@@ -43,15 +42,15 @@ namespace Shiny
         public async void OnNext(Exception value)
         {
             var cfg = GlobalExceptionHandlerConfig.Instance;
-            if (this.ShouldIgnore(cfg, value))
+            if (ShouldIgnore(cfg, value))
                 return;
 
             if (cfg.LogError)
-                this.logger.LogError(value, "Error in view");
+                logger.LogError(value, "Error in view");
 
             if (cfg.AlertType != ErrorAlertType.None)
             {
-                if (this.dialogs == null)
+                if (dialogs == null)
                     throw new ArgumentException("No dialogs registered");
 
                 var title = "ERROR";
@@ -64,14 +63,14 @@ namespace Shiny
                         break;
 
                     case ErrorAlertType.Localize:
-                        if (this.localize == null)
+                        if (localize == null)
                             throw new ArgumentException("Localize is not registered");
 
-                        title = this.localize[cfg.LocalizeErrorTitleKey];
-                        body = this.localize[cfg.LocalizeErrorBodyKey];
+                        title = localize[cfg.LocalizeErrorTitleKey];
+                        body = localize[cfg.LocalizeErrorBodyKey];
                         break;
                 }
-                await this.dialogs.Alert(body, title);
+                await dialogs.Alert(body, title);
             }
         }
     }

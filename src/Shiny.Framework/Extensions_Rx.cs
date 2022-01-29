@@ -1,11 +1,10 @@
-﻿using System;
+﻿using ReactiveUI;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using ReactiveUI;
-using Shiny.Infrastructure;
 
 
 namespace Shiny

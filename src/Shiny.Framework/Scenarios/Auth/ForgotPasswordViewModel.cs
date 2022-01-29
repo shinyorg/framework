@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 
 namespace Shiny.Scenarios.Auth
@@ -11,11 +10,11 @@ namespace Shiny.Scenarios.Auth
     {
         protected ForgotPasswordViewModel()
         {
-            this.Send = ReactiveCommand.CreateFromTask(
-               () => this.Process(this.Identifier),
+            Send = ReactiveCommand.CreateFromTask(
+               () => Process(Identifier),
                 this.WhenAny(
                     x => x.Identifier,
-                    id => this.Validate(id.GetValue())
+                    id => Validate(id.GetValue())
                 )
             );
         }

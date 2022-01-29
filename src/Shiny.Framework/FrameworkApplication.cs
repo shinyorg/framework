@@ -10,7 +10,7 @@ namespace Shiny
 
 
         protected override async void OnInitialized()
-            => await FrameworkStartup.Current!.RunApp(this.NavigationService);
+            => await FrameworkStartup.Current!.RunApp(NavigationService);
 
 
         protected override void RegisterRequiredTypes(IContainerRegistry containerRegistry)

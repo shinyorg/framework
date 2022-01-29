@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 
 namespace Shiny.XamForms
@@ -8,8 +7,8 @@ namespace Shiny.XamForms
     {
         public Group(string name, string shortName)
         {
-            this.Name = name;
-            this.ShortName = shortName;
+            Name = name;
+            ShortName = shortName;
         }
 
 

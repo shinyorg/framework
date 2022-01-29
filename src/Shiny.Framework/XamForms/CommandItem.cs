@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows.Input;
-using ReactiveUI;
+﻿using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System.Windows.Input;
 
 
 namespace Shiny.XamForms

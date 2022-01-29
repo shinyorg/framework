@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using DryIoc.Microsoft.DependencyInjection;
+﻿using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -9,6 +7,8 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Shiny.Extensions.Dialogs;
 using Shiny.Framework.Impl;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 
@@ -19,7 +19,8 @@ namespace Shiny
         internal static FrameworkStartup? Current { get; private set; }
 
         protected IPlatform? Platform { get; private set; }
-        ILoggingBuilder? builder;
+
+        private ILoggingBuilder? builder;
 
 
         /// <summary>
@@ -51,8 +52,8 @@ namespace Shiny
         public override void ConfigureServices(IServiceCollection services, IPlatform platform)
         {
             Current = this;
-            this.Platform = platform;
-            this.Configure(this.builder!, services);
+            Platform = platform;
+            Configure(builder!, services);
             services.TryAddSingleton<IDialogs, NativeDialogs>();
         }
 

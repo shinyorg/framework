@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 
 namespace Shiny.Scenarios.Auth
@@ -19,35 +18,35 @@ namespace Shiny.Scenarios.Auth
     {
         protected ResetPasswordViewModel()
         {
-            this.Reset = ReactiveCommand.CreateFromTask(
-                () => this.Process(this.ResetKey, this.NewPassword),
+            Reset = ReactiveCommand.CreateFromTask(
+                () => Process(ResetKey, NewPassword),
                 this.WhenAny(
                     x => x.ResetKey,
                     x => x.NewPassword,
                     x => x.ConfirmNewPassword,
-                    (key, pass, confirm) => this.Validate(
+                    (key, pass, confirm) => Validate(
                         key.GetValue(),
                         pass.GetValue(),
                         confirm.GetValue()
                     )
                 )
             );
-            this.BindBusyCommand(this.Reset);
+            BindBusyCommand(Reset);
         }
 
 
         protected virtual bool Validate(string key, string newPassword, string confirmNewPassword)
         {
-            this.Error = ResetPasswordError.None;
+            Error = ResetPasswordError.None;
             if (key.IsEmpty())
                 return false;
 
             if (newPassword.IsEmpty())
                 return false;
 
-            if (!this.IsPasswordComplex(newPassword))
+            if (!IsPasswordComplex(newPassword))
             {
-                this.Error = ResetPasswordError.PasswordNotComplex;
+                Error = ResetPasswordError.PasswordNotComplex;
                 return false;
             }
 
@@ -56,7 +55,7 @@ namespace Shiny.Scenarios.Auth
 
             if (!newPassword.Equals(confirmNewPassword))
             {
-                this.Error = ResetPasswordError.PasswordsDontMatch;
+                Error = ResetPasswordError.PasswordsDontMatch;
                 return false;
             }
             return true;

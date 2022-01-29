@@ -1,6 +1,6 @@
-﻿using System;
-using ReactiveUI;
+﻿using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using System;
 
 
 namespace Shiny.Scenarios.Auth
@@ -10,7 +10,7 @@ namespace Shiny.Scenarios.Auth
         protected IObservable<bool> WhenIdentifierValidates() => this.WhenAny(
             x => x.Identifier,
             x => x.ConfirmIdentifier,
-            (identifier, confirm) => this.ValidateIdentifer(
+            (identifier, confirm) => ValidateIdentifer(
                 identifier.GetValue(),
                 confirm.GetValue()
             )
@@ -19,19 +19,19 @@ namespace Shiny.Scenarios.Auth
 
         protected virtual bool ValidateIdentifer(string identifier, string confirmIdentifier)
         {
-            this.IsIdentifierMatching = true;
+            IsIdentifierMatching = true;
 
-            if (identifier.IsEmpty() || !this.IsIdentifierGood(identifier))
+            if (identifier.IsEmpty() || !IsIdentifierGood(identifier))
                 return false;
 
-            if (this.UseConfirmIdentifier)
+            if (UseConfirmIdentifier)
             {
                 if (confirmIdentifier.IsEmpty())
                     return false;
 
                 if (!identifier.Equals(confirmIdentifier))
                 {
-                    this.IsIdentifierMatching = false;
+                    IsIdentifierMatching = false;
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ namespace Shiny.Scenarios.Auth
         protected IObservable<bool> WhenPasswordValidates() => this.WhenAny(
             x => x.Password,
             x => x.ConfirmPassword,
-            (pass, confirm) => this.ValidatePassword(
+            (pass, confirm) => ValidatePassword(
                 pass.GetValue(),
                 confirm.GetValue()
             )
@@ -51,9 +51,9 @@ namespace Shiny.Scenarios.Auth
 
         protected virtual bool ValidatePassword(string newPassword, string confirmNewPassword)
         {
-            this.IsPasswordMatching = true;
+            IsPasswordMatching = true;
 
-            if (newPassword.IsEmpty() || !this.IsPasswordComplex(newPassword))
+            if (newPassword.IsEmpty() || !IsPasswordComplex(newPassword))
                 return false;
 
             if (confirmNewPassword.IsEmpty())
@@ -61,7 +61,7 @@ namespace Shiny.Scenarios.Auth
 
             if (!newPassword.Equals(confirmNewPassword))
             {
-                this.IsPasswordMatching = false;
+                IsPasswordMatching = false;
                 return false;
             }
 
