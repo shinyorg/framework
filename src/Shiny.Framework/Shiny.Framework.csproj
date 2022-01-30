@@ -14,7 +14,7 @@
 		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
 		<PackageReference Include="ReactiveUI" Version="17.1.17" />
 		<PackageReference Include="ReactiveUI.Fody" Version="17.1.17" />
-		<PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
 	</ItemGroup>
 
 	<ItemGroup>
