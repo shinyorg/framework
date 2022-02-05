@@ -14,6 +14,7 @@ Framework combines the best of MVVM using Prism & ReactiveUI while also combinin
 * Localization - a simple to use localization framework that can be used everywhere including your viewmodels!  Localization DONE RIGHT!
 * Global Navigator - allows you to inject a global navigator that you can use safely from your Shiny delegates.  Will ignore navigation requests when in the background
 * Global Command Exception Handler - do you like ReactiveCommand, so do I... this little service brings together Shiny's logging services + localization (from above) + dialogs (also from above) into one singular place
+* ViewModel Validation using Data Annotations by default (but can be changed to 3rd party by implementing IValidationService)
 
 ## Nugets
 
@@ -171,3 +172,10 @@ namespace YourNamespace
     }
 }
 ```
+
+
+## ViewModel Validation
+
+* TODO: WhenValidate for commands
+* TODO: Localization Details
+* TODO: Registration and use within viewmodel

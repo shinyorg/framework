@@ -7,5 +7,6 @@
     <TabbedPage.Children>
         <samples:DialogsPage Title="Dialogs" />
         <samples:OtherPage Title="Other Functions" />
+        <samples:ValidationPage Title="Validation" />
     </TabbedPage.Children>
 </TabbedPage>

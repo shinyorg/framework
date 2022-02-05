@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Shiny.Extensions.Localization;
 
 
@@ -9,24 +10,27 @@ namespace Shiny.Impl
     public class DataAnnotationsValidationService : IValidationService
     {
         readonly ILocalizationManager? localizationManager;
-        readonly ILocalizationSource? localizationSource;
 
-
-        public DataAnnotationsValidationService(ILocalizationSource? localizationSource = null)
-            => this.localizationSource = localizationSource;
 
         public DataAnnotationsValidationService(ILocalizationManager? localizationManager = null)
             => this.localizationManager = localizationManager;
 
 
-        public bool IsValid(object obj) => Validator.TryValidateObject(
-            obj,
-            new ValidationContext(obj),
-            null
-        );
+        public bool IsValid(object obj, string? propertyName = null)
+        {
+            var context = new ValidationContext(obj);
+            if (propertyName != null)
+                context.MemberName = propertyName;
+
+            return Validator.TryValidateObject(
+                obj,
+                context,
+                null
+            );
+        }
 
 
-        public IDisposable Subscribe(IValidationViewModel viewModel)
+        public IDisposable Subscribe(IValidationViewModel viewModel, bool setFirstError)
         {
             var results = new List<ValidationResult>();
             return viewModel
@@ -63,7 +67,7 @@ namespace Shiny.Impl
             var values = new Dictionary<string, IList<string>>();
             var results = new List<ValidationResult>();
 
-            var success = Validator.TryValidateObject(
+            Validator.TryValidateObject(
                 obj,
                 new ValidationContext(obj),
                 results
@@ -81,6 +85,20 @@ namespace Shiny.Impl
                 }
             }
             return values;
+        }
+
+
+        public IEnumerable<string> ValidateProperty(object obj, string propertyName)
+        {
+            var results = new List<ValidationResult>();
+            Validator.TryValidateObject(
+                obj,
+                new ValidationContext(obj) { MemberName = propertyName },
+                results
+            );
+            return results
+                .Select(x => this.GetErrorMessage(x))
+                .ToArray();
         }
 
 

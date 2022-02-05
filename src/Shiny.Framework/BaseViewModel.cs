@@ -30,11 +30,8 @@ namespace Shiny
         }
 
 
-        protected virtual void WireValidation()
-        {
-            var validationService = ShinyHost.Resolve<IValidationService>();
-            validationService.Subscribe(this).DisposedBy(this.DestroyWith);
-        }
+        protected virtual void EnableValidation()
+            => ShinyHost.Resolve<IValidationService>().Subscribe(this).DisposedBy(this.DestroyWith);
 
 
         [Reactive] public bool IsBusy { get; set; }

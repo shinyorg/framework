@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material" 
+             xmlns:samples="clr-namespace:Samples"
+             x:DataType="samples:ValidationViewModel"
+             x:Class="Samples.ValidationPage"
+             Title="Validation">
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <material:MaterialTextField Placeholder="Phone #" 
+                                        HelperText="Enter your phone number" 
+                                        ErrorText="{Binding Errors[Phone]}" 
+                                        Text="{Binding Phone}" />
+
+            <material:MaterialTextField Placeholder="Email Address" 
+                                        HelperText="Enter your email address" 
+                                        ErrorText="{Binding Errors[Email]}" 
+                                        Text="{Binding Email}" />
+            
+            <material:MaterialTextField Placeholder="Length Tests" 
+                                        HelperText="Must be 3-5 characters" 
+                                        ErrorText="{Binding Errors[LengthTest]}" 
+                                        Text="{Binding LengthTest}" />
+            
+            <Button Text="Test Command"
+                    Command="{Binding TestCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

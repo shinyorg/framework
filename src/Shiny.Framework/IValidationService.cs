@@ -1,21 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Reactive.Linq;
+
 
 namespace Shiny
 {
     public static class ValidationServiceExtensions
     {
+        /// <summary>
+        /// Checks an object property and returns true if valid
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="service"></param>
+        /// <param name="obj"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
         public static bool IsValidProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
-        {
-            return service.IsValid(obj, null);
-        }
+            => service.IsValid(obj, obj.GetPropertyInfo(expression).Name);
 
+
+        /// <summary>
+        /// Checks an object property to see if it is valid
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="service"></param>
+        /// <param name="obj"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
 
         public static IEnumerable<string> ValidateProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
-        {
-            return service.ValidateProperty(obj, null);
-        }
+            => service.ValidateProperty(obj, obj.GetPropertyInfo(expression).Name);
+
+
+        /// <summary>
+        /// Monitors an INotifyPropertyChanged interface for changes and returns true if valid - handy for ReactiveCommand in place of WhenAny
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        public static IObservable<bool> WhenValid(this INotifyPropertyChanged viewModel) 
+            => viewModel.WhenAnyProperty().Select(_ => ShinyHost.Resolve<IValidationService>().IsValid(viewModel));
     }
 
 
@@ -24,9 +49,13 @@ namespace Shiny
         /// <summary>
         /// Monitors the viewmodel for changes and sets it's Touched & Errors dictionary as the user changes
         /// </summary>
-        /// <param name="viewModel"></param>
+        /// <param name="viewModel">Your viewmodel that subscribes to IValidationViewModel</param>
+        /// <param name="setFirstError">
+        /// If true, only the first validator that fails will be displayed otherwise all error validation error 
+        /// messages for each property are set
+        /// </param>
         /// <returns></returns>
-        IDisposable Subscribe(IValidationViewModel viewModel);
+        IDisposable Subscribe(IValidationViewModel viewModel, bool setFirstError = true);
 
 
         /// <summary>
