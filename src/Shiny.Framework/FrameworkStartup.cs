@@ -8,7 +8,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Navigation;
 using Shiny.Extensions.Dialogs;
-using Shiny.Framework.Impl;
+using Shiny.Impl;
 using Xamarin.Forms;
 
 
@@ -54,6 +54,7 @@ namespace Shiny
             this.Platform = platform;
             this.Configure(this.builder!, services);
             services.TryAddSingleton<IDialogs, NativeDialogs>();
+            services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
         }
 
 

@@ -2,12 +2,11 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
-
 using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
 
 
-namespace Shiny
+namespace Shiny.Impl
 {
     public class GlobalExceptionHandler : IObserver<Exception>, IShinyStartupTask
     {

@@ -5,7 +5,7 @@ using System;
 using System.Threading.Tasks;
 
 
-namespace Shiny.Framework.Impl
+namespace Shiny.Impl
 {
     public class NativeDialogs : IDialogs
     {
