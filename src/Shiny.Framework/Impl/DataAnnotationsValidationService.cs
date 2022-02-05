@@ -60,15 +60,27 @@ namespace Shiny.Impl
 
         public IDictionary<string, IList<string>> Validate(object obj)
         {
+            var values = new Dictionary<string, IList<string>>();
             var results = new List<ValidationResult>();
 
-            Validator.TryValidateObject(
+            var success = Validator.TryValidateObject(
                 obj,
                 new ValidationContext(obj),
                 results
             );
 
-            return null;
+            foreach (var result in results)
+            {
+                foreach (var member in result.MemberNames)
+                {
+                    if (!values.ContainsKey(member))
+                        values.Add(member, new List<string>());
+
+                    var errMsg = this.GetErrorMessage(result);
+                    values[member].Add(errMsg);
+                }
+            }
+            return values;
         }
 
 

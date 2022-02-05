@@ -1,8 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Shiny
 {
+    public static class ValidationServiceExtensions
+    {
+        public static bool IsValidProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
+        {
+            return service.IsValid(obj, null);
+        }
+
+
+        public static IEnumerable<string> ValidateProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
+        {
+            return service.ValidateProperty(obj, null);
+        }
+    }
+
+
     public interface IValidationService
     {
         /// <summary>
@@ -21,10 +37,19 @@ namespace Shiny
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        IEnumerable<string> ValidateProperty(object obj, string propertyName);
+
+
+        /// <summary>
         /// Pass an object to run it through all validations
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        bool IsValid(object obj);
+        bool IsValid(object obj, string? propertyName = null);
     }
 }
