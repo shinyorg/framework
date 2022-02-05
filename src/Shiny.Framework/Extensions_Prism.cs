@@ -13,7 +13,7 @@ namespace Shiny
 {
     public static class PrismExtensions
     {
-        public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : BaseViewModel
+        public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
         {
             var p = viewModel.GetPropertyInfo(expression);
             if (!p.CanWrite)
