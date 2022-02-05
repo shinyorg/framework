@@ -9,7 +9,7 @@ using ReactiveUI.Fody.Helpers;
 
 namespace Shiny
 {
-    public abstract class LifecycleViewModel : BaseViewModel,
+    public abstract class LifecycleViewModel : ViewModel,
                                                IActiveAware,
                                                IInitializeAsync,
                                                INavigatedAware,
