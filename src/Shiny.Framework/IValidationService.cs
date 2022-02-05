@@ -11,12 +11,14 @@ namespace Shiny
         /// <param name="viewModel"></param>
         /// <returns></returns>
         IDisposable Subscribe(IValidationViewModel viewModel);
-        
+
+
         /// <summary>
         /// Returns a dictionary of invalid properties with their corresponding error messages
         /// </summary>
         /// <param name="obj"></param>
-        IDictionary<string, string> Validate(object obj);
+        IDictionary<string, IList<string>> Validate(object obj);
+
 
         /// <summary>
         /// Pass an object to run it through all validations

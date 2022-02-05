@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
@@ -16,9 +17,9 @@ using Shiny.Stores;
 
 namespace Shiny
 {
-    public abstract class BaseViewModel : ReactiveObject, IDestructible
+    public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
     {
-        protected ViewModel()
+        protected BaseViewModel()
         {
             ShinyHost
                 .Resolve<IConnectivity>()
@@ -26,6 +27,13 @@ namespace Shiny
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DestroyWith);
+        }
+
+
+        protected virtual void WireValidation()
+        {
+            var validationService = ShinyHost.Resolve<IValidationService>();
+            validationService.Subscribe(this).DisposedBy(this.DestroyWith);
         }
 
 
@@ -52,6 +60,7 @@ namespace Shiny
             }
         }
 
+
         CancellationTokenSource? destroyToken;
         protected CancellationToken DestroyToken
         {
@@ -61,6 +70,7 @@ namespace Shiny
                 return this.destroyToken.Token;
             }
         }
+
 
         ILogger? logger;
         protected ILogger Logger
@@ -99,6 +109,9 @@ namespace Shiny
 
 
         public ILocalizationSource? Localize { get; private set; }
+        public IDictionary<string, string> Errors { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDictionary<string, bool> Touched { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         protected void SetLocalization(string section)
             => this.Localize = this.LocalizationManager.GetSection(section);
 
