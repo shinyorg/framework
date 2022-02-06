@@ -106,8 +106,8 @@ namespace Shiny
 
 
         public ILocalizationSource? Localize { get; private set; }
-        public IDictionary<string, string> Errors { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IDictionary<string, bool> Touched { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDictionary<string, string> Errors { get; set; }
+        public IDictionary<string, bool> Touched { get; set; }
 
         protected void SetLocalization(string section)
             => this.Localize = this.LocalizationManager.GetSection(section);

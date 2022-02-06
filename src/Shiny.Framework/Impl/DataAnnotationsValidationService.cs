@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reactive.Linq;
+
+using ReactiveUI;
+
 using Shiny.Extensions.Localization;
 
 
@@ -35,11 +40,20 @@ namespace Shiny.Impl
             var results = new List<ValidationResult>();
             return viewModel
                 .WhenAnyProperty()
+                .Where(x => 
+                    !x.Value.Equals(nameof(IValidationViewModel.Touched)) && 
+                    !x.Value.StartsWith(nameof(IValidationViewModel.Errors))
+                )
                 .SubOnMainThread(x =>
                 {
-                    if (!viewModel.Touched.ContainsKey(x.Value))
-                        viewModel.Touched[x.Value] = true;
+                    viewModel.Touched ??= new Dictionary<string, bool>();
+                    viewModel.Errors ??= new Dictionary<string, string>();
 
+                    if (!viewModel.Touched.ContainsKey(x.Value))
+                    { 
+                        viewModel.Touched[x.Value] = true;
+                        viewModel.RaisePropertyChanged(new PropertyChangedEventArgs(nameof(IValidationViewModel.Touched)));
+                    }
                     results.Clear();
                     var result = Validator.TryValidateObject(
                         viewModel,
@@ -50,12 +64,15 @@ namespace Shiny.Impl
                         results
                     );
 
+                    var fireChanged = (viewModel.Errors.ContainsKey(x.Value) || !result);
+
                     viewModel.Errors.Remove(x.Value);
                     if (!result)
-                    {
                         // TODO: take first issue or all?  Make it configurable?
                         viewModel.Errors[x.Value] = this.GetErrorMessage(results[0]!);
-                    }
+
+                    if (fireChanged)
+                        viewModel.RaisePropertyChanged(new PropertyChangedEventArgs(nameof(IValidationViewModel.Errors)));
                     // TODO: fire change notifications for the dictionary and dictionary value?  possible?
                     //viewModel.RaisePropertyChanged()
                 });
