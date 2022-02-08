@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
@@ -31,12 +30,19 @@ namespace Shiny
 
 
         protected virtual void EnableValidation()
-            => ShinyHost.Resolve<IValidationService>().Subscribe(this).DisposedBy(this.DestroyWith);
+        { 
+            if (this.Validation != null)
+                return;
+
+            this.Validation = ShinyHost.Resolve<IValidationService>().Bind(this);
+            this.DestroyWith.Add(this.Validation);
+        }
 
 
         [Reactive] public bool IsBusy { get; set; }
         [Reactive] public string? Title { get; protected set; }
         public bool IsInternetAvailable { [ObservableAsProperty] get; }
+        public IValidationBinding Validation { get; private set; }
 
 
         CompositeDisposable? deactivateWith;
@@ -106,8 +112,6 @@ namespace Shiny
 
 
         public ILocalizationSource? Localize { get; private set; }
-        public IDictionary<string, string> Errors { get; set; }
-        public IDictionary<string, bool> Touched { get; set; }
 
         protected void SetLocalization(string section)
             => this.Localize = this.LocalizationManager.GetSection(section);

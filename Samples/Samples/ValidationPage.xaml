@@ -6,65 +6,47 @@
              x:DataType="samples:ValidationViewModel"
              x:Class="Samples.ValidationPage"
              Title="Validation">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="Hr" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="BackgroundColor" Value="#e5e5e5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <ContentPage.Content>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Phone" />
+                <Entry Text="{Binding Phone}" />
+                <Label Text="{Binding Validation.Errors[Phone]}" TextColor="Red" />
+                <CheckBox IsChecked="{Binding Validation.Touched[Phone]}" IsEnabled="False" />
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                <BoxView Style="{StaticResource Hr}"/>
 
-            <material:MaterialTextField Placeholder="Phone #" 
-                                        HelperText="Enter your phone number" 
-                                        ErrorText="{Binding Errors[Phone]}" 
-                                        Text="{Binding Phone}" 
-                                        Grid.Row="0" 
-                                        Grid.Column="0" />
+                <Label Text="Email" />
+                <Entry Text="{Binding Email}" />
+                <Label Text="{Binding Validation.Errors[Email]}" TextColor="Red" />
+                <CheckBox IsChecked="{Binding Validation.Touched[Email]}" IsEnabled="False" />
 
-            <CheckBox IsChecked="{Binding Touched[Phone]}"
-                      IsEnabled="False"
-                      Grid.Row="0"
-                      Grid.Column="1" 
-                      VerticalOptions="Start"/>
+                <BoxView Style="{StaticResource Hr}"/>
 
+                <Label Text="Length Test" />
+                <Entry Text="{Binding LengthTest}" />
+                <Label Text="{Binding Validation.Errors[LengthTest]}" TextColor="Red" />
+                <CheckBox IsChecked="{Binding Validation.Touched[LengthTest]}" IsEnabled="False" />
 
-            <material:MaterialTextField Placeholder="Email Address" 
-                                        HelperText="Enter your email address" 
-                                        ErrorText="{Binding Errors[Email]}" 
-                                        Text="{Binding Email}" 
-                                        Grid.Row="1" 
-                                        Grid.Column="0" />
+                <BoxView Style="{StaticResource Hr}"/>
 
-            <CheckBox IsChecked="{Binding Touched[Email]}" 
-                      IsEnabled="False"
-                      Grid.Row="1"
-                      Grid.Column="1" />
-
-            <material:MaterialTextField Placeholder="Length Tests" 
-                                        HelperText="Must be 3-5 characters" 
-                                        ErrorText="{Binding Errors[LengthTest]}" 
-                                        Text="{Binding LengthTest}" 
-                                        Grid.Row="2"
-                                        Grid.Column="0" />
-
-            <CheckBox IsChecked="{Binding Touched[LengthTest]}" 
-                      IsEnabled="False"
-                      Grid.Row="2"
-                      Grid.Column="1" />
-
-
-            <Button Text="Test Command"
-                    Command="{Binding TestCommand}" 
-                    Grid.Row="3" 
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2" />
-        </Grid>
+                <Button Text="Test Command"
+                        Command="{Binding TestCommand}" 
+                        Grid.Row="3" 
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

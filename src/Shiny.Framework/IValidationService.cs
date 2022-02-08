@@ -50,12 +50,8 @@ namespace Shiny
         /// Monitors the viewmodel for changes and sets it's Touched & Errors dictionary as the user changes
         /// </summary>
         /// <param name="viewModel">Your viewmodel that subscribes to IValidationViewModel</param>
-        /// <param name="setFirstError">
-        /// If true, only the first validator that fails will be displayed otherwise all error validation error 
-        /// messages for each property are set
-        /// </param>
         /// <returns></returns>
-        IDisposable Subscribe(IValidationViewModel viewModel, bool setFirstError = true);
+        IValidationBinding Bind(IValidationViewModel viewModel);
 
 
         /// <summary>
