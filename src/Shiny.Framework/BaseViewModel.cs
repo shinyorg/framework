@@ -27,9 +27,11 @@ namespace Shiny
                 .ToPropertyEx(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DestroyWith);
 
-            if (this.Validation != null)
+
+            var validationService = ShinyHost.Resolve<IValidationService>();
+            if (validationService != null)
             {
-                this.Validation = ShinyHost.Resolve<IValidationService>().Bind(this);
+                this.Validation = validationService.Bind(this);
                 this.DestroyWith.Add(this.Validation);
             }
         }
