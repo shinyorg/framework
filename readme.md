@@ -100,6 +100,7 @@ Inherit Shiny.ViewModel on your viewmodel.  You will instantly gain the followin
     * Localization is built right in (you need to register it though, we will cover that in the localization section)
     * All of the Prism lifecycle stuff waiting to be used (just type override to see everything)
     * All of the Reactive setup (WhenAny, WhenAnyValue) built right in
+    * Low Effort Validation
 
 ## Localization
 
