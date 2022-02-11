@@ -54,7 +54,6 @@ namespace Shiny
             this.Platform = platform;
             this.Configure(this.builder!, services);
             services.TryAddSingleton<IDialogs, NativeDialogs>();
-            services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
         }
 
 

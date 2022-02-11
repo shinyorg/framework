@@ -77,7 +77,7 @@ namespace Shiny.Impl
             {
                 if (result.MemberNames.Contains(propertyName))
                 {
-                    yield return result.ErrorMessage;
+                    yield return this.GetErrorMessage(result);
                 }
             }
         }
@@ -85,11 +85,15 @@ namespace Shiny.Impl
 
         protected virtual string GetErrorMessage(ValidationResult result)
         {
-            if (!result.ErrorMessage.IsEmpty())
-                return result.ErrorMessage!;
+            if (result.ErrorMessage.StartsWith("localize:"))
+            {
+                if (this.localizationManager == null)
+                    throw new ArgumentException("Localization has not been put into your startup");
 
-            // TODO: localization stuff - use objecttype?
-            return String.Empty;
+                var key = result.ErrorMessage.Replace("localize:", String.Empty);
+                return this.localizationManager[key] ?? key;
+            }
+            return result.ErrorMessage!;
         }
 
 

@@ -17,14 +17,16 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
-            // NOTE: IValidationService is automatically registered to the container using the data annotations model if you do not set one here
 
             var manager = new LocalizationBuilder()
                 .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
                 .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
+                .AddResource("Samples.Resources.Validation", this.GetType().Assembly, "Validation")
                 .Build();
 
             services.AddSingleton(manager);
+
+            services.UseDataAnnotationValidation();
 
             // NOTE: IDialogs is automatically registered to NativeDialogs if you do not set a custom one like below
             services.UseXfMaterialDialogs();

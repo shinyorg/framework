@@ -176,6 +176,78 @@ namespace YourNamespace
 
 ## ViewModel Validation
 
-* TODO: WhenValidate for commands
-* TODO: Localization Details
-* TODO: Registration and use within viewmodel
+Validation is often the painful act of doing the same thing over and over and over.  There are tools out there that help such as FluentValidation and Data Annotations, but nothing out of the box.
+
+Shiny.Framework now includes optional support for DataAnnotations (with a pluggable model under IValidationService); 
+
+Data Annotations is currently the only out-of-box provider for validation.  Take a look at [Microsoft Data Annotations](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-6.0) for more documentation on Data Annotations
+
+
+#### Setup
+
+NOTE: we recommend usage of [ReactiveUI.Fody](https://www.nuget.org/packages/ReactiveUI.Fody/) for the use of the [Reactive] attribute which removes the boilerplate code for MVVM properties
+
+First, we need to tell Shiny.Framework to wire in the validation service to Data Annotations by doing the following in your shiny startup
+
+```csharp
+public class SampleStartup : Shiny.FrameworkStartup
+{
+    protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
+    {
+        services.UseDataAnnotationValidation();
+    }
+}
+    
+```
+
+
+Now, in your viewmodel:
+
+```csharp
+public class MyViewModel : Shiny.ViewModel
+{
+    [Reactive]
+    [EmailAddress(ErrorMessage = "Invalid Email")]
+    public string Email { get; set; }
+
+
+    [Reactive]
+    [MinLength(3, ErrorMessage = "Min 3 Characters")]
+    [MaxLength(5, ErrorMessage = "Max 5 Characters")]
+    public string LengthTest { get; set; }
+}
+```
+
+####
+
+#### Commands
+```csharp
+
+public class MyViewModel : Shiny.ViewModel
+{
+    public MyViewModel() {
+        this.Command = ReactiveCommand.Create(() => {}, this.WhenValid());
+    }
+
+    public ICommand Command { get; }
+
+    // add some data annotated MVVM properties below
+}
+```
+
+#### Localization
+
+Data annotations actually stinks for pluggable localization.  Shiny is big on pluggability so we've "hacked" our way around this one.  Simply register your localization manager and follow this slight hack
+
+We recommand creating a secondary section called Validation.  Take a look at the sample app within this repo for examples.
+
+```csharp
+public class MyViewModel : Shiny.ViewModel
+{
+    [Reactive]
+    [EmailAddress(ErrorMessage = "localize:Validation:Required")]
+    public string Email { get; set; }
+}
+```
+
+> NOTE: the use of "localize:" if front the localization key.  Also note, that uses the fully qualified path to your localization value (ie Section:Key)

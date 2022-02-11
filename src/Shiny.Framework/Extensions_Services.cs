@@ -9,6 +9,10 @@ namespace Shiny
 {
     public static class ServiceExtensions
     {
+        public static void UseDataAnnotationValidation(this IServiceCollection services)
+            => services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
+
+
         public static void UseGlobalNavigation(this IServiceCollection services)
         {
             services.TryAddSingleton<IGlobalNavigationService, GlobalNavigationService>();

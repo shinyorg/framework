@@ -29,8 +29,8 @@
 		<EmbeddedResource Update="Resources\Strings.resx">
 			<Generator></Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="ValidationPage.xaml">
-		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\Validation.resx">
+			<Generator></Generator>
+		</EmbeddedResource>		
 	</ItemGroup>
 </Project>

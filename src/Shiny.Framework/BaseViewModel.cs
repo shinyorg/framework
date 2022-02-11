@@ -26,16 +26,12 @@ namespace Shiny
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .ToPropertyEx(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DestroyWith);
-        }
 
-
-        protected virtual void EnableValidation()
-        { 
             if (this.Validation != null)
-                return;
-
-            this.Validation = ShinyHost.Resolve<IValidationService>().Bind(this);
-            this.DestroyWith.Add(this.Validation);
+            {
+                this.Validation = ShinyHost.Resolve<IValidationService>().Bind(this);
+                this.DestroyWith.Add(this.Validation);
+            }
         }
 
 

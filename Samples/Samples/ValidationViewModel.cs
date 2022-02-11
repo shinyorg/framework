@@ -11,7 +11,6 @@ namespace Samples
     {
         public ValidationViewModel()
         {
-            this.EnableValidation();
             this.TestCommand = ReactiveCommand.CreateFromTask(
                 () => this.Dialogs.Alert("YAY you are valid"),
                 this.WhenValid()
@@ -23,7 +22,7 @@ namespace Samples
 
 
         [Reactive]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Required Field")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "localize:Validation:Required")]
         [Phone(ErrorMessage = "Invalid Phone #")]
         public string Phone { get; set; }
 
