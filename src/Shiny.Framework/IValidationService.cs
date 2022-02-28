@@ -39,8 +39,15 @@ namespace Shiny
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns></returns>
-        public static IObservable<bool> WhenValid(this INotifyPropertyChanged viewModel) 
-            => viewModel.WhenAnyProperty().Select(_ => ShinyHost.Resolve<IValidationService>().IsValid(viewModel));
+        public static IObservable<bool> WhenValid(this INotifyPropertyChanged viewModel)
+            => viewModel.WhenAnyProperty().Select(_ => {
+                var s = ShinyHost.Resolve<IValidationService>();
+                if (s == null)
+                    throw new InvalidOperationException("Validation service is not registered");
+
+                var result = s.IsValid(viewModel);
+                return result;
+            });
     }
 
 
@@ -62,7 +69,7 @@ namespace Shiny
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="propertyName"></param>

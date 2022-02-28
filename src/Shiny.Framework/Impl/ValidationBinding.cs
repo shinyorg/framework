@@ -13,7 +13,7 @@ namespace Shiny.Impl
         readonly Dictionary<string, bool> touched = new Dictionary<string, bool>();
         readonly Dictionary<string, string> errors = new Dictionary<string, string>();
 
-        
+
         public ValidationBinding(IValidationService service, IReactiveObject reactiveObj)
         {
             this.dispose = reactiveObj

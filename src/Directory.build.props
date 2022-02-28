@@ -12,7 +12,7 @@
         <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
         <PackageReleaseNotes>https://shinylib.net/release-notes</PackageReleaseNotes>
         <PackageTags>xamarin shiny</PackageTags>
-        <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">2.1.0</ShinyVersion>
+        <ShinyVersion Condition=" '$(ShinyVersion)' == '' ">2.2.0</ShinyVersion>
         <PackageVersion>$(ShinyVersion)</PackageVersion>
     </PropertyGroup>
 

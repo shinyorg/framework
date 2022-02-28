@@ -20,20 +20,21 @@ namespace Shiny.Impl
         public bool IsValid(object obj, string? propertyName = null)
         {
             if (propertyName == null)
-            { 
-                var context = new ValidationContext(obj) { MemberName = propertyName };
-
-                return Validator.TryValidateObject(
+            {
+                var context = new ValidationContext(obj);
+                var results = new List<ValidationResult>();
+                var result = Validator.TryValidateObject(
                     obj,
                     context,
-                    null
+                    results
                 );
+                return result;
             }
             return !this.ValidateProperty(obj, propertyName).Any();
         }
 
 
-        public IValidationBinding Bind(IValidationViewModel viewModel) 
+        public IValidationBinding Bind(IValidationViewModel viewModel)
             => new ValidationBinding(this, viewModel);
 
 
