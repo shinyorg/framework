@@ -13,8 +13,20 @@ namespace Shiny
         public static bool FirstRun { get; private set; } = true;
 
 
+        static void AssetFrameworkStartup()
+        {
+            if (FrameworkStartup.Current == null)
+                throw new InvalidOperationException("FrameworkStartup did not run.  Ensure you have initialized Shiny and that your startup inherits from Shiny.FrameworkStartup");
+
+        }
+
+
+
         protected override async void OnInitialized()
-            => await FrameworkStartup.Current!.RunApp(this.NavigationService);
+        {
+            AssetFrameworkStartup();
+            await FrameworkStartup.Current!.RunApp(this.NavigationService);
+        }
 
 
         protected override void Initialize()
@@ -38,9 +50,7 @@ namespace Shiny
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            if (FrameworkStartup.Current == null)
-                throw new InvalidOperationException("FrameworkStartup did not run.  Ensure you have initialized Shiny and that your startup inherits from Shiny.FrameworkStartup");
-
+            AssetFrameworkStartup();
             FrameworkStartup.Current.ConfigureApp(this, containerRegistry);
         }
     }
