@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Navigation;
+using System;
 using System.Reflection;
 
 
@@ -36,6 +37,11 @@ namespace Shiny
 
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-            => FrameworkStartup.Current!.ConfigureApp(this, containerRegistry);
+        {
+            if (FrameworkStartup.Current == null)
+                throw new InvalidOperationException("FrameworkStartup did not run.  Ensure you have initialized Shiny and that your startup inherits from Shiny.FrameworkStartup");
+
+            FrameworkStartup.Current.ConfigureApp(this, containerRegistry);
+        }
     }
 }
