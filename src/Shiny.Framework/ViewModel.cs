@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Prism;
 using Prism.AppModel;
 using Prism.Navigation;
-using ReactiveUI.Fody.Helpers;
 
+using ReactiveUI;
 
 namespace Shiny
 {
@@ -45,6 +45,13 @@ namespace Shiny
         /// This is not fired and only an artifact from Prism
         /// </summary>
         public event EventHandler? IsActiveChanged;
-        [Reactive] public bool IsActive { get; set; }
+
+
+        bool isActive;
+        public bool IsActive
+        {
+            get => this.isActive;
+            set => this.RaiseAndSetIfChanged(ref this.isActive, value);
+        }
     }
 }

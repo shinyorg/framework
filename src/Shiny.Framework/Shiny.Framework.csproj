@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
-		<TargetFrameworks>netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
 		<RootNamespace>Shiny</RootNamespace>
 	</PropertyGroup>
 
@@ -14,7 +14,6 @@
 		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="ReactiveUI" Version="17.1.50" />
-		<PackageReference Include="ReactiveUI.Fody" Version="17.1.50" PrivateAssets="All" />
 		<PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
 	</ItemGroup>
 
@@ -23,4 +22,7 @@
 		<ProjectReference Include="..\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj" />
 	</ItemGroup>
 
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+	</ItemGroup>
 </Project>

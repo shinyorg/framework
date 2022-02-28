@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using Prism.Navigation;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using Shiny.Extensions.Dialogs;
 using Shiny.Extensions.Localization;
 using Shiny.Net;
@@ -20,13 +19,12 @@ namespace Shiny
     {
         protected BaseViewModel()
         {
-            ShinyHost
+            this.isInternetAvaibale = ShinyHost
                 .Resolve<IConnectivity>()
                 .WhenInternetStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .ToPropertyEx(this, x => x.IsInternetAvailable)
+                .ToProperty(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DestroyWith);
-
 
             var validationService = ShinyHost.Resolve<IValidationService>();
             if (validationService != null)
@@ -37,10 +35,24 @@ namespace Shiny
         }
 
 
-        [Reactive] public bool IsBusy { get; set; }
-        [Reactive] public string? Title { get; protected set; }
-        public bool IsInternetAvailable { [ObservableAsProperty] get; }
-        public IValidationBinding Validation { get; private set; }
+        bool isBusy;
+        public bool IsBusy
+        {
+            get => this.isBusy;
+            set => this.RaiseAndSetIfChanged(ref this.isBusy, value);
+        }
+
+
+        string? title;
+        public string? Title
+        {
+            get => this.title;
+            protected set => this.RaiseAndSetIfChanged(ref this.title, value);
+        }
+
+        readonly ObservableAsPropertyHelper<bool> isInternetAvaibale;
+        public bool IsInternetAvailable => this.isInternetAvaibale.Value;
+        public IValidationBinding? Validation { get; private set; }
 
 
         CompositeDisposable? deactivateWith;
@@ -52,6 +64,9 @@ namespace Shiny
 
 
         CancellationTokenSource? deactiveToken;
+        /// <summary>
+        /// The destroy cancellation token - called when your model is deactivated
+        /// </summary>
         protected CancellationToken DeactivateToken
         {
             get
@@ -63,6 +78,9 @@ namespace Shiny
 
 
         CancellationTokenSource? destroyToken;
+        /// <summary>
+        /// The destroy cancellation token - called when your model is destroyed
+        /// </summary>
         protected CancellationToken DestroyToken
         {
             get
@@ -74,6 +92,9 @@ namespace Shiny
 
 
         ILogger? logger;
+        /// <summary>
+        /// A lazy loader logger instance for this viewmodel instance
+        /// </summary>
         protected ILogger Logger
         {
             get
@@ -85,7 +106,11 @@ namespace Shiny
         }
 
 
+
         IDialogs? dialogs;
+        /// <summary>
+        /// Dialog service from the service provider
+        /// </summary>
         public IDialogs Dialogs
         {
             get
@@ -98,6 +123,9 @@ namespace Shiny
 
 
         ILocalizationManager? localize;
+        /// <summary>
+        /// Localization manager from the service provider
+        /// </summary>
         public ILocalizationManager LocalizationManager
         {
             get
@@ -109,12 +137,22 @@ namespace Shiny
         }
 
 
+        /// <summary>
+        /// The localization source for this instance (if set by SetLocalization)
+        /// </summary>
         public ILocalizationSource? Localize { get; private set; }
 
+        /// <summary>
+        /// Set the localization section you want to use for this instance
+        /// </summary>
+        /// <param name="section"></param>
         protected void SetLocalization(string section)
             => this.Localize = this.LocalizationManager.GetSection(section);
 
 
+        /// <summary>
+        /// This can be called manually, generally used when your viewmodel is going to the background in the nav stack
+        /// </summary>
         protected virtual void Deactivate()
         {
             this.deactiveToken?.Cancel();
@@ -126,6 +164,9 @@ namespace Shiny
         }
 
 
+        /// <summary>
+        /// Called when the viewmodel is being destroyed (not in nav stack any longer)
+        /// </summary>
         public virtual void Destroy()
         {
             this.destroyToken?.Cancel();
@@ -136,10 +177,18 @@ namespace Shiny
         }
 
 
+        /// <summary>
+        /// Binds to IsBusy while your command works
+        /// </summary>
+        /// <param name="command"></param>
         protected void BindBusyCommand(ICommand command)
             => this.BindBusyCommand((IReactiveCommand)command);
 
 
+        /// <summary>
+        /// Binds to IsBusy while your command works
+        /// </summary>
+        /// <param name="command"></param>
         protected void BindBusyCommand(IReactiveCommand command) =>
             command.IsExecuting.Subscribe(
                 x => this.IsBusy = x,
@@ -149,6 +198,14 @@ namespace Shiny
             .DisposeWith(this.DeactivateWith);
 
 
+        /// <summary>
+        /// Calls the loading task from dialog service while your command works
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="loadingText"></param>
+        /// <param name="useSnackbar"></param>
+        /// <param name="canExecute"></param>
+        /// <returns></returns>
         protected ICommand LoadingCommand(
             Func<Task> action,
             string loadingText = "Loading...",
@@ -157,6 +214,9 @@ namespace Shiny
         ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
 
 
+        /// <summary>
+        /// Records the state of this model type for all get/set properties
+        /// </summary>
         protected virtual void RememberUserState()
         {
             var binder = ShinyHost.Resolve<IObjectStoreBinder>();
@@ -168,6 +228,12 @@ namespace Shiny
         }
 
 
+        /// <summary>
+        /// Reads localization key from localization service
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public virtual string? this[string key]
         {
             get

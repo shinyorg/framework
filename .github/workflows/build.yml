@@ -15,7 +15,7 @@ on:
     - ".github/workflows/**"
 
 env:
-  ShinyVersion: 2.1.0
+  ShinyVersion: 2.2.0
   DotNetVersion: 6.0.100
 
 jobs:
