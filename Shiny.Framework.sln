@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{3BABA639-780
 	ProjectSection(SolutionItems) = preProject
 		src\Directory.build.props = src\Directory.build.props
 		src\Directory.build.targets = src\Directory.build.targets
+		version.json = version.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shiny.Extensions.Dialogs", "src\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj", "{1858149A-1053-4762-9FAD-0DC7F40842E7}"
