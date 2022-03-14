@@ -2,21 +2,21 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-		<Description>XF Material dialog implementations for Shiny mobile applications</Description>
+		<Description>Dialog implementations for Shiny mobile applications using Acr.UserDialogs</Description>
 	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Shiny.Core" />
 		<PackageReference Include="Shiny.Extensions.Localization" />
-		<PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
-		<PackageReference Include="XF.Material" Version="1.8.0" />
+		<PackageReference Include="Acr.UserDialogs" Version="7.2.0.562" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
-	</ItemGroup>
 </Project>
