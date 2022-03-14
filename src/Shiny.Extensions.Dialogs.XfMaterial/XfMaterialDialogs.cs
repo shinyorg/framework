@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shiny.Extensions.Localization;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using XF.Material.Forms.UI.Dialogs;
@@ -9,7 +10,14 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
     public class XfMaterialDialogs : IDialogs
     {
         readonly IPlatform platform;
-        public XfMaterialDialogs(IPlatform platform) => this.platform = platform;
+        readonly ILocalizationSource? localizeSource;
+
+
+        public XfMaterialDialogs(IPlatform platform, ILocalizationSource? localizeSource)
+        {
+            this.platform = platform;
+            this.localizeSource = localizeSource;
+        }
 
 
         public virtual async Task<string?> ActionSheet(string title, string? acceptText = null, string? dismissText = null, params string[] actions)
@@ -30,7 +38,11 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
 
         public virtual Task Alert(string message, string? title = null, string? dismissText = null)
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(message, title, dismissText ?? "OK"));
+            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(
+                message, 
+                title, 
+                dismissText ?? GetText("OK")
+            ));
 
 
         public virtual async Task<bool> Confirm(string message, string? title = null, string? acceptText = null, string? dismissText = null)
@@ -38,8 +50,8 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
             var result = await this.platform.InvokeOnMainThreadAsync(async () => await MaterialDialog.Instance.ConfirmAsync(
                 message,
                 title,
-                acceptText,
-                dismissText
+                acceptText ?? GetText("OK"),
+                dismissText ?? GetText("Cancel")
             ));
             return result ?? false;
         }
@@ -51,8 +63,8 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
                 question,
                 null,
                 placeholder,
-                acceptText,
-                dismissText
+                acceptText ?? GetText("OK"),
+                dismissText ?? GetText("Cancel")
             ));
 
 
@@ -79,6 +91,13 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
         {
             var dialog = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingDialogAsync(message));
             return AsyncDisposable.Create(async () => await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync()));
+        }
+
+
+        protected virtual string GetText(string text)
+        {
+            var localizedText = this.localizeSource?[text];
+            return localizedText ?? text;
         }
     }
 }

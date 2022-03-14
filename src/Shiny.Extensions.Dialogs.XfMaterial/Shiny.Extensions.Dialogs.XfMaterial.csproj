@@ -9,6 +9,7 @@
 		<PackageReference Include="Shiny.Core" Version="2.4.3.3003" />
 		<PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
 		<PackageReference Include="XF.Material" Version="1.8.0" />
+		<PackageReference Include="Shiny.Extensions.Localization" Version="1.0.0.38" />
 	</ItemGroup>
 
 	<ItemGroup>
