@@ -228,6 +228,8 @@ namespace Shiny
         }
 
 
+        public static string? LocalizationDefaultSection { get; set; }
+
         /// <summary>
         /// Reads localization key from localization service
         /// </summary>
@@ -241,11 +243,13 @@ namespace Shiny
                 if (this.LocalizationManager == null)
                     throw new InvalidOperationException("Localization has not been initialized in your DI container");
 
-                string value = "";
-                if (this.Localize == null)
-                    value = this.LocalizationManager[key];
-                else
+                string? value = null;
+                if (this.Localize != null)
                     value = this.Localize[key];
+                else if (LocalizationDefaultSection != null)
+                    value = this.LocalizationManager.GetSection(LocalizationDefaultSection)![key];
+                else
+                    value = this.LocalizationManager[key];
 
                 return value;
             }
