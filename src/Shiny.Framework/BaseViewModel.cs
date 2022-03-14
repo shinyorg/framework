@@ -26,6 +26,8 @@ namespace Shiny
                 .ToProperty(this, x => x.IsInternetAvailable)
                 .DisposeWith(this.DestroyWith);
 
+            this.Localize = ShinyHost.Resolve<ILocalizationSource>(); // try to set the default section if there is one
+
             var validationService = ShinyHost.Resolve<IValidationService>();
             if (validationService != null)
             {
@@ -137,19 +139,13 @@ namespace Shiny
         }
 
 
-        /// <summary>
-        /// The localization source for this instance (if set by SetLocalization)
-        /// </summary>
-        public ILocalizationSource? Localize { get; private set; }
 
         /// <summary>
-        /// Set the localization section you want to use for this instance
+        /// The localization source for this instance - will attempt to use the default section (if registered)
         /// </summary>
-        /// <param name="section"></param>
-        protected void SetLocalization(string section)
-            => this.Localize = this.LocalizationManager.GetSection(section);
+        public ILocalizationSource? Localize {  get; protected set; }
 
-
+        
         /// <summary>
         /// This can be called manually, generally used when your viewmodel is going to the background in the nav stack
         /// </summary>
@@ -228,8 +224,6 @@ namespace Shiny
         }
 
 
-        public static string? LocalizationDefaultSection { get; set; }
-
         /// <summary>
         /// Reads localization key from localization service
         /// </summary>
@@ -243,15 +237,10 @@ namespace Shiny
                 if (this.LocalizationManager == null)
                     throw new InvalidOperationException("Localization has not been initialized in your DI container");
 
-                string? value = null;
-                if (this.Localize != null)
-                    value = this.Localize[key];
-                else if (LocalizationDefaultSection != null)
-                    value = this.LocalizationManager.GetSection(LocalizationDefaultSection)![key];
-                else
-                    value = this.LocalizationManager[key];
+                if (key.Contains(":") || this.Localize == null)
+                    return this.LocalizationManager[key];
 
-                return value;
+                return this.Localize[key];
             }
         }
     }

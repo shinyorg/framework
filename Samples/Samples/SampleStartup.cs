@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Prism.Ioc;
 using Prism.Navigation;
 using Shiny;
-using Shiny.Extensions.Localization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,14 +16,12 @@ namespace Samples
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
-
-            var manager = new LocalizationBuilder()
+            services.ConfigureLocalization(x => x
                 .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
                 .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
-                .AddResource("Samples.Resources.Validation", this.GetType().Assembly, "Validation")
-                .Build();
-
-            services.AddSingleton(manager);
+                .AddResource("Samples.Resources.Validation", this.GetType().Assembly, "Validation"),
+                "Strings"
+            );
 
             services.UseDataAnnotationValidation();
 

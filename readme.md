@@ -112,12 +112,10 @@ namespace YourNamespace
     {
         protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
         {
-            var manager = new LocalizationBuilder()
+            services.ConfigureLocalization(x => 
                 .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
                 .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
-                .Build();
-
-            services.AddSingleton(manager); // ILocalizationManager if you need this in other services
+            );
         }
     }
 }
