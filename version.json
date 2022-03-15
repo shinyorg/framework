@@ -15,6 +15,11 @@
       "setVersionVariables": true
     }
   },
+  "release": {
+    "branchName": "v{version}",
+    "versionIncrement": "build",
+    "firstUnstableTag": "preview"
+  },
   "publicReleaseRefSpec": [
     "^refs/heads/master$",
     "^refs/heads/preview$",
