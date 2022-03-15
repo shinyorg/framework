@@ -39,8 +39,8 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
         public virtual Task Alert(string message, string? title = null, string? dismissText = null)
             => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(
-                message, 
-                title, 
+                message,
+                title,
                 dismissText ?? GetText("OK")
             ));
 

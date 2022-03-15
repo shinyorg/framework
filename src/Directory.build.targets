@@ -13,6 +13,6 @@
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Update="Xamarin.Forms" Version="5.0.0.2337" />
 		<PackageReference Update="Shiny.Core" Version="2.4.3.3024" />
-		<PackageReference Update="Shiny.Extensions.Localization" Version="1.1.0.60" />
+		<PackageReference Update="Shiny.Extensions.Localization" Version="1.2.0-preview.53" />
 	</ItemGroup>
 </Project>

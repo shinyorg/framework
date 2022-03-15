@@ -26,7 +26,7 @@ namespace Samples
             services.UseDataAnnotationValidation();
 
             // NOTE: IDialogs is automatically registered to NativeDialogs if you do not set a custom one like below
-            services.UseXfMaterialDialogs();
+            services.UseXfMaterialDialogs("Strings");
 
             services.UseGlobalCommandExceptionHandler(options =>
             {
