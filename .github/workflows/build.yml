@@ -37,7 +37,7 @@ jobs:
         dotnet-version: ${{ env.DotNetVersion }}
 
     - name: Build
-      run: msbuild Build.slnf /restore -m -property:Configuration=Release
+      run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:PublicRelease={github.ref == 'refs/heads/master'}
 
     - name: Post NuGet Artifacts
       uses: actions/upload-artifact@v2

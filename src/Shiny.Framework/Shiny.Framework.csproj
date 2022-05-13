@@ -13,8 +13,8 @@
 		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
 		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="ReactiveUI" Version="17.1.50" />
-		<PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+		<PackageReference Include="ReactiveUI" Version="18.0.10" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
 	</ItemGroup>
 
 	<ItemGroup>

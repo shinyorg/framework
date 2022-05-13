@@ -12,11 +12,10 @@
 	<ItemGroup>
 		<PackageReference Include="Shiny.Core" />
 		<PackageReference Include="Shiny.Extensions.Localization" />
-		<PackageReference Include="Acr.UserDialogs" Version="7.2.0.562" />
+		<PackageReference Include="Acr.UserDialogs" Version="7.2.0.564" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj" />
 	</ItemGroup>
-
 </Project>

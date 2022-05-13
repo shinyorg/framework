@@ -1,28 +1,16 @@
 {
-  "$schema": "https://raw.githubusercontent.com/AArnott/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
-  "version": "2.2.1-preview.{height}",
-  "buildNumberOffset": 157,
-  "assemblyVersion": {
-    "precision": "revision"
-  },
-  "nugetPackageVersion": {
-    "semVer": 2,
-    "precision": "revision"
-  },
-  "cloudBuild": {
-    "buildNumber": {
-      "enabled": true,
-      "setVersionVariables": true
-    }
-  },
-  "release": {
-    "branchName": "v{version}",
-    "versionIncrement": "build",
-    "firstUnstableTag": "preview"
-  },
-  "publicReleaseRefSpec": [
-    "^refs/heads/master$",
-    "^refs/heads/preview$",
-    "^refs/tags/v\\d+\\.\\d+"
-  ]
+    "$schema": "https://raw.githubusercontent.com/AArnott/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
+    "version": "2.3.0-preview.{height}",
+    "buildNumberOffset": 157,
+    "release": {
+        "branchName": "v{version}",
+        "versionIncrement": "build",
+        "firstUnstableTag": "preview"
+    },
+    "publicReleaseRefSpec": [
+        "^refs/heads/master$",
+        "^refs/heads/preview$",
+        "^refs/tags/v\\d+\\.\\d+",
+        "^refs/tags/v\\d+\\.\\d+\\.\\d+"
+    ]
 }
