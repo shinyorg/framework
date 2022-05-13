@@ -9,13 +9,13 @@ on:
         default: 'warning'
 
   push:
-    branches: [ master, dev, preview ]
+    branches:
+    - master
+    - dev
+    - preview
     paths:
     - "src/**"
     - ".github/workflows/**"
-
-env:
-  DotNetVersion: 6.0.100
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ env.DotNetVersion }}
+        dotnet-version: 6.0.3
 
     - name: Build
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:PublicRelease=${{github.ref == 'refs/heads/master'}}

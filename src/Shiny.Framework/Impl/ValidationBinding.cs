@@ -18,11 +18,11 @@ namespace Shiny.Impl
         {
             this.dispose = reactiveObj
                 .WhenAnyProperty()
-                .Where(x => !x.Value.Equals(nameof(IValidationViewModel.Validation)))
+                .Where(x => x.PropertyName.Equals(nameof(IValidationViewModel.Validation)))
                 .SubOnMainThread(x =>
                 {
-                    var error = service.ValidateProperty(reactiveObj, x.Value)?.FirstOrDefault();
-                    this.Set(x.Value, error);
+                    var error = service.ValidateProperty(reactiveObj, x.PropertyName)?.FirstOrDefault();
+                    this.Set(x.PropertyName, error);
                 });
         }
 
