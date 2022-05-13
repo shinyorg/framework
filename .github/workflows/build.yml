@@ -13,6 +13,7 @@ on:
     - master
     - dev
     - preview
+    - v*
     paths:
     - "src/**"
     - ".github/workflows/**"
@@ -34,7 +35,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.3
+        dotnet-version: 6.0.100
 
     - name: Build
       run: msbuild Build.slnf /restore -m -property:Configuration=Release -property:PublicRelease=${{github.ref == 'refs/heads/master'}}
