@@ -47,5 +47,5 @@ jobs:
         path: '**/*.nupkg'
 
     - name: Publish NuGets
-      if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/preview' }}
+      if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/v') }}
       run: dotnet nuget push **\*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGETAPIKEY }} --skip-duplicate
