@@ -1,4 +1,6 @@
-﻿namespace Shiny;
+﻿using Shiny.Hosting;
+
+namespace Shiny;
 
 
 public static class DialogExtensions
@@ -50,14 +52,14 @@ public static class DialogExtensions
 
     public static async Task SnackbarToOpenAppSettings(this IDialogs dialogs, string message, string actionText = "Open", int durationMillis = 3000)
     {
+        var appInfo = Host.Current.Services.GetRequiredService<IAppInfo>();
+
         var result = await dialogs.Snackbar(
             message,
             durationMillis,
             actionText
         );
-
-        // TODO: can resolve IAppInfo from serviceprovider or host.current
-        //if (result)
-        //    Xamarin.Essentials.AppInfo.ShowSettingsUI();
+        if (result)
+            appInfo.ShowSettingsUI();
     }
 }
