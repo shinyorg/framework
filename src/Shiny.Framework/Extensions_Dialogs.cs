@@ -7,6 +7,32 @@ namespace Shiny
 {
     public static class DialogExtensions
     {
+        public static async Task<T> LoadingTask<T>(this IDialogs dialogs, Func<Task<T>> task, string message, bool useSnackbar = false)
+        {
+            var showDialog = useSnackbar
+                ? dialogs.LoadingSnackbar(message)
+                : dialogs.LoadingDialog(message);
+
+            var dialogEl = await showDialog.ConfigureAwait(false);
+
+            await using (dialogEl.ConfigureAwait(false))
+                return await task.Invoke().ConfigureAwait(false);
+        }
+
+
+        public static async Task LoadingTask(this IDialogs dialogs, Func<Task> task, string message = "Loading", bool useSnackbar = false)
+        {
+            var showDialog = useSnackbar
+                ? dialogs.LoadingSnackbar(message)
+                : dialogs.LoadingDialog(message);
+
+            var dialogEl = await showDialog.ConfigureAwait(false);
+
+            await using (dialogEl.ConfigureAwait(false))
+                await task.Invoke().ConfigureAwait(false);
+        }
+
+
         public static async Task<AccessState> OpenAppSettingsIf(this IDialogs dialogs, Func<Task<AccessState>> accessRequest, string deniedMessage, string restrictedMessage)
         {
             var result = await accessRequest.Invoke();
@@ -33,8 +59,9 @@ namespace Shiny
                 durationMillis,
                 actionText
             );
-            if (result)
-                Xamarin.Essentials.AppInfo.ShowSettingsUI();
+            // TODO
+            //if (result)
+            //    Xamarin.Essentials.AppInfo.ShowSettingsUI();
         }
     }
 }
