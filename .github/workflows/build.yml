@@ -35,7 +35,7 @@ jobs:
         dotnet-version: 6.0.300
 
     - name: Build
-      run: msbuild Shiny.Framework.sln /restore -m -property:Configuration=Release -property:PublicRelease=true
+      run: dotnet build Shiny.Framework.sln /restore -m -property:Configuration=Release -property:PublicRelease=true
 
     - name: Post NuGet Artifacts
       uses: actions/upload-artifact@v2
