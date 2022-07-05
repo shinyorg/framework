@@ -1,57 +1,51 @@
-﻿using System;
-using System.Reactive.Subjects;
-using System.Threading.Tasks;
-using Prism;
-using Prism.AppModel;
-using Prism.Navigation;
-
+﻿using System.Reactive.Subjects;
 using ReactiveUI;
 
-namespace Shiny
+namespace Shiny;
+
+
+public abstract class ViewModel : BaseViewModel,
+                                  IActiveAware,
+                                  IInitializeAsync,
+                                  INavigatedAware,
+                                  IPageLifecycleAware,
+                                  IConfirmNavigationAsync
 {
-    public abstract class ViewModel : BaseViewModel,
-                                      IActiveAware,
-                                      IInitializeAsync,
-                                      INavigatedAware,
-                                      IPageLifecycleAware,
-                                      IConfirmNavigationAsync
+    public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
+    public virtual void OnAppearing() {}
+    public virtual void OnDisappearing() => this.Deactivate();
+
+
+    public virtual void OnNavigatedFrom(INavigationParameters parameters)
+        => this.navSubj?.OnNext((parameters, false));
+
+
+    public virtual void OnNavigatedTo(INavigationParameters parameters)
+        => this.navSubj?.OnNext((parameters, true));
+
+
+    public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
+        => Task.FromResult(true);
+
+
+    Subject<(INavigationParameters, bool)>? navSubj;
+    public IObservable<(INavigationParameters Paramters, bool NavigatedTo)> WhenNavigation()
     {
-        public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
-        public virtual void OnAppearing() {}
-        public virtual void OnDisappearing() => this.Deactivate();
+        navSubj ??= new Subject<(INavigationParameters, bool)>();
+        return navSubj.DisposedBy(this.DestroyWith);
+    }
 
 
-        public virtual void OnNavigatedFrom(INavigationParameters parameters)
-            => this.navSubj?.OnNext((parameters, false));
+    /// <summary>
+    /// This is not fired and only an artifact from Prism
+    /// </summary>
+    public event EventHandler? IsActiveChanged;
 
 
-        public virtual void OnNavigatedTo(INavigationParameters parameters)
-            => this.navSubj?.OnNext((parameters, true));
-
-
-        public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
-            => Task.FromResult(true);
-
-
-        Subject<(INavigationParameters, bool)>? navSubj;
-        public IObservable<(INavigationParameters Paramters, bool NavigatedTo)> WhenNavigation()
-        {
-            navSubj ??= new Subject<(INavigationParameters, bool)>();
-            return navSubj.DisposedBy(this.DestroyWith);
-        }
-
-
-        /// <summary>
-        /// This is not fired and only an artifact from Prism
-        /// </summary>
-        public event EventHandler? IsActiveChanged;
-
-
-        bool isActive;
-        public bool IsActive
-        {
-            get => this.isActive;
-            set => this.RaiseAndSetIfChanged(ref this.isActive, value);
-        }
+    bool isActive;
+    public bool IsActive
+    {
+        get => this.isActive;
+        set => this.RaiseAndSetIfChanged(ref this.isActive, value);
     }
 }

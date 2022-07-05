@@ -1,14 +1,8 @@
-﻿using ReactiveUI;
-
-using System;
-using System.Collections.Generic;
+﻿namespace Shiny;
 
 
-namespace Shiny
+public interface IValidationBinding : ReactiveUI.IReactiveObject, IDisposable
 {
-    public interface IValidationBinding : IReactiveObject, IDisposable
-    {
-        IReadOnlyDictionary<string, string> Errors { get; }
-        IReadOnlyDictionary<string, bool> Touched { get;}
-    }
+    IReadOnlyDictionary<string, string> Errors { get; }
+    IReadOnlyDictionary<string, bool> Touched { get;}
 }
