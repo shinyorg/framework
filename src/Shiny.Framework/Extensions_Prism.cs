@@ -31,21 +31,21 @@ namespace Shiny
         }
 
 
-        public static Task NavigateModal(this INavigationService navigation, string uri, params (string, object)[] parameters)
-            => navigation.NavigateModal(uri, parameters.ToNavParams());
+        //public static Task NavigateModal(this INavigationService navigation, string uri, params (string, object)[] parameters)
+        //    => navigation.NavigateModal(uri, parameters.ToNavParams());
 
 
-        public static async Task NavigateModal(this INavigationService navigation, string uri, INavigationParameters parameters)
-            => (await navigation.NavigateAsync(uri, parameters, true, true)).Assert();
+        //public static async Task NavigateModal(this INavigationService navigation, string uri, INavigationParameters parameters)
+        //    => (await navigation.NavigateAsync(uri, parameters, true, true)).Assert();
 
 
-        public static ICommand NavigateModalCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
-            => ReactiveCommand.CreateFromTask(async () =>
-            {
-                var p = new NavigationParameters();
-                getParams?.Invoke(p);
-                await navigation.NavigateModal(uri, p);
-            }, canExecute);
+        //public static ICommand NavigateModalCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
+        //    => ReactiveCommand.CreateFromTask(async () =>
+        //    {
+        //        var p = new NavigationParameters();
+        //        getParams?.Invoke(p);
+        //        await navigation.NavigateModal(uri, p);
+        //    }, canExecute);
 
 
         public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
