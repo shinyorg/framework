@@ -1,10 +1,7 @@
-﻿using ReactiveUI;
+﻿namespace Shiny;
 
 
-namespace Shiny
+public interface IValidationViewModel : ReactiveUI.IReactiveObject // needs to be idisposable or something to destroy
 {
-    public interface IValidationViewModel : IReactiveObject // needs to be idisposable or something to destroy
-    {
-        IValidationBinding Validation { get; }
-    }
+    IValidationBinding Validation { get; }
 }

@@ -1,48 +1,37 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Prism.Common;
-
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shiny.Extensions.Localization;
 using Shiny.Impl;
-using System;
+
+namespace Shiny;
 
 
-namespace Shiny
+public static class ServiceExtensions
 {
-    public static class ServiceExtensions
+    public static void UseDataAnnotationValidation(this IServiceCollection services)
+        => services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
+
+
+    public static void ConfigureLocalization(this IServiceCollection services, Action<LocalizationBuilder> builderAction, string? defaultSection = null)
     {
-        public static void UseDataAnnotationValidation(this IServiceCollection services)
-            => services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
+        var builder = new LocalizationBuilder();
+        builderAction(builder);
+        var localizationManager = builder.Build();
 
-
-        public static void ConfigureLocalization(this IServiceCollection services, Action<LocalizationBuilder> builderAction, string? defaultSection = null)
+        services.AddSingleton(localizationManager);
+        if (defaultSection != null)
         {
-            var builder = new LocalizationBuilder();
-            builderAction(builder);
-            var localizationManager = builder.Build();
+            var section = localizationManager.GetSection(defaultSection);
+            if (section == null)
+                throw new InvalidOperationException($"Invalid Default Section Name: " + defaultSection);
 
-            services.AddSingleton(localizationManager);
-            if (defaultSection != null)
-            {
-                var section = localizationManager.GetSection(defaultSection);
-                if (section == null)
-                    throw new InvalidOperationException($"Invalid Default Section Name: " + defaultSection);
-
-                services.AddSingleton(section);
-            }
+            services.AddSingleton(section);
         }
-
-        public static void UseGlobalNavigation(this IServiceCollection services)
-        {
-            services.TryAddSingleton<IGlobalNavigationService, GlobalNavigationService>();
-            services.TryAddSingleton<IApplicationProvider, ApplicationProvider>();
-        }
+    }
 
 
-        public static void UseGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
-        {
-            services.AddSingleton<GlobalExceptionHandler>();
-            configure?.Invoke(GlobalExceptionHandlerConfig.Instance);
-        }
+    public static void UseGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
+    {
+        services.AddSingleton<GlobalExceptionHandler>();
+        configure?.Invoke(GlobalExceptionHandlerConfig.Instance);
     }
 }

@@ -2,26 +2,50 @@
 
 	<PropertyGroup>
 		<Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
-		<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net6.0-ios;net6.0-maccatalyst;net6.0-android</TargetFrameworks>
 		<RootNamespace>Shiny</RootNamespace>
+		<Nullable>enable</Nullable>
+		<LangVersion>10.0</LangVersion>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+    <PropertyGroup>
+        <Authors>Allan Ritchie</Authors>
+        <Owners>aritchie; shinylib</Owners>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://shinylib.net</PackageProjectUrl>
+        <PackageReleaseNotes>https://shinylib.net/release-notes</PackageReleaseNotes>
+        <PackageTags>maui shiny</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DesignTimeBuild>false</DesignTimeBuild>
+        <DebugType>portable</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Xamarin.Forms" />
-		<PackageReference Include="Shiny.Core" />
-		<PackageReference Include="Shiny.Extensions.Localization" />
-		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
-		<PackageReference Include="Prism.DryIoc.Forms" Version="8.1.97" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="ReactiveUI" Version="18.0.10" />
-		<PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+		<None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
+		<None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="readme.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Shiny.Extensions.Dialogs\Shiny.Extensions.Dialogs.csproj" />
+		<PackageReference Include="NerdBank.GitVersioning" Version="3.5.104" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+
+		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-alpha-0128" />
+		<PackageReference Include="Shiny.Extensions.Localization" Version="1.3.0-g2ba43447db" />
+		<PackageReference Include="Prism.Maui" Version="8.1.228-beta" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="ReactiveUI" Version="18.2.5" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
-	</ItemGroup>
 </Project>
