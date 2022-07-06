@@ -37,38 +37,24 @@ Inherit Shiny.ViewModel on your viewmodel.  You will instantly gain the followin
 This uses Shiny.Extensions.Localization - go to <https://shinylib.net/apiservices> for more info on this library
 
 ```csharp
-namespace YourNamespace
+
+public static class MauiProgram
 {
-    public class YourStartupClassName : Shiny.FrameworkStartup
-    {
-        protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
-        {
-            services.ConfigureLocalization(x => 
-                .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
-                .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
-            );
-        }
-    }
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp
+			.CreateBuilder()
+            .UseShinyFramework();
+
+        builder.Services.ConfigureLocalization(x => x
+            .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
+            .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
+        );
+
+		return builder.Build();
+	}
 }
 ```
-
-## Dialogs
-
-We recommend installing Shiny.Extensions.Dialogs.XfMaterial for a full experience.  However, if you don't, we use standard native dialogs under the hood.  However, you will be missing loading & snackbar with the default implementation.
-
-To use XF Material Dialogs
-
-```csharp
-public class SampleStartup : FrameworkStartup
-{
-    protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
-    {
-        services.UseXfMaterialDialogs();
-    }
-}
-```
-
-For examples on what methods are available in dialogs, take a look here: [Dialog Samples](https://github.com/shinyorg/framework/blob/master/Samples/Samples/DialogsViewModel.cs)
 
 ## Global Command Exception Handler
 
@@ -77,27 +63,28 @@ Global command exception handling is something provided by ReactiveUI.  It saves
 Shiny builds on this by adding logging and a standard dialog message to handle trap-all scenarios.  To use it, simply add the following to your framework startup:
 
 ```csharp
-namespace YourNamespace
+public static class MauiProgram
 {
-    public class YourStartupClassName : Shiny.FrameworkStartup
-    {
-        protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp
+			.CreateBuilder()
+            .UseShinyFramework();
+
+        builder.Services.AddGlobalCommandExceptionHandler(options =>
         {
-            services.UseGlobalCommandExceptionHandler(options =>
-            {
 #if DEBUG
-                options.AlertType = ErrorAlertType.FullError; // this will show the full error in a dialog during debug
-                options.LogError = false;
+            options.AlertType = ErrorAlertType.FullError; // this will show the full error in a dialog during debug
+            options.LogError = false;
 #else
-                // you will need localization to be registered to use this
-                options.AlertType = ErrorAlertType.Localize; // you can use NoLocalize which will send a standard english message instead
-                options.LogError = true;
-                options.IgnoreTokenCancellations = true;
-                options.LocalizeErrorTitleKey = "YourLocalizationTitleKey";
-                options.LocalizeErrorBodyKey = "YourLocalizationErrorBodyMessageKey";
+            // you will need localization to be registered to use this
+            options.AlertType = ErrorAlertType.Localize; // you can use NoLocalize which will send a standard english message instead
+            options.LogError = true;
+            options.IgnoreTokenCancellations = true;
+            options.LocalizeErrorTitleKey = "YourLocalizationTitleKey";
+            options.LocalizeErrorBodyKey = "YourLocalizationErrorBodyMessageKey";
 #endif
-            });
-        }
+        });
     }
 }
 ```
@@ -119,11 +106,15 @@ NOTE: we recommend usage of [ReactiveUI.Fody](https://www.nuget.org/packages/Rea
 First, we need to tell Shiny.Framework to wire in the validation service to Data Annotations by doing the following in your shiny startup
 
 ```csharp
-public class SampleStartup : Shiny.FrameworkStartup
+public static class MauiProgram
 {
-    protected override void Configure(ILoggingBuilder builder, IServiceCollection services)
-    {
-        services.UseDataAnnotationValidation();
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp
+			.CreateBuilder()
+            .UseShinyFramework();
+
+        builder.Services.UseDataAnnotationValidation();
     }
 }
     

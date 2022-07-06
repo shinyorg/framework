@@ -29,7 +29,7 @@ public static class ServiceExtensions
     }
 
 
-    public static void UseGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
+    public static void AddGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
     {
         services.AddSingleton<GlobalExceptionHandler>();
         configure?.Invoke(GlobalExceptionHandlerConfig.Instance);
