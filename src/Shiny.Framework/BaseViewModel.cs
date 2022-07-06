@@ -12,29 +12,6 @@ namespace Shiny;
 
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
-    protected BaseViewModel()
-    {
-        // TODO
-        //this.isInternetAvaibale = Host
-        //    .Current
-        //    .Services
-        //    .GetService<IConnectivity>()
-        //    .WhenInternetStatusChanged()
-        //    .ObserveOn(RxApp.MainThreadScheduler)
-        //    .ToProperty(this, x => x.IsInternetAvailable)
-        //    .DisposeWith(this.DestroyWith);
-
-        this.Localize = Host.Current.Services.GetService<ILocalizationSource>(); // try to set the default section if there is one
-
-        var validationService = Host.Current.Services.GetService<IValidationService>();
-        if (validationService != null)
-        {
-            this.Validation = validationService.Bind(this);
-            this.DestroyWith.Add(this.Validation);
-        }
-    }
-
-
     bool isBusy;
     public bool IsBusy
     {
@@ -50,9 +27,46 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         protected set => this.RaiseAndSetIfChanged(ref this.title, value);
     }
 
-    readonly ObservableAsPropertyHelper<bool> isInternetAvaibale;
-    public bool IsInternetAvailable => this.isInternetAvaibale.Value;
-    public IValidationBinding? Validation { get; private set; }
+
+    bool? internetAvailable;
+    public virtual bool IsInternetAvailable
+    {
+        get
+        {
+            if (this.internetAvailable == null)
+            {
+                Host
+                    .Current
+                    .Services
+                    .GetService<IConnectivity>()?
+                    .WhenInternetStateChanged()
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(x => this.internetAvailable = x)                
+                    .DisposeWith(this.DestroyWith);
+            }
+            return this.internetAvailable!.Value;
+        }
+    }
+
+
+    IValidationBinding? validationBinding;
+    public IValidationBinding? Validation
+    {
+        get
+        {
+            if (this.validationBinding == null)
+            {
+                var validationService = Host.Current.Services.GetService<IValidationService>();
+                if (validationService != null)
+                {
+                    this.validationBinding = validationService.Bind(this);
+                    this.DestroyWith.Add(this.validationBinding);
+                }
+            }
+            return this.validationBinding;
+        }
+        private set => this.validationBinding = value;
+    }
 
 
     CompositeDisposable? deactivateWith;
@@ -122,7 +136,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     }
 
 
-    ILocalizationManager? localize;
+    ILocalizationManager? localizeManager;
     /// <summary>
     /// Localization manager from the service provider
     /// </summary>
@@ -130,18 +144,27 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            this.localize ??= Host.Current.Services.GetService<ILocalizationManager>();
-            return this.localize;
+            this.localizeManager ??= Host.Current.Services.GetService<ILocalizationManager>();
+            return this.localizeManager;
         }
-        protected set => this.localize = value;
+        protected set => this.localizeManager = value;
     }
 
 
-
+    ILocalizationSource? localizeSource;
     /// <summary>
     /// The localization source for this instance - will attempt to use the default section (if registered)
     /// </summary>
-    public ILocalizationSource? Localize {  get; protected set; }
+    public ILocalizationSource? Localize
+    {
+        get
+        {
+            // try to set the default section if there is one
+            this.localizeSource ??= Host.Current.Services.GetService<ILocalizationSource>();
+            return this.localizeSource;
+        }
+        protected set => this.localizeSource = value;
+    }
 
     
     /// <summary>
