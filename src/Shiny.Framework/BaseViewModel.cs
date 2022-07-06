@@ -50,7 +50,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
 
 
     IValidationBinding? validationBinding;
-    public IValidationBinding? Validation
+    public virtual IValidationBinding? Validation
     {
         get
         {
@@ -65,7 +65,6 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
             }
             return this.validationBinding;
         }
-        private set => this.validationBinding = value;
     }
 
 
