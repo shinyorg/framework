@@ -7,7 +7,7 @@ namespace Shiny;
 
 public static class ServiceExtensions
 {
-    public static void UseDataAnnotationValidation(this IServiceCollection services)
+    public static void AddDataAnnotationValidation(this IServiceCollection services)
         => services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
 
 

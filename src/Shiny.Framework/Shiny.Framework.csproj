@@ -41,11 +41,11 @@
 		<PackageReference Include="NerdBank.GitVersioning" Version="3.5.104" PrivateAssets="All" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 
-		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-alpha-0128" />
+		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-alpha-0142" />
 		<PackageReference Include="Shiny.Extensions.Localization" Version="1.3.0-preview-0027" />
-		<PackageReference Include="Prism.Maui" Version="8.1.228-beta" />
+		<PackageReference Include="Prism.Maui" Version="8.1.254-beta" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="ReactiveUI" Version="18.2.5" />
+		<PackageReference Include="ReactiveUI" Version="18.2.9" />
 	</ItemGroup>
 
 </Project>
