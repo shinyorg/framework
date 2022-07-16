@@ -10,7 +10,7 @@ public class DryIocTests
     public void Test1()
     {
         var container = new Container(Rules.MicrosoftDependencyInjectionRules);
-        container.Register<BaseServices>
+        //container.Register<BaseServices>()
         //builder
         //    .UseShiny()
         //    .UsePrismApp<TApp>(container, prismBuilder);

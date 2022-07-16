@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
 		<!--<TargetFrameworks>net6.0;net6.0-ios;net6.0-maccatalyst;net6.0-android</TargetFrameworks>-->
-		<TargetFrameworks>net6.0;net6.0-ios;net6.0-maccatalyst;net6.0-android</TargetFrameworks>
+		<TargetFrameworks>net6.0-ios;net6.0-maccatalyst;net6.0-android</TargetFrameworks>
 		<RootNamespace>Shiny</RootNamespace>
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
