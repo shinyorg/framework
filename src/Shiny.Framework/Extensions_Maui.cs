@@ -14,6 +14,7 @@ public static class MauiExtensions
             .UseShiny()
             .UsePrismApp<TApp>(container, prismBuilder);
 
+        builder.Services.AddSingleton<BaseServices>();
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
         builder.Services.TryAddSingleton<IDialogs, NativeDialogs>();

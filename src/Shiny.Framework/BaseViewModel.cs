@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using Shiny.Extensions.Localization;
-using Shiny.Hosting;
 using Shiny.Stores;
 
 namespace Shiny;
@@ -12,6 +11,10 @@ namespace Shiny;
 
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
+    readonly BaseServices services;
+    protected BaseViewModel(BaseServices services) => this.services = services;
+
+
     bool isBusy;
     public bool IsBusy
     {
@@ -35,10 +38,8 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         {
             if (this.internetAvailable == null)
             {
-                Host
-                    .Current
-                    .Services
-                    .GetService<IConnectivity>()?
+                this.services
+                    .Connectivity
                     .WhenInternetStateChanged()
                     .ObserveOn(RxApp.MainThreadScheduler)
                     .Subscribe(x => this.internetAvailable = x)                
@@ -54,14 +55,10 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            if (this.validationBinding == null)
+            if (this.validationBinding == null && this.services.Validation != null)
             {
-                var validationService = Host.Current.Services.GetService<IValidationService>();
-                if (validationService != null)
-                {
-                    this.validationBinding = validationService.Bind(this);
-                    this.DestroyWith.Add(this.validationBinding);
-                }
+                this.validationBinding = this.services.Validation.Bind(this);
+                this.DestroyWith.Add(this.validationBinding);
             }
             return this.validationBinding;
         }
@@ -112,7 +109,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            this.logger ??= Host.Current.Logging.CreateLogger(this.GetType().AssemblyQualifiedName);
+            this.logger ??= this.services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName);
             return this.logger;
         }
         set => this.logger = value;
@@ -124,46 +121,19 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// <summary>
     /// Dialog service from the service provider
     /// </summary>
-    public IDialogs Dialogs
-    {
-        get
-        {
-            this.dialogs ??= Host.Current.Services.GetRequiredService<IDialogs>();
-            return this.dialogs!;
-        }
-        protected set => this.dialogs = value;
-    }
+    public IDialogs Dialogs => this.services.Dialogs;
 
 
-    ILocalizationManager? localizeManager;
     /// <summary>
     /// Localization manager from the service provider
     /// </summary>
-    public ILocalizationManager? LocalizationManager
-    {
-        get
-        {
-            this.localizeManager ??= Host.Current.Services.GetService<ILocalizationManager>();
-            return this.localizeManager;
-        }
-        protected set => this.localizeManager = value;
-    }
+    public ILocalizationManager? LocalizationManager => this.services.localizeManager;
 
 
-    ILocalizationSource? localizeSource;
     /// <summary>
     /// The localization source for this instance - will attempt to use the default section (if registered)
     /// </summary>
-    public ILocalizationSource? Localize
-    {
-        get
-        {
-            // try to set the default section if there is one
-            this.localizeSource ??= Host.Current.Services.GetService<ILocalizationSource>();
-            return this.localizeSource;
-        }
-        protected set => this.localizeSource = value;
-    }
+    public ILocalizationSource? Localize => this.services.Localize;
 
     
     /// <summary>
@@ -235,11 +205,9 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// </summary>
     protected virtual void RememberUserState()
     {
-        var binder = Host.Current.Services.GetRequiredService<IObjectStoreBinder>();
-        binder.Bind(this);
-
+        this.services.ObjectBinder.Bind(this);
         this.DestroyWith.Add(Disposable.Create(() =>
-            binder.UnBind(this)
+            this.services.ObjectBinder.UnBind(this)
         ));
     }
 
