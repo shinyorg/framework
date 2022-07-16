@@ -11,6 +11,11 @@ public abstract class ViewModel : BaseViewModel,
                                   IPageLifecycleAware,
                                   IConfirmNavigationAsync
 {
+    protected ViewModel(BaseServices services) : base(services)
+    {
+    }
+
+
     public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
     public virtual void OnAppearing() {}
     public virtual void OnDisappearing() => this.Deactivate();
