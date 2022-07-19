@@ -11,6 +11,7 @@ public record BaseServices(
     IDialogs Dialogs,
     IConnectivity Connectivity,
     ILoggerFactory LoggerFactory,
+    IPlatform Platform,
     IValidationService? Validation = null,
     ILocalizationManager? localizeManager = null,
     ILocalizationSource? Localize = null

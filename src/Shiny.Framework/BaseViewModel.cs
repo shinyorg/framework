@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using Shiny.Extensions.Localization;
+using Shiny.Hosting;
 using Shiny.Stores;
 
 namespace Shiny;
@@ -12,6 +13,8 @@ namespace Shiny;
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
     readonly BaseServices services;
+
+    protected BaseViewModel() : this(Host.Current.Services.GetRequiredService<BaseServices>()) { }
     protected BaseViewModel(BaseServices services) => this.services = services;
 
 
@@ -42,7 +45,11 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
                     .Connectivity
                     .WhenInternetStateChanged()
                     .ObserveOn(RxApp.MainThreadScheduler)
-                    .Subscribe(x => this.internetAvailable = x)                
+                    .Subscribe(x =>
+                    {
+                        this.internetAvailable = x;
+                        this.RaisePropertyChanged(nameof(this.IsInternetAvailable));
+                    })
                     .DisposeWith(this.DestroyWith);
             }
             return this.internetAvailable!.Value;
@@ -115,6 +122,11 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         set => this.logger = value;
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public IPlatform Platform => this.services.Platform;
 
 
     IDialogs? dialogs;
