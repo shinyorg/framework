@@ -19,7 +19,7 @@ public static class MauiExtensions
 
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
-        
+
         return builder;
     }
 
