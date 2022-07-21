@@ -9,13 +9,10 @@ public enum ErrorAlertType
 }
 
 
-public class GlobalExceptionHandlerConfig
-{
-    public static GlobalExceptionHandlerConfig Instance { get; } = new GlobalExceptionHandlerConfig();
-
-    public ErrorAlertType AlertType { get; set; } = ErrorAlertType.NoLocalize;
-    public string LocalizeErrorTitleKey { get; set; } = "Strings:Error";
-    public string LocalizeErrorBodyKey { get; set; } = "Strings:ErrorDetail";
-    public bool IgnoreTokenCancellations { get; set; } = true;
-    public bool LogError { get; set; } = true;
-}
+public record GlobalExceptionHandlerConfig(
+    ErrorAlertType AlertType = ErrorAlertType.NoLocalize,
+    string? LocalizeErrorTitleKey = null,
+    string? LocalizeErrorBodyKey = null,
+    bool IgnoreTokenCancellations = true,
+    bool LogError = true
+);

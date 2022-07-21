@@ -29,9 +29,9 @@ public static class ServiceExtensions
     }
 
 
-    public static void AddGlobalCommandExceptionHandler(this IServiceCollection services, Action<GlobalExceptionHandlerConfig>? configure = null)
+    public static void AddGlobalCommandExceptionHandler(this IServiceCollection services, GlobalExceptionHandlerConfig? config = null)
     {
+        services.AddSingleton(config ?? new GlobalExceptionHandlerConfig());
         services.AddShinyService<GlobalExceptionHandler>();
-        configure?.Invoke(GlobalExceptionHandlerConfig.Instance);
     }
 }
