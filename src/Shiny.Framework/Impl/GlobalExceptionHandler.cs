@@ -7,17 +7,20 @@ namespace Shiny.Impl;
 
 public class GlobalExceptionHandler : IObserver<Exception>, IShinyStartupTask
 {
+    readonly GlobalExceptionHandlerConfig config;
     readonly ILocalizationManager? localize;
     readonly IDialogs dialogs;
     readonly ILogger logger;
 
 
     public GlobalExceptionHandler(
+        GlobalExceptionHandlerConfig config,
         ILogger<GlobalExceptionHandler> logger,
         IDialogs dialogs,
         ILocalizationManager? localize = null
     )
     {
+        this.config = config;
         this.dialogs = dialogs;
         this.logger = logger;
         this.localize = localize;
@@ -40,7 +43,7 @@ public class GlobalExceptionHandler : IObserver<Exception>, IShinyStartupTask
 
     public async void OnNext(Exception value)
     {
-        var cfg = GlobalExceptionHandlerConfig.Instance;
+        var cfg = this.config;
         if (this.ShouldIgnore(cfg, value))
             return;
 

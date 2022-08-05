@@ -1,4 +1,5 @@
-﻿namespace Shiny.Impl;
+﻿#if PLATFORM
+namespace Shiny.Impl;
 
 
 public class NativeDialogs : IDialogs
@@ -35,3 +36,4 @@ public class NativeDialogs : IDialogs
     public Task<IAsyncDisposable> LoadingSnackbar(string message) => Task.FromResult(AsyncDisposable.Create(async () => { }));
     public Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null) => Task.FromResult(false);
 }
+#endif

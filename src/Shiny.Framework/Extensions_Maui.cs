@@ -11,14 +11,17 @@ public static class MauiExtensions
             where TApp : Application
     {
         builder
+#if PLATFORM
             .UseShiny()
+#endif
             .UsePrismApp<TApp>(container, prismBuilder);
-
-        builder.Services.AddScoped<BaseServices>();
+#if PLATFORM
         builder.Services.TryAddScoped<IDialogs, NativeDialogs>();
-
+#endif
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
+
+        builder.Services.AddScoped<BaseServices>();
 
         return builder;
     }
@@ -36,6 +39,7 @@ public static class MauiExtensions
 
             return () => connectivity.ConnectivityChanged -= handler;
         });
+
 
 
     public static bool IsInternetAvailable(this NetworkAccess access, bool includeConstrained = true)
