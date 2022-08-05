@@ -123,11 +123,12 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     }
 
 
+#if PLATFORM
     /// <summary>
-    /// 
+    /// Access to platform services
     /// </summary>
     public IPlatform Platform => this.services.Platform;
-
+#endif
 
     IDialogs? dialogs;
     /// <summary>
@@ -147,7 +148,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// </summary>
     public ILocalizationSource? Localize => this.services.Localize;
 
-    
+
     /// <summary>
     /// This can be called manually, generally used when your viewmodel is going to the background in the nav stack
     /// </summary>
