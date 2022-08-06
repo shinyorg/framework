@@ -16,7 +16,7 @@ public static class MauiExtensions
 #endif
             .UsePrismApp<TApp>(container, prismBuilder);
 #if PLATFORM
-        builder.Services.TryAddScoped<IDialogs, NativeDialogs>();
+        builder.Services.TryAddSingleton<IDialogs, NativeDialogs>();
 #endif
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);

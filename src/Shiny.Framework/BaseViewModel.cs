@@ -13,9 +13,11 @@ namespace Shiny;
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
     readonly BaseServices services;
-
-    protected BaseViewModel() : this(Host.Current.Services.GetRequiredService<BaseServices>()) { }
+    
     protected BaseViewModel(BaseServices services) => this.services = services;
+
+
+    protected INavigationService Navigation => this.services.Navigation;
 
 
     bool isBusy;
@@ -130,7 +132,6 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     public IPlatform Platform => this.services.Platform;
 #endif
 
-    IDialogs? dialogs;
     /// <summary>
     /// Dialog service from the service provider
     /// </summary>
@@ -195,22 +196,6 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
             () => this.IsBusy = false
         )
         .DisposeWith(this.DeactivateWith);
-
-
-    /// <summary>
-    /// Calls the loading task from dialog service while your command works
-    /// </summary>
-    /// <param name="action"></param>
-    /// <param name="loadingText"></param>
-    /// <param name="useSnackbar"></param>
-    /// <param name="canExecute"></param>
-    /// <returns></returns>
-    protected ICommand LoadingCommand(
-        Func<Task> action,
-        string loadingText = "Loading...",
-        bool useSnackbar = false,
-        IObservable<bool>? canExecute = null
-    ) => ReactiveCommand.CreateFromTask(() => this.Dialogs.LoadingTask(action, loadingText, useSnackbar), canExecute);
 
 
     /// <summary>

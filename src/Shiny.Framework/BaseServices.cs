@@ -9,6 +9,7 @@ public record BaseServices(
     #if PLATFORM
     IPlatform Platform,
     #endif
+    INavigationService Navigation,
     IDialogs Dialogs,
     IConnectivity Connectivity, // TODO: switch to shiny?
     ILoggerFactory LoggerFactory,
