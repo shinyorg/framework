@@ -1,6 +1,9 @@
 ﻿using System.Reactive.Linq;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using CommunityToolkit.Maui;
 using Shiny.Impl;
+#if PLATFORM
+using Microsoft.Extensions.DependencyInjection.Extensions;
+#endif
 
 namespace Shiny;
 
@@ -16,7 +19,11 @@ public static class MauiExtensions
 #endif
             .UsePrismApp<TApp>(container, prismBuilder);
 #if PLATFORM
-        builder.Services.TryAddSingleton<IDialogs, NativeDialogs>();
+        if (!builder.Services.Any(x => x.ServiceType == typeof(IDialogs)))
+        {
+            builder.UseMauiCommunityToolkit();
+            builder.Services.AddSingleton<IDialogs, NativeDialogs>();
+        }
 #endif
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
