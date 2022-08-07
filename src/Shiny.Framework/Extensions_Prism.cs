@@ -8,6 +8,12 @@ namespace Shiny;
 
 public static class PrismExtensions
 {
+    public static bool IsBackNavigation(this INavigationParameters parameters)
+        => parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.Back;
+
+    public static bool IsNewNavigation(this INavigationParameters parameters)
+        => parameters.GetNavigationMode() == Prism.Navigation.NavigationMode.New;
+
     public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
     {
         var p = viewModel.GetPropertyInfo(expression);

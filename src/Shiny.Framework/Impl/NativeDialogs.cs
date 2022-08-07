@@ -37,10 +37,10 @@ public class NativeDialogs : IDialogs
             return true;
         });
 
-    public Task<bool> Confirm(string message, string? title = null, string? okText = null, string? cancelText = null)
+    public Task<bool> Confirm(string message, string? title = null, string? okText = "OK", string? cancelText = "Cancel")
         => this.Run(dialogs => dialogs.DisplayAlertAsync(title, message, okText, cancelText));
 
-    public Task<string?> Input(string question, string? title = null, string? acceptText = null, string? dismissText = null, string? placeholder = null, int? maxLength = null)
+    public Task<string?> Input(string question, string? title = null, string? acceptText = "OK", string? dismissText = "Cancel", string? placeholder = null, int? maxLength = null)
         => this.Run(dialogs => dialogs.DisplayPromptAsync(title, question, acceptText, dismissText, placeholder, maxLength ?? -1));
 
     public async Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null)
