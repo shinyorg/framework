@@ -10,8 +10,7 @@ namespace Shiny;
 
 public static class MauiExtensions
 {
-    public static MauiAppBuilder UseShinyFramework<TApp>(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
-            where TApp : Application
+    public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
     {
 #if PLATFORM
         builder
@@ -23,12 +22,13 @@ public static class MauiExtensions
             builder.UseMauiCommunityToolkit();
             builder.Services.AddSingleton<IDialogs, NativeDialogs>();
         }
-#endif
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
 
         builder.Services.AddScoped<BaseServices>();
-
+#else
+        throw new InvalidOperationException("This platform is not supported");
+#endif
         return builder;
     }
 
