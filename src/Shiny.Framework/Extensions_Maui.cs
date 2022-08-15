@@ -1,8 +1,8 @@
 ﻿using System.Reactive.Linq;
-using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shiny.Impl;
 #if PLATFORM
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using CommunityToolkit.Maui;
 #endif
 
 namespace Shiny;
@@ -13,12 +13,11 @@ public static class MauiExtensions
     public static MauiAppBuilder UseShinyFramework<TApp>(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
             where TApp : Application
     {
+#if PLATFORM
         builder
-#if PLATFORM
             .UseShiny()
-#endif
-            .UsePrismApp<TApp>(container, prismBuilder);
-#if PLATFORM
+            .UsePrism(container, prismBuilder);
+
         if (!builder.Services.Any(x => x.ServiceType == typeof(IDialogs)))
         {
             builder.UseMauiCommunityToolkit();

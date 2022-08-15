@@ -2,7 +2,6 @@
 using CommunityToolkit.Maui.Core;
 using Prism.Common;
 using Prism.Navigation.Xaml;
-using Prism.Services.Dialogs;
 using Font = Microsoft.Maui.Font;
 using SB = CommunityToolkit.Maui.Alerts.Snackbar;
 
