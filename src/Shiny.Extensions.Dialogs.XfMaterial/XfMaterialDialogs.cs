@@ -22,7 +22,7 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
         public virtual async Task<string?> ActionSheet(string title, string? acceptText = null, string? dismissText = null, params string[] actions)
         {
-            var task = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.SelectChoiceAsync(
+            var task = await this.platform.InvokeTaskOnMainThread(() => MaterialDialog.Instance.SelectChoiceAsync(
                 title,
                 actions.ToList(),
                 acceptText,
@@ -38,7 +38,7 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
 
         public virtual Task Alert(string message, string? title = null, string? dismissText = null)
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.AlertAsync(
+            => this.platform.InvokeTaskOnMainThread(() => MaterialDialog.Instance.AlertAsync(
                 message,
                 title,
                 dismissText ?? GetText("OK")
@@ -47,7 +47,7 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
         public virtual async Task<bool> Confirm(string message, string? title = null, string? acceptText = null, string? dismissText = null)
         {
-            var result = await this.platform.InvokeOnMainThreadAsync(async () => await MaterialDialog.Instance.ConfirmAsync(
+            var result = await this.platform.InvokeTaskOnMainThread(async () => await MaterialDialog.Instance.ConfirmAsync(
                 message,
                 title,
                 acceptText ?? GetText("OK"),
@@ -58,7 +58,7 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
 
         public Task<string?> Input(string question, string? title = null, string? acceptText = null, string? dismissText = null, string? placeholder = null, int? maxLength = null)
-            => this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.InputAsync(
+            => this.platform.InvokeTaskOnMainThread(() => MaterialDialog.Instance.InputAsync(
                 title,
                 question,
                 null,
@@ -69,7 +69,7 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
 
         public Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null)
-            => this.platform.InvokeOnMainThreadAsync(async () =>
+            => this.platform.InvokeTaskOnMainThread(async () =>
             {
                 if (actionText == null)
                 {
@@ -82,15 +82,15 @@ namespace Shiny.Extensions.Dialogs.XfMaterial
 
         public async Task<IAsyncDisposable> LoadingSnackbar(string message)
         {
-            var dialog = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingSnackbarAsync(message));
-            return AsyncDisposable.Create(async () => await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync()));
+            var dialog = await this.platform.InvokeTaskOnMainThread(() => MaterialDialog.Instance.LoadingSnackbarAsync(message));
+            return AsyncDisposable.Create(async () => await this.platform.InvokeTaskOnMainThread(() => dialog.DismissAsync()));
         }
 
 
         public async Task<IAsyncDisposable> LoadingDialog(string message)
         {
-            var dialog = await this.platform.InvokeOnMainThreadAsync(() => MaterialDialog.Instance.LoadingDialogAsync(message));
-            return AsyncDisposable.Create(async () => await this.platform.InvokeOnMainThreadAsync(() => dialog.DismissAsync()));
+            var dialog = await this.platform.InvokeTaskOnMainThread(() => MaterialDialog.Instance.LoadingDialogAsync(message));
+            return AsyncDisposable.Create(async () => await this.platform.InvokeTaskOnMainThread(() => dialog.DismissAsync()));
         }
 
 
