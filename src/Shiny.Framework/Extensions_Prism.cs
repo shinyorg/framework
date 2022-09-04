@@ -32,44 +32,12 @@ public static class PrismExtensions
     }
 
 
-    //public static Task NavigateModal(this INavigationService navigation, string uri, params (string, object)[] parameters)
-    //    => navigation.NavigateModal(uri, parameters.ToNavParams());
-
-
-    //public static async Task NavigateModal(this INavigationService navigation, string uri, INavigationParameters parameters)
-    //    => (await navigation.NavigateAsync(uri, parameters, true, true)).Assert();
-
-
-    //public static ICommand NavigateModalCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
-    //    => ReactiveCommand.CreateFromTask(async () =>
-    //    {
-    //        var p = new NavigationParameters();
-    //        getParams?.Invoke(p);
-    //        await navigation.NavigateModal(uri, p);
-    //    }, canExecute);
-
-
     public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
         => navigation.Navigate(uri, parameters.ToNavParams());
 
 
     public static async Task Navigate(this INavigationService navigation, string uri, INavigationParameters parameters)
         => (await navigation.NavigateAsync(uri, parameters)).Assert();
-
-
-    public static Task NavigateWithTabs(this INavigationService navigation, string tabbedPageName, params string[] pages)
-    {
-        var uri = tabbedPageName + "?";
-        for (var i = 0; i < pages.Length; i++)
-        {
-            if (i > 0)
-                uri += "&";
-
-            uri += $"{KnownNavigationParameters.CreateTab}={pages[i]}";
-        }
-
-        return navigation.Navigate(uri);
-    }
 
 
     public static void Assert(this INavigationResult result)
@@ -81,7 +49,7 @@ public static class PrismExtensions
         }
     }
 
-    public static ICommand NavigateCommand(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
+    public static ICommand Command(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
         => ReactiveCommand.CreateFromTask(async () =>
         {
             var p = new NavigationParameters();
@@ -90,7 +58,7 @@ public static class PrismExtensions
         }, canExecute);
 
 
-    public static ICommand NavigateCommand<T>(this INavigationService navigation, string uri, Action<T, INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
+    public static ICommand Command<T>(this INavigationService navigation, string uri, Action<T, INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
         => ReactiveCommand.CreateFromTask<T>(async arg =>
         {
             var p = new NavigationParameters();

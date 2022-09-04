@@ -10,7 +10,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<ShinyVersion>3.0.0-alpha-0266</ShinyVersion>
+		<ShinyVersion>3.0.0-alpha-0310</ShinyVersion>
 	</PropertyGroup>
 
     <PropertyGroup>

@@ -39,8 +39,11 @@ public class NativeDialogs : IDialogs
     public Task<bool> Confirm(string message, string? title = null, string? okText = "OK", string? cancelText = "Cancel")
         => this.Run(dialogs => dialogs.DisplayAlertAsync(title, message, okText, cancelText));
 
-    public Task<string?> Input(string question, string? title = null, string? acceptText = "OK", string? dismissText = "Cancel", string? placeholder = null, int? maxLength = null)
-        => this.Run(dialogs => dialogs.DisplayPromptAsync(title, question, acceptText, dismissText, placeholder, maxLength ?? -1));
+    public Task<string?> Input(string question, string? title = null, string? acceptText = "OK", string? dismissText = "Cancel", string? placeholder = null, int? maxLength = null, InputKeyboard keyboard = InputKeyboard.Default)
+    {
+        var keyboardType = Enum.Parse<KeyboardType>(keyboard.ToString());
+        return this.Run(dialogs => dialogs.DisplayPromptAsync(title, question, acceptText, dismissText, placeholder, maxLength ?? -1, keyboardType));
+    }
 
     public async Task<bool> Snackbar(string message, int durationMillis = 3000, string? actionText = null)
     {
