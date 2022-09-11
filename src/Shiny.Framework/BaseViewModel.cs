@@ -118,7 +118,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            this.logger ??= this.services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName);
+            this.logger ??= this.services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName!);
             return this.logger;
         }
         set => this.logger = value;
@@ -149,6 +149,48 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// </summary>
     public ILocalizationSource? Localize => this.services.Localize;
 
+
+    /// <summary>
+    /// Will trap any errors - log them and display a message to the user
+    /// </summary>
+    /// <param name="action"></param>
+    /// <param name="userMessage"></param>
+    /// <param name="title"></param>
+    /// <param name="dialogBtn"></param>
+    protected virtual async void SafeExecute(Action action, string userMessage, string title = "Error", string dialogBtn = "OK")
+    {
+        try
+        {
+            action.Invoke();
+        }
+        catch (Exception ex)
+        {
+            this.Logger.LogError(userMessage, ex);
+            await this.Dialogs.Alert(userMessage, title, dialogBtn);
+        }
+    }
+
+
+    /// <summary>
+    /// Will trap any errors - log them and display a message to the user
+    /// </summary>
+    /// <param name="func"></param>
+    /// <param name="userMessage"></param>
+    /// <param name="title"></param>
+    /// <param name="dialogBtn"></param>
+    /// <returns></returns>
+    protected virtual async Task SafeExecuteAsync(Func<Task> func, string userMessage, string title = "Error", string dialogBtn = "OK")
+    {
+        try
+        {
+            await func.Invoke().ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            this.Logger.LogError(userMessage, ex);
+            await this.Dialogs.Alert(userMessage, title, dialogBtn);
+        }
+    }
 
     /// <summary>
     /// This can be called manually, generally used when your viewmodel is going to the background in the nav stack
