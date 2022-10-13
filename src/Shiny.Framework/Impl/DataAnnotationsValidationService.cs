@@ -26,7 +26,8 @@ namespace Shiny.Impl
                 var result = Validator.TryValidateObject(
                     obj,
                     context,
-                    results
+                    results,
+                    true
                 );
                 return result;
             }
