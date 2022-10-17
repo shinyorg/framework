@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sample="clr-namespace:Sample"
+             x:DataType="sample:ValidationViewModel"
+             x:Class="Sample.ValidationPage"
+             Title="Validation">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Frame>
+                <VerticalStackLayout>
+                    <Label Text="Email" />
+                    <Entry Text="{Binding Email}" />
+
+                    <Label Text="{Binding Validation.Errors[Email]}"
+                           TextColor="Red"
+                           VerticalTextAlignment="End" />
+
+                    <CheckBox IsChecked="{Binding Validation.Touched[Email]}"
+                              IsEnabled="False" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame>
+                <VerticalStackLayout>
+                    <Label Text="Website" />
+                    <Entry Text="{Binding Website}" />
+
+                    <Label Text="{Binding Validation.Errors[Website]}"
+                           TextColor="Red"
+                           VerticalTextAlignment="End" />
+
+                    <CheckBox IsChecked="{Binding Validation.Touched[Website]}"
+                              IsEnabled="False" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame>
+                <VerticalStackLayout>
+                    <Label Text="String (Must be 3-5 characters)" />
+                    <Entry Text="{Binding String}" />
+
+                    <Label Text="{Binding Validation.Errors[String]}"
+                           TextColor="Red"
+                           VerticalTextAlignment="End" />
+
+                    <CheckBox IsChecked="{Binding Validation.Touched[String]}"
+                              IsEnabled="False" />
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Save (Disabled Until ALL Fields Valid)"
+                    Command="{Binding Save}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

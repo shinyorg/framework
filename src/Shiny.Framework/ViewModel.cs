@@ -5,7 +5,6 @@ namespace Shiny;
 
 
 public abstract class ViewModel : BaseViewModel,
-                                  IActiveAware,
                                   IInitializeAsync,
                                   INavigatedAware,
                                   IPageLifecycleAware,
@@ -38,19 +37,5 @@ public abstract class ViewModel : BaseViewModel,
     {
         navSubj ??= new Subject<(INavigationParameters, bool)>();
         return navSubj.DisposedBy(this.DestroyWith);
-    }
-
-
-    /// <summary>
-    /// This is not fired and only an artifact from Prism
-    /// </summary>
-    public event EventHandler? IsActiveChanged;
-
-
-    bool isActive;
-    public bool IsActive
-    {
-        get => this.isActive;
-        set => this.RaiseAndSetIfChanged(ref this.isActive, value);
     }
 }

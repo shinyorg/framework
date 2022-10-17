@@ -6,50 +6,6 @@ using Shiny.Hosting;
 namespace Shiny;
 
 
-public static class ValidationServiceExtensions
-{
-    /// <summary>
-    /// Checks an object property and returns true if valid
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="service"></param>
-    /// <param name="obj"></param>
-    /// <param name="expression"></param>
-    /// <returns></returns>
-    public static bool IsValidProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
-        => service.IsValid(obj, obj.GetPropertyInfo(expression).Name);
-
-
-    /// <summary>
-    /// Checks an object property to see if it is valid
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="service"></param>
-    /// <param name="obj"></param>
-    /// <param name="expression"></param>
-    /// <returns></returns>
-
-    public static IEnumerable<string> ValidateProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
-        => service.ValidateProperty(obj, obj.GetPropertyInfo(expression).Name);
-
-
-    /// <summary>
-    /// Monitors an INotifyPropertyChanged interface for changes and returns true if valid - handy for ReactiveCommand in place of WhenAny
-    /// </summary>
-    /// <param name="viewModel"></param>
-    /// <returns></returns>
-    public static IObservable<bool> WhenValid(this INotifyPropertyChanged viewModel)
-        => viewModel.WhenAnyProperty().Select(_ => {
-            var s = Host.Current.Services.GetService<IValidationService>();
-            if (s == null)
-                throw new InvalidOperationException("Validation service is not registered");
-
-            var result = s.IsValid(viewModel);
-            return result;
-        });
-}
-
-
 public interface IValidationService
 {
     /// <summary>

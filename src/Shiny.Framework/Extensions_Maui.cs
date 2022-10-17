@@ -10,27 +10,28 @@ namespace Shiny;
 
 public static class MauiExtensions
 {
+    #if PLATFORM
+
     public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
     {
-#if PLATFORM
         builder
-            .UseShiny()
-            .UsePrism(container, prismBuilder);
+            .UsePrism(container, prismBuilder)
+            .UseShiny();
 
         if (!builder.Services.Any(x => x.ServiceType == typeof(IDialogs)))
         {
             builder.UseMauiCommunityToolkit();
             builder.Services.AddSingleton<IDialogs, NativeDialogs>();
         }
+        builder.Services.AddGlobalCommandExceptionAction();
         builder.Services.TryAddSingleton(AppInfo.Current);
         builder.Services.TryAddSingleton(Connectivity.Current);
 
         builder.Services.AddScoped<BaseServices>();
-#else
-        throw new InvalidOperationException("This platform is not supported");
-#endif
         return builder;
     }
+
+    #endif
 
 
     public static IObservable<bool> WhenInternetStateChanged(this IConnectivity connectivity, bool includeConstrained = true) => Observable

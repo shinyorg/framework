@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sample="clr-namespace:Sample"
+             x:DataType="sample:MainViewModel"
+             x:Class="Sample.MainPage"
+             Title="Shiny Framework">
+
+    <VerticalStackLayout>
+        <Button Text="Test Global Command Exception Handler"
+                Command="{Binding TestGEH}" />
+
+        <Button Text="Validation Sample"
+                Command="{Binding NavToValidate}" />
+
+        <Button Text="Dialog Samples"
+                Command="{Binding NavToDialogs}" />
+    </VerticalStackLayout>
+</ContentPage>
+

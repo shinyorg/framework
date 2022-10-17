@@ -1,4 +1,5 @@
-﻿using System.Reactive.Disposables;
+﻿using System.ComponentModel;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
@@ -151,6 +152,21 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
 
 
     /// <summary>
+    /// Monitors for viewmodel changes and returns true if valid - handy for ReactiveCommand in place of WhenAny
+    /// </summary>
+    /// <param name="viewModel"></param>
+    /// <returns></returns>
+    public IObservable<bool> WhenValid()
+        => this.WhenAnyProperty().Select(_ => {
+            if (this.services.Validation == null)
+                throw new InvalidOperationException("Validation service is not registered");
+
+            var result = this.services.Validation.IsValid(this);
+            return result;
+        });
+
+
+    /// <summary>
     /// Will trap any errors - log them and display a message to the user
     /// </summary>
     /// <param name="action"></param>
@@ -165,8 +181,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         }
         catch (Exception ex)
         {
-            this.Logger.LogError(userMessage, ex);
-            await this.Dialogs.Alert(userMessage, title, dialogBtn);
+            await this.services.ErrorHandler.Process(ex);
         }
     }
 
@@ -187,8 +202,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         }
         catch (Exception ex)
         {
-            this.Logger.LogError(userMessage, ex);
-            await this.Dialogs.Alert(userMessage, title, dialogBtn);
+            await this.services.ErrorHandler.Process(ex);
         }
     }
 

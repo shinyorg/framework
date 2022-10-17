@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using ReactiveUI;
 using Shiny.Extensions.Localization;
 using Shiny.Impl;
 
@@ -11,7 +12,7 @@ public static class ServiceExtensions
         => services.TryAddSingleton<IValidationService, DataAnnotationsValidationService>();
 
 
-    public static void ConfigureLocalization(this IServiceCollection services, Action<LocalizationBuilder> builderAction, string? defaultSection = null)
+    public static void AddLocalization(this IServiceCollection services, Action<LocalizationBuilder> builderAction, string? defaultSection = null)
     {
         var builder = new LocalizationBuilder();
         builderAction(builder);
@@ -31,7 +32,14 @@ public static class ServiceExtensions
 
     public static void AddGlobalCommandExceptionHandler(this IServiceCollection services, GlobalExceptionHandlerConfig? config = null)
     {
-        services.AddSingleton(config ?? new GlobalExceptionHandlerConfig());
-        services.AddShinyService<GlobalExceptionHandler>();
+        RxApp.DefaultExceptionHandler = new GlobalExceptionHandler();
+        services.AddGlobalCommandExceptionAction();
+    }
+
+
+    internal static void AddGlobalCommandExceptionAction(this IServiceCollection services, GlobalExceptionHandlerConfig? config = null)
+    {
+        services.TryAddSingleton(config ?? new GlobalExceptionHandlerConfig());
+        services.TryAddSingleton<GlobalExceptionAction>();
     }
 }

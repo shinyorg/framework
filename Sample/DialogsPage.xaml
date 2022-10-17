@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sample="clr-namespace:Sample"
+             x:DataType="sample:DialogsViewModel"
+             x:Class="Sample.DialogsPage"
+             Title="Dialogs">
+
+    <VerticalStackLayout>
+        <Frame BorderColor="Black"
+               BackgroundColor="LemonChiffon"
+               CornerRadius="0"
+               Padding="10">
+            <Label Text="{Binding Message}"
+                   VerticalOptions="FillAndExpand"
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+        </Frame>
+
+        <Button Text="Snackbar"
+                Command="{Binding Snackbar}" />
+
+    </VerticalStackLayout>
+</ContentPage>
