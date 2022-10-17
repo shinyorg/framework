@@ -46,7 +46,7 @@ public static class MauiProgram
 			.CreateBuilder()
             .UseShinyFramework();
 
-        builder.Services.ConfigureLocalization(x => x
+        builder.Services.AddLocalization(x => x
             .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
             .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
         );
@@ -71,7 +71,7 @@ public static class MauiProgram
 			.CreateBuilder()
             .UseShinyFramework();
 
-        builder.Services.AddGlobalCommandExceptionHandler(options =>
+        builder.Services.AddGlobalCommandExceptionHandler(new(
         {
 #if DEBUG
             options.AlertType = ErrorAlertType.FullError; // this will show the full error in a dialog during debug
@@ -114,7 +114,7 @@ public static class MauiProgram
 			.CreateBuilder()
             .UseShinyFramework();
 
-        builder.Services.UseDataAnnotationValidation();
+        builder.Services.AddDataAnnotationValidation();
     }
 }
     
@@ -126,6 +126,12 @@ Now, in your viewmodel:
 ```csharp
 public class MyViewModel : Shiny.ViewModel
 {
+    public MyViewModel()
+    {
+        this.BindValidation(); 
+    }
+
+
     [Reactive]
     [EmailAddress(ErrorMessage = "Invalid Email")]
     public string Email { get; set; }
@@ -145,8 +151,10 @@ public class MyViewModel : Shiny.ViewModel
 
 public class MyViewModel : Shiny.ViewModel
 {
-    public MyViewModel() {
+    public MyViewModel()
+    {
         this.Command = ReactiveCommand.Create(() => {}, this.WhenValid());
+        this.BindValidation();
     }
 
     public ICommand Command { get; }

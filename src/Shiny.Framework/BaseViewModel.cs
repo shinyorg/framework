@@ -14,7 +14,6 @@ namespace Shiny;
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
     readonly BaseServices services;
-    
     protected BaseViewModel(BaseServices services) => this.services = services;
 
 
@@ -60,19 +59,18 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     }
 
 
-    IValidationBinding? validationBinding;
-    public virtual IValidationBinding? Validation
+    protected virtual void BindValidation()
     {
-        get
+        if (this.Validation == null && this.services.Validation != null)
         {
-            if (this.validationBinding == null && this.services.Validation != null)
-            {
-                this.validationBinding = this.services.Validation.Bind(this);
-                this.DestroyWith.Add(this.validationBinding);
-            }
-            return this.validationBinding;
+            this.Validation = this.services.Validation.Bind(this);
+            this.DestroyWith.Add(this.Validation);
         }
     }
+
+
+
+    public virtual IValidationBinding Validation { get; private set; } = null!;
 
 
     CompositeDisposable? deactivateWith;

@@ -16,6 +16,7 @@ public class ValidationViewModel : ViewModel
             async () => await this.Dialogs.Snackbar("Fired Saved because form was valid"),
             this.WhenValid()
         );
+        this.BindValidation();
     }
 
 

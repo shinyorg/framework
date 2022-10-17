@@ -15,11 +15,24 @@ public class ValidationBinding : ReactiveObject, IValidationBinding
     {
         this.dispose = reactiveObj
             .WhenAnyProperty()
-            .Where(x => x.PropertyName.Equals(nameof(IValidationViewModel.Validation)))
             .SubOnMainThread(x =>
             {
-                var error = service.ValidateProperty(reactiveObj, x.PropertyName)?.FirstOrDefault();
-                this.Set(x.PropertyName, error);
+                if (x.PropertyName == null)
+                {
+                    var results = service.Validate(reactiveObj);
+                    this.errors.Clear();
+
+                    foreach (var result in results)
+                    {
+                        var msg = result.Value?.FirstOrDefault();
+                        this.Set(result.Key, msg);
+                    }
+                }
+                else
+                {
+                    var error = service.ValidateProperty(reactiveObj, x.PropertyName)?.FirstOrDefault();
+                    this.Set(x.PropertyName, error);
+                }
             });
     }
 
