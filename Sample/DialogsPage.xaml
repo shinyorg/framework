@@ -12,6 +12,7 @@
                CornerRadius="0"
                Padding="10">
             <Label Text="{Binding Message}"
+                   TextColor="Black"
                    VerticalOptions="FillAndExpand"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Center"
