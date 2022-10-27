@@ -10,7 +10,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		
-		<ShinyVersion>3.0.0-alpha-0376</ShinyVersion>
+		<ShinyVersion>3.0.0-alpha-0387</ShinyVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -63,6 +63,6 @@
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
 		<PackageReference Include="Shiny.Hosting.Maui" Version="$(ShinyVersion)" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="1.3.0" />
 	</ItemGroup>
 </Project>
