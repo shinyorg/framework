@@ -4,7 +4,6 @@
 		<Description>A collection of libraries and classes to make Xamarin, Shiny, RXUI, and Prism play beautifully together</Description>
 		
 		<TargetFrameworks>net7.0;net7.0-ios;net7.0-maccatalyst;net7.0-android</TargetFrameworks>
-		<TargetFrameworks Condition="'$(GITHUB_ACTIONS)' == 'true'">$(TargetFrameworks);net6.0;net6.0-ios;net6.0-maccatalyst;net6.0-android</TargetFrameworks>
 		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
 
 		<RootNamespace>Shiny</RootNamespace>
@@ -14,7 +13,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		
-		<ShinyVersion>3.0.0-alpha-0399</ShinyVersion>
+		<ShinyVersion>3.0.0-alpha-0402</ShinyVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -63,7 +62,6 @@
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
 		<PackageReference Include="Shiny.Hosting.Maui" Version="$(ShinyVersion)" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="2.0.0" Condition="$(TargetFramework.Contains('6.0'))" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" Condition="'$(TargetFramework.Contains('6.0'))' == 'false'" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
 	</ItemGroup>
 </Project>

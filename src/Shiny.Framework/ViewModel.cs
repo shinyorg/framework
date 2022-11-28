@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Subjects;
+using System.Windows.Input;
 using ReactiveUI;
 
 namespace Shiny;
@@ -11,6 +12,15 @@ public abstract class ViewModel : BaseViewModel,
 {
     protected ViewModel(BaseServices services) : base(services)
     {
+    }
+
+
+    ICommand? navigateCommand;
+    public ICommand Navigate
+    {
+        get => this.navigateCommand ??= ReactiveCommand.CreateFromTask<string>(
+            uri => this.Navigation.Navigate(uri)
+        );
     }
 
 
