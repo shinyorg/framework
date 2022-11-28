@@ -15,15 +15,6 @@ public abstract class ViewModel : BaseViewModel,
     }
 
 
-    ICommand? navigateCommand;
-    public ICommand Navigate
-    {
-        get => this.navigateCommand ??= ReactiveCommand.CreateFromTask<string>(
-            uri => this.Navigation.Navigate(uri)
-        );
-    }
-
-
     public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
     public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
         => Task.FromResult(true);

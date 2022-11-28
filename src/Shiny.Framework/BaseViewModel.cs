@@ -20,6 +20,13 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     protected INavigationService Navigation => this.services.Navigation;
 
 
+    ICommand? navigateCommand;
+    public ICommand Navigate
+    {
+        get => this.navigateCommand ??= this.Navigation.GeneralNavigateCommand();
+    }
+
+
     bool isBusy;
     public bool IsBusy
     {
