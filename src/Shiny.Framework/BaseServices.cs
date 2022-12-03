@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Shiny.Extensions.Localization;
+using Shiny.Net;
 using Shiny.Impl;
 using Shiny.Stores;
 
@@ -12,7 +13,7 @@ public record BaseServices(
     #endif
     INavigationService Navigation,
     IDialogs Dialogs,
-    IConnectivity Connectivity, // TODO: switch to shiny?
+    IConnectivity Connectivity,
     ILoggerFactory LoggerFactory,
     IObjectStoreBinder ObjectBinder,
     GlobalExceptionAction ErrorHandler,

@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Subjects;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
 
@@ -6,6 +7,7 @@ namespace Shiny;
 
 
 public abstract class ViewModel : BaseViewModel,
+                                  IPageLifecycleAware,
                                   IInitializeAsync,
                                   INavigatedAware,
                                   IConfirmNavigationAsync
@@ -23,4 +25,8 @@ public abstract class ViewModel : BaseViewModel,
         => this.Deactivate();
 
     public virtual void OnNavigatedTo(INavigationParameters parameters) { }
+
+
+    public virtual void OnAppearing() { }
+    public virtual void OnDisappearing() { }
 }

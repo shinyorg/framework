@@ -1,4 +1,7 @@
 ﻿using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 
 namespace Shiny.Impl;
@@ -7,8 +10,8 @@ namespace Shiny.Impl;
 public class ValidationBinding : ReactiveObject, IValidationBinding
 {
     readonly IDisposable dispose;
-    readonly Dictionary<string, bool> touched = new Dictionary<string, bool>();
-    readonly Dictionary<string, string> errors = new Dictionary<string, string>();
+    readonly Dictionary<string, bool> touched = new();
+    readonly Dictionary<string, string> errors = new();
 
 
     public ValidationBinding(IValidationService service, IReactiveObject reactiveObj)

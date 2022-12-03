@@ -1,4 +1,7 @@
-﻿namespace Shiny;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Shiny;
 
 
 public interface IValidationBinding : ReactiveUI.IReactiveObject, IDisposable

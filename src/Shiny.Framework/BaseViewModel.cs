@@ -1,6 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
@@ -52,9 +55,8 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
             {
                 this.services
                     .Connectivity
-                    .WhenInternetStateChanged()
-                    .ObserveOn(RxApp.MainThreadScheduler)
-                    .Subscribe(x =>
+                    .WhenInternetStatusChanged()
+                    .SubOnMainThread(x =>
                     {
                         this.internetAvailable = x;
                         this.RaisePropertyChanged(nameof(this.IsInternetAvailable));

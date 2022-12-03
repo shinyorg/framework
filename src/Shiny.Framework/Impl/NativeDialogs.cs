@@ -1,5 +1,11 @@
 ﻿#if PLATFORM
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Maui.Core;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Prism.Common;
 using Prism.Navigation.Xaml;
 using Font = Microsoft.Maui.Font;

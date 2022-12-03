@@ -1,4 +1,6 @@
-﻿namespace Shiny;
+﻿using System.Threading.Tasks;
+
+namespace Shiny;
 
 public interface IDialogs
 {

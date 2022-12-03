@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Prism.Xaml;
 
 namespace Shiny;
 
@@ -9,7 +11,7 @@ public class FuncViewModel : ViewModel
 
 
     protected Func<IDisposable, Task>? OnStart { get; set; }
-    protected Action<INavigationParameters, IDisposable>? NavTo { get; set; }
+    protected Action<INavigationParameters?, IDisposable>? NavTo { get; set; }
 
 
     public override async Task InitializeAsync(INavigationParameters parameters)
@@ -21,10 +23,18 @@ public class FuncViewModel : ViewModel
     }
 
 
+    INavigationParameters? navToParams;
     public override void OnNavigatedTo(INavigationParameters parameters)
     {
         base.OnNavigatedTo(parameters);
-        this.NavTo?.Invoke(parameters, this.DeactivateWith);
+        this.navToParams = parameters;
+    }
+
+
+    public override void OnAppearing()
+    {
+        base.OnAppearing();
+        this.NavTo?.Invoke(this.navToParams, this.DeactivateWith);
     }
 }
 
