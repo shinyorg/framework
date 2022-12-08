@@ -50,9 +50,11 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     public virtual bool IsInternetAvailable
     {
         get
-        {
+        {            
             if (this.internetAvailable == null)
             {
+                this.internetAvailable = this.services.Connectivity.IsInternetAvailable();
+
                 this.services
                     .Connectivity
                     .WhenInternetStatusChanged()

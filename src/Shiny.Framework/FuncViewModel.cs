@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using Prism.Xaml;
 
@@ -10,14 +11,14 @@ public class FuncViewModel : ViewModel
     public FuncViewModel(BaseServices services) : base(services) {}
 
 
-    protected Func<IDisposable, Task>? OnStart { get; set; }
-    protected Action<INavigationParameters?, IDisposable>? NavTo { get; set; }
+    protected Func<INavigationParameters, CompositeDisposable, Task>? OnStart { get; set; }
+    protected Action<INavigationParameters?, CompositeDisposable>? OnReady { get; set; }
 
 
     public override async Task InitializeAsync(INavigationParameters parameters)
     {
         if (this.OnStart != null)
-            await this.OnStart.Invoke(this.DestroyWith);
+            await this.OnStart.Invoke(parameters, this.DestroyWith);
 
         await base.InitializeAsync(parameters);
     }
@@ -34,7 +35,7 @@ public class FuncViewModel : ViewModel
     public override void OnAppearing()
     {
         base.OnAppearing();
-        this.NavTo?.Invoke(this.navToParams, this.DeactivateWith);
+        this.OnReady?.Invoke(this.navToParams, this.DeactivateWith);
     }
 }
 

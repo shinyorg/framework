@@ -1,22 +1,19 @@
-﻿using System.Reactive.Linq;
+﻿#if PLATFORM
+using System;
+using System.Linq;
+using System.Reactive.Linq;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shiny.Impl;
 using Microsoft.Maui.Hosting;
-using System;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-#if PLATFORM
 using CommunityToolkit.Maui;
-#endif
 
 namespace Shiny;
 
 
 public static class MauiExtensions
 {
-    #if PLATFORM
-
     public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
     {
         builder
@@ -35,6 +32,5 @@ public static class MauiExtensions
         builder.Services.AddScoped<BaseServices>();
         return builder;
     }
-
-    #endif
 }
+#endif
