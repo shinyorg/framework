@@ -8,7 +8,6 @@ namespace Shiny;
 
 public abstract class ViewModel : BaseViewModel,
                                   IPageLifecycleAware,
-                                  IInitializeAsync,
                                   INavigatedAware,
                                   IConfirmNavigationAsync
 {
@@ -17,7 +16,6 @@ public abstract class ViewModel : BaseViewModel,
     }
 
 
-    public virtual Task InitializeAsync(INavigationParameters parameters) => Task.CompletedTask;
     public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
         => Task.FromResult(true);
 
@@ -25,8 +23,6 @@ public abstract class ViewModel : BaseViewModel,
         => this.Deactivate();
 
     public virtual void OnNavigatedTo(INavigationParameters parameters) { }
-
-
     public virtual void OnAppearing() { }
     public virtual void OnDisappearing() { }
 }

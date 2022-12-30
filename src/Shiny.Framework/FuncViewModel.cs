@@ -10,18 +10,7 @@ public class FuncViewModel : ViewModel
 {
     public FuncViewModel(BaseServices services) : base(services) {}
 
-
-    protected Func<INavigationParameters, CompositeDisposable, Task>? OnStart { get; set; }
-    protected Action<INavigationParameters?, CompositeDisposable>? OnReady { get; set; }
-
-
-    public override async Task InitializeAsync(INavigationParameters parameters)
-    {
-        if (this.OnStart != null)
-            await this.OnStart.Invoke(parameters, this.DestroyWith);
-
-        await base.InitializeAsync(parameters);
-    }
+    protected Func<INavigationParameters?, CompositeDisposable, Task>? OnReady { get; set; }
 
 
     INavigationParameters? navToParams;
@@ -32,10 +21,17 @@ public class FuncViewModel : ViewModel
     }
 
 
-    public override void OnAppearing()
+    public override async void OnAppearing()
     {
         base.OnAppearing();
-        this.OnReady?.Invoke(this.navToParams, this.DeactivateWith);
+        if (OnReady != null)
+        {
+            await this.SafeExecuteAsync(
+                () => this.OnReady.Invoke(this.navToParams, this.DeactivateWith),
+                true
+            );
+            this.navToParams = null;
+        }
     }
 }
 
