@@ -179,10 +179,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// Will trap any errors - log them and display a message to the user
     /// </summary>
     /// <param name="action"></param>
-    /// <param name="userMessage"></param>
-    /// <param name="title"></param>
-    /// <param name="dialogBtn"></param>
-    protected virtual async void SafeExecute(Action action, string userMessage, string title = "Error", string dialogBtn = "OK")
+    protected virtual async void SafeExecute(Action action)
     {
         try
         {
@@ -199,21 +196,27 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// Will trap any errors - log them and display a message to the user
     /// </summary>
     /// <param name="func"></param>
-    /// <param name="userMessage"></param>
-    /// <param name="title"></param>
-    /// <param name="dialogBtn"></param>
+    /// <param name="markBusy"></param>
     /// <returns></returns>
-    protected virtual async Task SafeExecuteAsync(Func<Task> func, string userMessage, string title = "Error", string dialogBtn = "OK")
+    protected virtual async Task SafeExecuteAsync(Func<Task> func, bool markBusy = false)
     {
         try
         {
+            if (markBusy)
+                this.IsBusy = true;
+
             await func.Invoke().ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             await this.services.ErrorHandler.Process(ex);
         }
+        finally
+        {
+            this.IsBusy = false;
+        }
     }
+
 
     /// <summary>
     /// This can be called manually, generally used when your viewmodel is going to the background in the nav stack
