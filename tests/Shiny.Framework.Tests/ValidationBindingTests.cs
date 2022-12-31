@@ -17,6 +17,10 @@ public class ValidationBindingTests
         //services.AddGlobalCommandExceptionAction();        
         //services.AddConnectivity();
         //services.AddScoped<BaseServices>();
+
+        var sp = services.BuildServiceProvider();
+        var vm = sp.GetRequiredService<StandardViewModel>();
+
     }
 }
 
