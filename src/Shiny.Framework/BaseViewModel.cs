@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using Shiny.Extensions.Localization;
 using Shiny.Hosting;
+using Shiny.Net;
 using Shiny.Stores;
 
 namespace Shiny;
@@ -16,11 +17,11 @@ namespace Shiny;
 
 public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidationViewModel
 {
-    readonly BaseServices services;
-    protected BaseViewModel(BaseServices services) => this.services = services;
+    protected BaseServices Services { get; }
+    protected BaseViewModel(BaseServices services) => this.Services = services;
 
 
-    protected INavigationService Navigation => this.services.Navigation;
+    protected INavigationService Navigation => this.Services.Navigation;
 
 
     ICommand? navigateCommand;
@@ -53,9 +54,9 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         {            
             if (this.internetAvailable == null)
             {
-                this.internetAvailable = this.services.Connectivity.IsInternetAvailable();
+                this.internetAvailable = this.Services.Connectivity.IsInternetAvailable();
 
-                this.services
+                this.Services
                     .Connectivity
                     .WhenInternetStatusChanged()
                     .SubOnMainThread(x =>
@@ -71,10 +72,10 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
 
 
     protected virtual void BindValidation()
-    {
-        if (this.Validation == null && this.services.Validation != null)
+    {        
+        if (this.Validation == null && this.Services.Validation != null)
         {
-            this.Validation = this.services.Validation.Bind(this);
+            this.Validation = this.Services.Validation.Bind(this);
             this.DestroyWith.Add(this.Validation);
         }
     }
@@ -128,7 +129,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            this.logger ??= this.services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName!);
+            this.logger ??= this.Services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName!);
             return this.logger;
         }
         set => this.logger = value;
@@ -139,26 +140,36 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// <summary>
     /// Access to platform services
     /// </summary>
-    public IPlatform Platform => this.services.Platform;
+    public IPlatform Platform => this.Services.Platform;
 #endif
 
     /// <summary>
     /// Dialog service from the service provider
     /// </summary>
-    public IDialogs Dialogs => this.services.Dialogs;
+    public IDialogs Dialogs => this.Services.Dialogs;
 
 
     /// <summary>
     /// Localization manager from the service provider
     /// </summary>
-    public ILocalizationManager? LocalizationManager => this.services.localizeManager;
+    public ILocalizationManager? LocalizationManager => this.Services.LocalizationManager;
 
 
     /// <summary>
     /// The localization source for this instance - will attempt to use the default section (if registered)
     /// </summary>
-    public ILocalizationSource? Localize => this.services.Localize;
+    public ILocalizationSource? Localize => this.Services.Localize;
 
+
+    /// <summary>
+    /// Shiny Connectivity Service 
+    /// </summary>
+    public IConnectivity Connectivity => this.Services.Connectivity;
+
+    /// <summary>
+    /// Store binder
+    /// </summary>
+    public IObjectStoreBinder StoreBinder => this.Services.ObjectBinder;
 
     /// <summary>
     /// Monitors for viewmodel changes and returns true if valid - handy for ReactiveCommand in place of WhenAny
@@ -166,13 +177,12 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// <param name="viewModel"></param>
     /// <returns></returns>
     public IObservable<bool> WhenValid()
-        => this.WhenAnyProperty().Select(_ => {
-            if (this.services.Validation == null)
-                throw new InvalidOperationException("Validation service is not registered");
+    {
+        if (this.Services.Validation == null)
+            throw new InvalidOperationException("Validation service is not registered");
 
-            var result = this.services.Validation.IsValid(this);
-            return result;
-        });
+        return this.WhenAnyProperty().Select(_ => this.Services.Validation.IsValid(this));
+    }
 
 
     /// <summary>
@@ -187,7 +197,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         }
         catch (Exception ex)
         {
-            await this.services.ErrorHandler.Process(ex);
+            await this.Services.ErrorHandler.Process(ex);
         }
     }
 
@@ -209,7 +219,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
         }
         catch (Exception ex)
         {
-            await this.services.ErrorHandler.Process(ex);
+            await this.Services.ErrorHandler.Process(ex);
         }
         finally
         {
@@ -271,9 +281,9 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// </summary>
     protected virtual void RememberUserState()
     {
-        this.services.ObjectBinder.Bind(this);
+        this.Services.ObjectBinder.Bind(this);
         this.DestroyWith.Add(Disposable.Create(() =>
-            this.services.ObjectBinder.UnBind(this)
+            this.Services.ObjectBinder.UnBind(this)
         ));
     }
 

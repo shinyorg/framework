@@ -18,6 +18,6 @@ public record BaseServices(
     IObjectStoreBinder ObjectBinder,
     GlobalExceptionAction ErrorHandler,
     IValidationService? Validation = null,
-    ILocalizationManager? localizeManager = null,
+    ILocalizationManager? LocalizationManager = null,
     ILocalizationSource? Localize = null
 );

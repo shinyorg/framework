@@ -9,14 +9,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
         <PackageReference Include="xunit" Version="2.4.2" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="DryIoc.dll" Version="5.2.2" />
-        <PackageReference Include="FluentAssertions" Version="6.7.0" />
+        <PackageReference Include="DryIoc.dll" Version="5.3.1" />
+        <PackageReference Include="FluentAssertions" Version="6.8.0" />
+        <PackageReference Include="ReactiveUI.Fody" Version="18.4.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     </ItemGroup>
 
     <!--
@@ -24,4 +26,11 @@
         <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
     </ItemGroup>
     -->
+    <ItemGroup>
+      <None Remove="ReactiveUI.Fody" />
+      <None Remove="Microsoft.Extensions.DependencyInjection" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
+    </ItemGroup>
 </Project>

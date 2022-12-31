@@ -87,7 +87,7 @@ public class DataAnnotationsValidationService : IValidationService
 
     protected virtual string GetErrorMessage(ValidationResult result)
     {
-        if (result.ErrorMessage.StartsWith("localize:"))
+        if (result.ErrorMessage?.StartsWith("localize:") ?? false)
         {
             if (this.localizationManager == null)
                 throw new ArgumentException("Localization has not been put into your startup");
