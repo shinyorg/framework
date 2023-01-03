@@ -7,14 +7,15 @@ namespace Shiny;
 
 
 public abstract class ViewModel : BaseViewModel,
+                                  IInitializeAsync,
                                   IPageLifecycleAware,
                                   INavigatedAware,
                                   IConfirmNavigationAsync
 {
-    protected ViewModel(BaseServices services) : base(services)
-    {
-    }
+    protected ViewModel(BaseServices services) : base(services) {}
 
+    public virtual Task InitializeAsync(INavigationParameters parameters)
+        => Task.CompletedTask;
 
     public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters)
         => Task.FromResult(true);
