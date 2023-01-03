@@ -10,7 +10,7 @@ public abstract class FuncViewModel : ViewModel
 {
     protected FuncViewModel(BaseServices services) : base(services) {}
     protected Func<INavigationParameters, CompositeDisposable, Task>? NavTo { get; set; }
-    protected Func<Task>? Appearing { get; }
+    protected Func<Task>? Appearing { get; set; }
 
 
     public override async void OnNavigatedTo(INavigationParameters parameters)
