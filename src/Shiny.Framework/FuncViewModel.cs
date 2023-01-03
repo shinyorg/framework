@@ -9,27 +9,32 @@ namespace Shiny;
 public abstract class FuncViewModel : ViewModel
 {
     protected FuncViewModel(BaseServices services) : base(services) {}
-    protected Func<CompositeDisposable, Task>? OnReady { get; set; }
+    protected Func<INavigationParameters, CompositeDisposable, Task>? NavTo { get; set; }
+    protected Func<Task>? Appearing { get; }
 
 
-    protected INavigationParameters? NavParams { get; private set; }
-    public override void OnNavigatedTo(INavigationParameters parameters)
+    public override async void OnNavigatedTo(INavigationParameters parameters)
     {
         base.OnNavigatedTo(parameters);
-        this.NavParams = parameters;
+        if (this.NavTo != null)
+        {
+            await this.SafeExecuteAsync(
+                () => this.NavTo.Invoke(parameters, this.DeactivateWith),
+                true
+            );
+        }
     }
 
 
     public override async void OnAppearing()
     {
         base.OnAppearing();
-        if (OnReady != null)
+        if (this.Appearing != null)
         {
             await this.SafeExecuteAsync(
-                () => this.OnReady.Invoke(this.DeactivateWith),
+                () => this.Appearing.Invoke(),
                 true
             );
         }
     }
 }
-
