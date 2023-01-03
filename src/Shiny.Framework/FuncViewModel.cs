@@ -6,18 +6,17 @@ using Prism.Xaml;
 namespace Shiny;
 
 
-public class FuncViewModel : ViewModel
+public abstract class FuncViewModel : ViewModel
 {
-    public FuncViewModel(BaseServices services) : base(services) {}
+    protected FuncViewModel(BaseServices services) : base(services) {}
+    protected Func<CompositeDisposable, Task>? OnReady { get; set; }
 
-    protected Func<INavigationParameters?, CompositeDisposable, Task>? OnReady { get; set; }
 
-
-    INavigationParameters? navToParams;
+    protected INavigationParameters? NavParams { get; private set; }
     public override void OnNavigatedTo(INavigationParameters parameters)
     {
         base.OnNavigatedTo(parameters);
-        this.navToParams = parameters;
+        this.NavParams = parameters;
     }
 
 
@@ -27,10 +26,9 @@ public class FuncViewModel : ViewModel
         if (OnReady != null)
         {
             await this.SafeExecuteAsync(
-                () => this.OnReady.Invoke(this.navToParams, this.DeactivateWith),
+                () => this.OnReady.Invoke(this.DeactivateWith),
                 true
             );
-            this.navToParams = null;
         }
     }
 }
