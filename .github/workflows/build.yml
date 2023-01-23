@@ -34,7 +34,7 @@ jobs:
       with:
           dotnet-version: '7.0.x'
 
-    - name: Add .NET 6 Workloads
+    - name: Add .NET Workloads
       run: dotnet workload install maui ios android maccatalyst
 
     - name: Build
