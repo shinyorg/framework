@@ -27,7 +27,6 @@ public static class MauiExtensions
         }
         builder.Services.AddGlobalCommandExceptionAction();
         builder.Services.TryAddSingleton(AppInfo.Current);
-        builder.Services.AddConnectivity();
 
         builder.Services.AddScoped<BaseServices>();
         return builder;
