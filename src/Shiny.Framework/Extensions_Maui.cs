@@ -25,6 +25,7 @@ public static class MauiExtensions
             builder.UseMauiCommunityToolkit();
             builder.Services.AddSingleton<IDialogs, NativeDialogs>();
         }
+        builder.Services.AddSingleton<IGlobalNavigationService, GlobalNavigationService>();
         builder.Services.AddGlobalCommandExceptionAction();
         builder.Services.TryAddSingleton(AppInfo.Current);
 

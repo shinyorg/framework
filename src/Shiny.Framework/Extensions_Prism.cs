@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
-using Shiny;
 
 namespace Shiny;
 
