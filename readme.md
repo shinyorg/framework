@@ -2,12 +2,13 @@
 
 These libraries were written by the author for the author and thus are not open to issues, enhancements, or anything in between.
 
+Shiny Framework is not required to run your applications with Shiny.  It is a set of tools designed to make working with Shiny easier.  v2 of Framework does enable a much better integration between Shiny, Prism, & Classic Xamarin applications.  v3 (currently in preview) is only a collection tools.
+
 ## Shiny.Framework
 Framework combines the best of MVVM using Prism & ReactiveUI while also combining Shiny.  Find the sample at [https://github.com/shinyorg/samples/tree/main/Integration-Best-Prism-RXUI]
 
 
 #### Features
-* No guess work about what dependency injection mechanism to install - Framework uses [DryIoc](https://github.com/dadhi/DryIoc) under the hood, but guess what.... you'll NEVER know it even if this changes one day
 * Localization - a simple to use localization framework that can be used everywhere including your viewmodels!  Localization DONE RIGHT!
 * Global Navigator - allows you to inject a global navigator that you can use safely from your Shiny delegates.  Will ignore navigation requests when in the background
 * Global Command Exception Handler - do you like ReactiveCommand, so do I... this little service brings together Shiny's logging services + localization (from above) + dialogs (also from above) into one singular place
