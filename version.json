@@ -8,6 +8,7 @@
     },
     "publicReleaseRefSpec": [
         "^refs/heads/master$",
+        "^refs/heads/main",
         "^refs/heads/preview$",
         "^refs/tags/v\\d+\\.\\d+",
         "^refs/tags/v\\d+\\.\\d+\\.\\d+"

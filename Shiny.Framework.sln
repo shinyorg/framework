@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.md = readme.md
 		version.json = version.json
 		src\global.json = src\global.json
+		Build.slnf = Build.slnf
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shiny.Framework", "src\Shiny.Framework\Shiny.Framework.csproj", "{0A10F54F-6E81-401F-BB5B-D176AD44FA4B}"
