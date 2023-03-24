@@ -9,6 +9,7 @@ namespace Shiny;
 public abstract class ViewModel : BaseViewModel,
                                   IInitializeAsync,
                                   IPageLifecycleAware,
+                                  IApplicationLifecycleAware,
                                   INavigatedAware,
                                   IConfirmNavigationAsync
 {
@@ -26,4 +27,7 @@ public abstract class ViewModel : BaseViewModel,
     public virtual void OnNavigatedTo(INavigationParameters parameters) { }
     public virtual void OnAppearing() { }
     public virtual void OnDisappearing() { }
+
+    public virtual void OnResume() => this.OnAppearing();
+    public virtual void OnSleep() => this.OnDisappearing();
 }
