@@ -61,7 +61,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
-		<PackageReference Include="Shiny.Hosting.Maui" Version="$(ShinyVersion)" />
+		<PackageReference Include="Shiny.Hosting.Maui" Version="3.0.0-alpha-0540" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	</ItemGroup>
 </Project>
