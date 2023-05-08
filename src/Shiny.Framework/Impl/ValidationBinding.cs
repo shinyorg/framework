@@ -12,6 +12,7 @@ public class ValidationBinding : ReactiveObject, IValidationBinding
     readonly IDisposable dispose;
     readonly Dictionary<string, bool> touched = new();
     readonly Dictionary<string, string> errors = new();
+    readonly Dictionary<string, bool> isErrors = new();
 
 
     public ValidationBinding(IValidationService service, IReactiveObject reactiveObj)
@@ -42,30 +43,32 @@ public class ValidationBinding : ReactiveObject, IValidationBinding
 
     public IReadOnlyDictionary<string, string> Errors => this.errors;
     public IReadOnlyDictionary<string, bool> Touched => this.touched;
-
+    public IReadOnlyDictionary<string, bool> IsError => this.isErrors;
 
     internal void Set(string propertyName, string? errorMessage)
     {
         if (!this.touched.ContainsKey(propertyName))
         {
             this.touched[propertyName] = true;
+            this.isErrors.Add(propertyName, false);
             this.RaisePropertyChanged(nameof(this.Touched));
         }
         if (this.errors.ContainsKey(propertyName))
         {
             // change
             this.errors.Remove(propertyName);
+            this.isErrors[propertyName] = true;
             if (errorMessage != null)
                 this.errors[propertyName] = errorMessage;
-
-            this.RaisePropertyChanged(nameof(this.Errors));
         }
         else if (errorMessage != null)
         {
             // change
             this.errors[propertyName] = errorMessage;
-            this.RaisePropertyChanged(nameof(this.Errors));
+            this.isErrors[propertyName] = false;
         }
+        this.RaisePropertyChanged(nameof(this.IsError));
+        this.RaisePropertyChanged(nameof(this.Errors));
     }
 
 
