@@ -58,7 +58,7 @@
 		<PackageReference Include="Shiny.Extensions.Localization" Version="2.0.0-preview-0005" />
 		<PackageReference Include="Prism.Maui" Version="8.1.273-pre" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="ReactiveUI" Version="18.4.34" />
+		<PackageReference Include="ReactiveUI" Version="18.4.44" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
