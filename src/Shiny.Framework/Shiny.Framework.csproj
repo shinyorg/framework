@@ -53,6 +53,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Shiny.Core" Version="$(ShinyVersion)" />
+		<PackageReference Include="Shiny.Support.DeviceMonitoring" Version="$(ShinyVersion)" />
 		<PackageReference Include="Shiny.Extensions.Localization" Version="2.0.0-preview-0005" />
 		<PackageReference Include="Prism.Maui" Version="8.1.273-pre" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
