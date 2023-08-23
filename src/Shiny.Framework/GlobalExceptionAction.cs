@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Shiny.Extensions.Localization;
 
-namespace Shiny.Impl;
+namespace Shiny;
 
 
 public class GlobalExceptionAction
 {
     readonly GlobalExceptionHandlerConfig config;
-    readonly ILocalizationManager? localize;
+    readonly IStringLocalizer? localize;
     readonly IDialogs dialogs;
     readonly ILogger logger;
 
 
     public GlobalExceptionAction(
         GlobalExceptionHandlerConfig config,
-        ILogger<GlobalExceptionHandler> logger,
+        ILogger<GlobalExceptionAction> logger,
         IDialogs dialogs,
-        ILocalizationManager? localize = null
+        IStringLocalizer<GlobalExceptionAction>? localize = null
     )
     {
         this.config = config;

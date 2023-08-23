@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
-using Shiny.Extensions.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace Shiny.Impl;
 
 
 public class DataAnnotationsValidationService : IValidationService
 {
-    readonly ILocalizationManager? localizationManager;
+    readonly IStringLocalizerFactory? localizationManager;
 
-
-    public DataAnnotationsValidationService(ILocalizationManager? localizationManager = null)
+    public DataAnnotationsValidationService(IStringLocalizerFactory? localizationManager = null)
         => this.localizationManager = localizationManager;
 
 
@@ -93,7 +92,9 @@ public class DataAnnotationsValidationService : IValidationService
                 throw new ArgumentException("Localization has not been put into your startup");
 
             var key = result.ErrorMessage.Replace("localize:", String.Empty);
-            return this.localizationManager[key] ?? key;
+            //return this.localizationManager[key] ?? key;
+            // TODO
+            return key;
         }
         return result.ErrorMessage!;
     }
