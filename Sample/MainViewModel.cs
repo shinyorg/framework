@@ -1,13 +1,14 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using ReactiveUI;
-using Shiny;
 
 namespace Sample;
 
 
 public class MainViewModel : ViewModel
 {
+    //public const string LocalizeKey = nameof(LocalizeKey);
+
+
     public MainViewModel(BaseServices services) : base(services)
     {
         // TODO: test localization

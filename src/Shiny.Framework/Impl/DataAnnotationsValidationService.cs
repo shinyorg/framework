@@ -56,7 +56,7 @@ public class DataAnnotationsValidationService : IValidationService
                 if (!values.ContainsKey(member))
                     values.Add(member, new List<string>());
 
-                var errMsg = this.GetErrorMessage(result);
+                var errMsg = this.GetErrorMessage(obj, result);
                 values[member].Add(errMsg);
             }
         }
@@ -78,13 +78,13 @@ public class DataAnnotationsValidationService : IValidationService
         {
             if (result.MemberNames.Contains(propertyName))
             {
-                yield return this.GetErrorMessage(result);
+                yield return this.GetErrorMessage(obj, result);
             }
         }
     }
 
 
-    protected virtual string GetErrorMessage(ValidationResult result)
+    protected virtual string GetErrorMessage(object obj, ValidationResult result)
     {
         if (result.ErrorMessage?.StartsWith("localize:") ?? false)
         {
@@ -92,14 +92,14 @@ public class DataAnnotationsValidationService : IValidationService
                 throw new ArgumentException("Localization has not been put into your startup");
 
             var key = result.ErrorMessage.Replace("localize:", String.Empty);
-            //return this.localizationManager[key] ?? key;
-            // TODO
-            return key;
+            var localize = this.localizationManager.Create(obj.GetType());
+
+            return localize[key];
         }
         return result.ErrorMessage!;
     }
 
 
     protected static object? GetValue(object obj, string propertyName)
-        => obj.GetType().GetProperty(propertyName).GetValue(obj, null);
+        => obj.GetType()?.GetProperty(propertyName)?.GetValue(obj, null);
 }
