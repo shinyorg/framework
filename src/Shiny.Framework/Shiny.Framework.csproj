@@ -12,8 +12,8 @@
 		<LangVersion>latest</LangVersion>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<ShinyVersion>3.0.0-beta-0122</ShinyVersion>
-		
+		<ShinyVersion>3.0.0-beta-0277</ShinyVersion>
+
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -49,15 +49,16 @@
 	<ItemGroup>
 		<PackageReference Include="NerdBank.GitVersioning" Version="3.5.109" PrivateAssets="All" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+		
     </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.0" />
 		<PackageReference Include="Shiny.Core" Version="$(ShinyVersion)" />
 		<PackageReference Include="Shiny.Support.DeviceMonitoring" Version="$(ShinyVersion)" />
-		<PackageReference Include="Shiny.Extensions.Localization" Version="2.0.0-preview-0005" />
 		<PackageReference Include="Prism.Maui" Version="8.1.273-pre" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="ReactiveUI" Version="18.4.44" />
+		<PackageReference Include="ReactiveUI" Version="19.4.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">

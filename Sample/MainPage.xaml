@@ -15,6 +15,7 @@
 
         <Button Text="Dialog Samples"
                 Command="{Binding NavToDialogs}" />
+
     </VerticalStackLayout>
 </ContentPage>
 

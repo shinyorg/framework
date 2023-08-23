@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Shiny.Extensions.Localization;
 using Shiny.Net;
-using Shiny.Impl;
 using Shiny.Stores;
+using Microsoft.Extensions.Localization;
 
 namespace Shiny;
 
@@ -13,11 +12,24 @@ public record BaseServices(
     #endif
     INavigationService Navigation,
     IDialogs Dialogs,
-    IConnectivity Connectivity,
-    ILoggerFactory LoggerFactory,
     IObjectStoreBinder ObjectBinder,
     GlobalExceptionAction ErrorHandler,
-    IValidationService? Validation = null,
-    ILocalizationManager? LocalizationManager = null,
-    ILocalizationSource? Localize = null
+    IConnectivity Connectivity,
+    ILoggerFactory LoggerFactory,
+    IValidationService? Validation = null, 
+    IStringLocalizerFactory? StringLocalizationFactory = null
 );
+//{
+//    public async Task SafeExecute(Func<Task> task)
+//    {
+//        try
+//        {
+//            await task.Invoke().ConfigureAwait(false);
+//        }
+//        catch (Exception ex)
+//        {
+//            this.Logger.LogError(ex, "");
+//            await this.Dialogs.Alert("", "");
+//        }
+//    }
+//};

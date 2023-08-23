@@ -1,14 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
-using Shiny.Extensions.Localization;
-using Shiny.Hosting;
 using Shiny.Net;
 using Shiny.Stores;
 
@@ -125,15 +123,7 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// <summary>
     /// A lazy loader logger instance for this viewmodel instance
     /// </summary>
-    protected ILogger Logger
-    {
-        get
-        {
-            this.logger ??= this.Services.LoggerFactory.CreateLogger(this.GetType().AssemblyQualifiedName!);
-            return this.logger;
-        }
-        set => this.logger = value;
-    }
+    protected ILogger Logger => this.logger ??= this.Services.LoggerFactory.CreateLogger(this.GetType());
 
 
 #if PLATFORM
@@ -148,17 +138,11 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     /// </summary>
     public IDialogs Dialogs => this.Services.Dialogs;
 
-
-    /// <summary>
-    /// Localization manager from the service provider
-    /// </summary>
-    public ILocalizationManager? LocalizationManager => this.Services.LocalizationManager;
-
-
+    IStringLocalizer? localizer;
     /// <summary>
     /// The localization source for this instance - will attempt to use the default section (if registered)
     /// </summary>
-    public ILocalizationSource? Localize => this.Services.Localize;
+    public IStringLocalizer? Localize => this.localizer ??= this.Services.StringLocalizationFactory!.Create(this.GetType());
 
 
     /// <summary>
@@ -298,11 +282,8 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
     {
         get
         {
-            if (this.LocalizationManager == null)
+            if (this.Localize == null)
                 throw new InvalidOperationException("Localization has not been initialized in your DI container");
-
-            if (key.Contains(":") || this.Localize == null)
-                return this.LocalizationManager[key];
 
             return this.Localize[key];
         }
