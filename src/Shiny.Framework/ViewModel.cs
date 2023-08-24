@@ -13,7 +13,7 @@ public abstract class ViewModel : BaseViewModel,
                                   INavigatedAware,
                                   IConfirmNavigationAsync
 {
-    protected ViewModel(BaseServices services) : base(services) {}
+    protected ViewModel(BaseServices services) : base(services) { }
 
     public virtual Task InitializeAsync(INavigationParameters parameters)
         => Task.CompletedTask;
