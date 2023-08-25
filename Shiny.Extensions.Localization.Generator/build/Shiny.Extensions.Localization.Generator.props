@@ -1,0 +1,13 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <AdditionalFileItemNames>$(AdditionalFileItemNames);EmbeddedResource</AdditionalFileItemNames>
+        <!--<AdditionalFiles Include="@(EmbeddedResource)" Condition=" '%(EmbeddedResource.Extension)' == '.resx' " />-->
+    </PropertyGroup>
+
+    <ItemGroup>
+        <CompilerVisibleProperty Include="MSBuildProjectFullPath" />
+        <CompilerVisibleProperty Include="MSBuildProjectName" />
+        <CompilerVisibleProperty Include="RootNamespace" />
+    </ItemGroup>
+</Project>
