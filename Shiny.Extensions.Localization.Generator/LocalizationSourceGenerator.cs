@@ -34,6 +34,7 @@ public class LocalizationSourceGenerator : IIncrementalGenerator
 
 		foreach (var file in compilationAndFiles.files)
 		{
+			// TODO: add folder to root namespace
 			var associatedResourceClassName = file.Item1; // TODO: don't get the resource locale
 			var className = associatedResourceClassName + "Localized";
 			var generated = GenerateStronglyTypedClass(file.Item2, nameSpace, className, associatedResourceClassName);
