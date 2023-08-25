@@ -11,7 +11,7 @@
 		<LangVersion>latest</LangVersion>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<ShinyVersion>3.0.0-beta-0277</ShinyVersion>
+		<ShinyVersion>3.0.0-beta-0282</ShinyVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -40,18 +40,14 @@
 		<DefineConstants>$(DefineConstants);PLATFORM</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
 	<ItemGroup>
 		<None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
 		<None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="readme.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="NerdBank.GitVersioning" Version="3.5.109" PrivateAssets="All" />
+		<PackageReference Include="NerdBank.GitVersioning" Version="3.6.133" PrivateAssets="All" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-		
     </ItemGroup>
 
 	<ItemGroup>
