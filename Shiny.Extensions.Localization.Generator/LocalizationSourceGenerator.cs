@@ -38,7 +38,10 @@ public class LocalizationSourceGenerator : IIncrementalGenerator
 			var associatedResourceClassName = file.Item1; // TODO: don't get the resource locale
 			var className = associatedResourceClassName + "Localized";
 			var generated = GenerateStronglyTypedClass(file.Item2, nameSpace, className, associatedResourceClassName);
-			generatedClasses.Add(className);
+
+			var fullClassName = $"{nameSpace}.{className}";
+
+            generatedClasses.Add(fullClassName);
 
 			context.AddSource(className + ".g.cs", generated);
 		}
@@ -56,13 +59,11 @@ public class LocalizationSourceGenerator : IIncrementalGenerator
 	)
 	{
 		var sb = new StringBuilder()
-			.AppendLine("using Microsoft.Extensions.Localization;")
-			.AppendLine()
 			.AppendLine($"namespace {nameSpace};")
 			.AppendLine()
 			.AppendLine($"public class {className}")
 			.AppendLine("{")
-			.AppendLine("\treadonly IStringLocalizer localizer;")
+			.AppendLine("\treadonly Microsoft.Extensions.Localization.IStringLocalizer localizer;")
 			.AppendLine()
 			.AppendLine($"\tpublic {className}(IStringLocalizer<{associatedResourceClassName}> localizer)")
 			.AppendLine("\t{")
@@ -80,7 +81,6 @@ public class LocalizationSourceGenerator : IIncrementalGenerator
             }
 		}
 
-        
         sb.AppendLine("}");
 
 		return sb.ToString();
@@ -94,21 +94,22 @@ public class LocalizationSourceGenerator : IIncrementalGenerator
 	}
 
 
-    static string GenerateServiceCollectionRegistration(string nameSpace, IEnumerable<string> generatedTypes)
+    static string GenerateServiceCollectionRegistration(string rootNamespace, IEnumerable<string> generatedTypes)
     {
         var sb = new StringBuilder()
             .AppendLine("using Microsoft.Extensions.Localization;")
             .AppendLine()
-            .AppendLine($"namespace {nameSpace};")
+            .AppendLine($"namespace {rootNamespace};")
             .AppendLine()
             .Append("public static class Generated")
             .AppendLine("{")
             .AppendLine("\tpublic static void AddStrongTypedLocalizations(this Microsoft.Extensions.DependencyInjection.IServiceCollection services)")
             .AppendLine("\t{");
 
+		// TODO: should I force install localization, add args to allow it to be installed, or just ignore?
         foreach (var genType in generatedTypes)
         {
-            sb.AppendLine($"\t\tservices.AddSingleton<{genType}>();");
+            sb.AppendLine($"\t\tservices.AddSingleton<global::{genType}>();");
         }
         sb
             .Append("\t}")
