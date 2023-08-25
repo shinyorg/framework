@@ -16,6 +16,7 @@
         <Button Text="Dialog Samples"
                 Command="{Binding NavToDialogs}" />
 
+        <Label Text="{Binding [LocalizeKey]}" />
     </VerticalStackLayout>
 </ContentPage>
 

@@ -285,7 +285,11 @@ public abstract class BaseViewModel : ReactiveObject, IDestructible, IValidation
             if (this.Localize == null)
                 throw new InvalidOperationException("Localization has not been initialized in your DI container");
 
-            return this.Localize[key];
+            var res = this.Localize[key];
+            if (res.ResourceNotFound)
+                return $"KEY '{key}' NOT FOUND";
+
+            return res.Value;
         }
     }
 }
