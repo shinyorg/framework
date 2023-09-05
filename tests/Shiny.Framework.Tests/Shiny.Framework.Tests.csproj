@@ -26,10 +26,7 @@
         <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
     </ItemGroup>
     -->
-    <ItemGroup>
-      <None Remove="ReactiveUI.Fody" />
-      <None Remove="Microsoft.Extensions.DependencyInjection" />
-    </ItemGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\src\Shiny.Framework\Shiny.Framework.csproj" />
     </ItemGroup>

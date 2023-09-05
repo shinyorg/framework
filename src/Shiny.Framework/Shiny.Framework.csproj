@@ -11,7 +11,7 @@
 		<LangVersion>latest</LangVersion>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<ShinyVersion>3.0.0-beta-0282</ShinyVersion>
+		<ShinyVersion>3.0.0</ShinyVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
