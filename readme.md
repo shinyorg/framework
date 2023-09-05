@@ -35,7 +35,7 @@ Inherit Shiny.ViewModel on your viewmodel.  You will instantly gain the followin
 
 ## Localization
 
-This uses Shiny.Extensions.Localization - go to <https://shinylib.net/apiservices> for more info on this library
+We use Microsoft.Extensions.Localization with framework
 
 ```csharp
 
@@ -47,14 +47,17 @@ public static class MauiProgram
 			.CreateBuilder()
             .UseShinyFramework();
 
-        builder.Services.AddLocalization(x => x
-            .AddResource("Samples.Resources.Strings", this.GetType().Assembly, "Strings")
-            .AddResource("Samples.Resources.Enums", this.GetType().Assembly, "Enums")
-        );
+        builder.Services.AddLocalization();
 
 		return builder.Build();
 	}
 }
+```
+
+And to bind with it in your XAML UI
+
+```xml
+<Label Text="{Binding [MyResourceKey]}" />
 ```
 
 ## Global Command Exception Handler
