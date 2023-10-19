@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Navigation;
 using ReactiveUI;
 using Shiny.Reflection;
 

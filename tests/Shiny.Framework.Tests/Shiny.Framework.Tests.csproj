@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
@@ -18,7 +18,7 @@
         <PackageReference Include="DryIoc.dll" Version="5.4.1" />
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
         <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-rc.2.23479.6" />
     </ItemGroup>
 
     <!--

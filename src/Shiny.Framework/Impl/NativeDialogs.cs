@@ -6,8 +6,11 @@ using CommunityToolkit.Maui.Core;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+using Prism.AppModel;
 using Prism.Common;
+using Prism.Ioc;
 using Prism.Navigation.Xaml;
+using Prism.Services;
 using Font = Microsoft.Maui.Font;
 using SB = CommunityToolkit.Maui.Alerts.Snackbar;
 

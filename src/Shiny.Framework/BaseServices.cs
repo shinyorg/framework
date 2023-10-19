@@ -2,6 +2,7 @@
 using Shiny.Net;
 using Shiny.Stores;
 using Microsoft.Extensions.Localization;
+using Prism.Navigation;
 
 namespace Shiny;
 
