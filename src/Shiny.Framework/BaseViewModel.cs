@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Prism.Navigation;
 using ReactiveUI;
 using Shiny.Net;
 using Shiny.Stores;

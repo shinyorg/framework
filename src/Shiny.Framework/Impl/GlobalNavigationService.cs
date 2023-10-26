@@ -2,12 +2,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Prism.Common;
+using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Navigation.Xaml;
-using Shiny;
 
 namespace Shiny.Impl;
 

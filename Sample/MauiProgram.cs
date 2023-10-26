@@ -1,4 +1,4 @@
-﻿using Prism.DryIoc;
+﻿using Prism.Container.DryIoc;
 using Shiny;
 using Prism.Navigation;
 

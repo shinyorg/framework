@@ -8,6 +8,8 @@ using Microsoft.Maui.Hosting;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Maui;
+using Prism.Ioc;
+using Prism;
 
 namespace Shiny;
 
