@@ -11,18 +11,31 @@ public abstract class FuncViewModel : ViewModel
     {
     }
 
-    protected Action? Appearing { get; }
-    protected Action? Disappearing { get; }
-    protected Func<INavigationParameters, Task>? Init { get; }
-    protected Func<Task<bool>>? CanNav { get; }
-    protected Action<INavigationParameters>? NavTo { get; }
-    protected Action<INavigationParameters>? NavFrom { get; }
+    protected Action? Appearing { get; set; }
+    protected Func<Task>? AppearingTask { get; set; }
 
+    protected Action? BeforeDestroy { get; set; }
+    protected Action? Disappearing { get; set; }
+    protected Func<INavigationParameters, Task>? Init { get; set; }
+    protected Func<Task<bool>>? CanNav { get; set; }
+    protected Action<INavigationParameters>? NavTo { get; set; }
+    protected Func<INavigationParameters, Task>? NavToTask { get; set; }
+    protected Action<INavigationParameters>? NavFrom { get; set; }
+
+    protected Func<IDisposable[]>? WithDisappear { get; }
+    protected Func<IDisposable[]>? WithDestroy { get; }
 
     public override Task InitializeAsync(INavigationParameters parameters)
     {
         if (this.Init == null)
             return Task.CompletedTask;
+
+        if (this.WithDestroy != null)
+        {
+            var en = this.WithDestroy.Invoke();
+            foreach (var dispose in en)
+                this.DestroyWith.Add(dispose);
+        }
 
         return this.Init.Invoke(parameters);
     }
@@ -37,10 +50,13 @@ public abstract class FuncViewModel : ViewModel
     }
 
 
-    public override void OnNavigatedTo(INavigationParameters parameters)
+    public override async void OnNavigatedTo(INavigationParameters parameters)
     {
         base.OnNavigatedTo(parameters);
         this.NavTo?.Invoke(parameters);
+
+        if (this.NavToTask != null)
+            await this.SafeExecuteAsync(() => this.NavToTask.Invoke(parameters));
     }
 
 
@@ -51,10 +67,19 @@ public abstract class FuncViewModel : ViewModel
     }
 
 
-    public override void OnAppearing()
+    public override async void OnAppearing()
     {
         base.OnAppearing();
         this.Appearing?.Invoke();
+        if (this.AppearingTask != null)
+            await this.SafeExecuteAsync(this.AppearingTask);
+
+        if (this.WithDisappear != null)
+        {
+            var en = this.WithDisappear.Invoke();
+            foreach (var dispose in en)
+                this.DeactivateWith.Add(dispose);
+        }
     }
 
 
@@ -62,5 +87,12 @@ public abstract class FuncViewModel : ViewModel
     {
         base.OnDisappearing();
         this.Disappearing?.Invoke();
+    }
+
+
+    public override void Destroy()
+    {
+        base.Destroy();
+        this.BeforeDestroy?.Invoke();
     }
 }
