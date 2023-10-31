@@ -41,12 +41,6 @@
 		<DefineConstants>$(DefineConstants);PLATFORM</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
 	<ItemGroup>
 		<None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
 		<None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="readme.txt" />

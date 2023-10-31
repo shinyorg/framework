@@ -1,9 +1,6 @@
-﻿using System.Reactive.Subjects;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Threading.Tasks;
 using Prism.AppModel;
 using Prism.Navigation;
-using ReactiveUI;
 
 namespace Shiny;
 
