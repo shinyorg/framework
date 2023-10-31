@@ -33,8 +33,7 @@ public abstract class FuncViewModel : ViewModel
         if (this.WithDestroy != null)
         {
             var en = this.WithDestroy.Invoke();
-            foreach (var dispose in en)
-                this.DestroyWith.Add(dispose);
+            this.DestroyWith.AddRange(en);
         }
 
         return this.Init.Invoke(parameters);
@@ -77,8 +76,7 @@ public abstract class FuncViewModel : ViewModel
         if (this.WithDisappear != null)
         {
             var en = this.WithDisappear.Invoke();
-            foreach (var dispose in en)
-                this.DeactivateWith.Add(dispose);
+            this.DeactivateWith.AddRange(en);
         }
     }
 

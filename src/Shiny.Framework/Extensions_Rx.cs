@@ -1,6 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq.Expressions;
+using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ReactiveUI;
@@ -10,6 +9,14 @@ namespace Shiny;
 
 public static class RxExtensions
 {
+    public static void AddRange(this CompositeDisposable disposer, IEnumerable<IDisposable> en)
+    {
+        if (en != null)
+            foreach (var dispose in en)
+                disposer.Add(dispose);
+    }
+
+
     public static IDisposable SubOnMainThread<T>(this IObservable<T> obs, Action<T> onNext)
         => obs
             .ObserveOn(RxApp.MainThreadScheduler)
