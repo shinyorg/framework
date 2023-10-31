@@ -22,8 +22,8 @@ public abstract class FuncViewModel : ViewModel
     protected Func<INavigationParameters, Task>? NavToTask { get; set; }
     protected Action<INavigationParameters>? NavFrom { get; set; }
 
-    protected Func<IDisposable[]>? WithDisappear { get; }
-    protected Func<IDisposable[]>? WithDestroy { get; }
+    protected Func<IDisposable[]>? WithDisappear { get; set; }
+    protected Func<IDisposable[]>? WithDestroy { get; set; }
 
     public override Task InitializeAsync(INavigationParameters parameters)
     {
