@@ -59,7 +59,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9511" />
 		<PackageReference Include="Shiny.Core" Version="$(ShinyVersion)" />
 		<PackageReference Include="Shiny.Support.DeviceMonitoring" Version="$(ShinyVersion)" />
-		<PackageReference Include="Prism.Maui" Version="9.0.291-pre" />
+		<PackageReference Include="Prism.Maui" Version="9.0.271-pre" />
 		<PackageReference Include="ReactiveUI" Version="19.5.1" />
 	</ItemGroup>
 
