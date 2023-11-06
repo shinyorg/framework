@@ -8,8 +8,8 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<ApplicationTitle>Sample</ApplicationTitle>
 
+		<ApplicationTitle>Sample</ApplicationTitle>
 		<ApplicationId>org.shiny.frameworksample</ApplicationId>
 		<ApplicationIdGuid>8AA1CE20-7325-4612-A14E-E71D93D02FDF</ApplicationIdGuid>
 
@@ -24,12 +24,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
 	<ItemGroup>
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -42,9 +36,9 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\src\Shiny.Framework\Shiny.Framework.csproj" />
-		<PackageReference Include="Prism.DryIoc.Maui" Version="9.0.271-pre" />
+		<PackageReference Include="Prism.DryIoc.Maui" Version="9.0.291-pre" />
 		<PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9373" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9511" />
 	</ItemGroup>
 
 	<ItemGroup>
