@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reactive.Disposables;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Shiny;
@@ -33,5 +34,20 @@ public static class LoggingExtensions
                 logger.LogWarning(msg);
             }
         });
+    }
+
+
+    /// <summary>
+    /// Execute a task wrapped in the warning timer logic
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="taskFunc"></param>
+    /// <param name="getMsg"></param>
+    /// <param name="slowTime"></param>
+    /// <returns></returns>
+    public static async Task LogWarningIfSlow(this ILogger logger, Func<Task> taskFunc, Func<TimeSpan, string> getMsg, TimeSpan? slowTime = null)
+    {
+        using (logger.LogWarningIfSlow(getMsg, slowTime))
+            await taskFunc.Invoke().ConfigureAwait(false);
     }
 }
