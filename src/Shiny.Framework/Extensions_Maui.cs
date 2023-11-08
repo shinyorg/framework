@@ -10,13 +10,14 @@ using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Maui;
 using Prism.Ioc;
 using Prism;
+using ReactiveUI;
 
 namespace Shiny;
 
 
-public static class MauiExtensions
+public static partial class MauiExtensions
 {
-    public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
+    public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder, GlobalExceptionHandlerConfig? exceptionConfig = null)
     {
         builder
             .UsePrism(container, prismBuilder)
@@ -28,12 +29,14 @@ public static class MauiExtensions
             builder.Services.AddSingleton<IDialogs, NativeDialogs>();
         }
         builder.Services.AddSingleton<IGlobalNavigationService, GlobalNavigationService>();
-        builder.Services.AddGlobalCommandExceptionAction();
-        builder.Services.AddConnectivity();
-        builder.Services.TryAddSingleton(AppInfo.Current);
-        builder.Services.AddConnectivity();
 
+        builder.Services.TryAddSingleton(AppInfo.Current);
+        builder.Services.TryAddSingleton(exceptionConfig ?? new GlobalExceptionHandlerConfig());
+        builder.Services.TryAddSingleton<GlobalExceptionAction>();
+        builder.Services.AddConnectivity();
         builder.Services.AddScoped<BaseServices>();
+
+        RxApp.DefaultExceptionHandler = new GlobalExceptionHandler();
         return builder;
     }
 }

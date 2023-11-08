@@ -22,8 +22,9 @@ public static class MauiProgram
 						{
 							Console.WriteLine(ex);
 						}
-					)
-				)
+					),
+                    new(ErrorAlertType.FullError)
+                )
 				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -31,7 +32,6 @@ public static class MauiProgram
 				});
 
 			builder.Services.AddLocalization();
-			builder.Services.AddGlobalCommandExceptionHandler();
 			builder.Services.AddDataAnnotationValidation();
 
 			builder.Services.RegisterForNavigation<MainPage, MainViewModel>();
