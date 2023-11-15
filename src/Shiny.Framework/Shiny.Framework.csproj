@@ -12,10 +12,6 @@
 		<LangVersion>latest</LangVersion>
 		<SingleProject>true</SingleProject>
 		<ShinyVersion>3.1.2</ShinyVersion>
-
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
     <PropertyGroup>
@@ -40,9 +36,6 @@
 		<DefineConstants>$(DefineConstants);PLATFORM</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <CreatePackage>false</CreatePackage>
-	</PropertyGroup>
 	<ItemGroup>
 		<None Include="$(MSBuildThisFileDirectory)..\nuget.png" Pack="true" PackagePath="icon.png" />
 		<None Include="$(MSBuildThisFileDirectory)..\..\readme.md" Pack="true" PackagePath="readme.txt" />
@@ -54,9 +47,10 @@
     </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0-rc.2.23480.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0-rc.2.9530" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
 		<PackageReference Include="Shiny.Core" Version="$(ShinyVersion)" />
 		<PackageReference Include="Shiny.Support.DeviceMonitoring" Version="$(ShinyVersion)" />
 		<PackageReference Include="Prism.Maui" Version="9.0.271-pre" />
