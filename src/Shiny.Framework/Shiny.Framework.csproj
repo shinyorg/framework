@@ -43,7 +43,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="NerdBank.GitVersioning" Version="3.6.133" PrivateAssets="All" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     </ItemGroup>
 
 	<ItemGroup>
@@ -59,6 +59,6 @@
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
 		<PackageReference Include="Shiny.Hosting.Maui" Version="$(ShinyVersion)" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
 	</ItemGroup>
 </Project>
