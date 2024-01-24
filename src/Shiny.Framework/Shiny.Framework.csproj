@@ -11,7 +11,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<SingleProject>true</SingleProject>
-		<ShinyVersion>3.2.0</ShinyVersion>
+		<ShinyVersion>3.2.3</ShinyVersion>
 	</PropertyGroup>
 
     <PropertyGroup>
@@ -31,7 +31,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
-	<PropertyGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios')) OR $(TargetFramework.Contains('maccatalyst'))">
+	<PropertyGroup Condition="$(TargetFramework.Contains('android')) OR $(TargetFramework.Contains('ios')) OR $(TargetFramework.Contains('maccatalyst')) OR $(TargetFramework.Contains('windows10.0.19041.0'))">
 		<IsPlatform>true</IsPlatform>
 		<DefineConstants>$(DefineConstants);PLATFORM</DefineConstants>
 	</PropertyGroup>
@@ -47,18 +47,17 @@
     </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
+		<PackageReference Include="Prism.Maui" Version="9.0.271-pre" />
+		<PackageReference Include="ReactiveUI" Version="19.5.39" />
 		<PackageReference Include="Shiny.Core" Version="$(ShinyVersion)" />
 		<PackageReference Include="Shiny.Support.DeviceMonitoring" Version="$(ShinyVersion)" />
-		<PackageReference Include="Prism.Maui" Version="9.0.271-pre" />
-		<PackageReference Include="ReactiveUI" Version="19.5.1" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(IsPlatform)' == 'true'">
 		<PackageReference Include="Shiny.Hosting.Maui" Version="$(ShinyVersion)" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
 	</ItemGroup>
 </Project>

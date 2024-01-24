@@ -1,4 +1,5 @@
-﻿using Prism.Container.DryIoc;
+using Microsoft.Extensions.Logging;
+using Prism.Container.DryIoc;
 using Shiny;
 using Prism.Navigation;
 
@@ -23,14 +24,16 @@ public static class MauiProgram
 							Console.WriteLine(ex);
 						}
 					),
-                    new(ErrorAlertType.FullError)
-                )
+					new(ErrorAlertType.FullError)
+				)
 				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
-
+#if DEBUG
+			builder.Logging.AddDebug();
+#endif
 			builder.Services.AddLocalization();
 			builder.Services.AddDataAnnotationValidation();
 

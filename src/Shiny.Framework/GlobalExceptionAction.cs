@@ -64,8 +64,8 @@ public class GlobalExceptionAction
                     if (this.localize == null)
                         throw new ArgumentException("Localize is not registered");
 
-                    title = this.localize[cfg.LocalizeErrorTitleKey];
-                    body = this.localize[cfg.LocalizeErrorBodyKey];
+                    title = cfg.LocalizeErrorTitleKey == null ? title : this.localize[cfg.LocalizeErrorTitleKey];
+                    body = cfg.LocalizeErrorBodyKey == null ? body : this.localize[cfg.LocalizeErrorBodyKey];
                     break;
             }
             await this.dialogs.Alert(body, title);

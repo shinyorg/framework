@@ -16,8 +16,8 @@ public static class ValidationExtensions
     /// <param name="obj"></param>
     /// <param name="expression"></param>
     /// <returns></returns>
-    public static bool IsValidProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
-        => service.IsValid(obj, obj.GetPropertyInfo(expression).Name);
+    public static bool IsValidProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression) where T : notnull
+        => service.IsValid(obj, obj.GetPropertyInfo(expression)?.Name);
 
 
     /// <summary>
@@ -29,7 +29,7 @@ public static class ValidationExtensions
     /// <param name="expression"></param>
     /// <returns></returns>
 
-    public static IEnumerable<string> ValidateProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression)
+    public static IEnumerable<string> ValidateProperty<T>(this IValidationService service, T obj, Expression<Func<T, string>> expression) where T : notnull
         => service.ValidateProperty(obj, obj.GetPropertyInfo(expression).Name);
 }
 

@@ -21,7 +21,7 @@ public static class PrismExtensions
     public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
     {
         var p = viewModel.GetPropertyInfo(expression);
-        if (!p.CanWrite)
+        if (p is null || !p.CanWrite)
             throw new ArgumentException("Cannot write property");
 
         viewModel
@@ -79,7 +79,7 @@ public static class PrismExtensions
         => navigation.GoBack(toRoot, parameters.ToNavParams());
 
 
-    public static async Task GoBack(this INavigationService navigation, bool toRoot = false, INavigationParameters parameters = null)
+    public static async Task GoBack(this INavigationService navigation, bool toRoot = false, INavigationParameters? parameters = null)
     {
         parameters = parameters ?? new NavigationParameters();
         var task = toRoot
@@ -91,7 +91,7 @@ public static class PrismExtensions
     }
 
 
-    public static ICommand GoBackCommand(this INavigationService navigation, bool toRoot = false, Action<INavigationParameters>? getParams = null, IObservable<bool> canExecute = null)
+    public static ICommand GoBackCommand(this INavigationService navigation, bool toRoot = false, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
         => ReactiveCommand.CreateFromTask(async () =>
         {
             var p = new NavigationParameters();
@@ -100,7 +100,7 @@ public static class PrismExtensions
         }, canExecute);
 
 
-    public static ICommand GoBackCommand<T>(this INavigationService navigation, bool toRoot = false, Action<T, INavigationParameters>? getParams = null, IObservable<bool> canExecute = null)
+    public static ICommand GoBackCommand<T>(this INavigationService navigation, bool toRoot = false, Action<T, INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
         => ReactiveCommand.CreateFromTask<T>(async arg =>
         {
             var p = new NavigationParameters();
