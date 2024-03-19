@@ -16,7 +16,7 @@ public static class MauiProgram
 				.UseMauiApp<App>()
 				.UseShinyFramework(
 					new DryIocContainerExtension(),
-					prism => prism.OnAppStart(
+					prism => prism.CreateWindow(
 						"NavigationPage/MainPage",
 						ex =>
 						{
