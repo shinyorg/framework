@@ -1,23 +1,16 @@
 ﻿using Microsoft.Extensions.Logging;
-using Shiny.Net;
-using Shiny.Stores;
 using Microsoft.Extensions.Localization;
 using Prism.Navigation;
+using Shiny.Net;
 
 namespace Shiny;
 
 
 public record BaseServices(
-    #if PLATFORM
-    IPlatform Platform,
-    #endif
     INavigationService Navigation,
     IDialogs Dialogs,
-    IObjectStoreBinder ObjectBinder,
-    GlobalExceptionAction ErrorHandler,
     IConnectivity Connectivity,
     ILoggerFactory LoggerFactory,
-    IValidationService? Validation = null, 
     IStringLocalizerFactory? StringLocalizationFactory = null
 );
 //{

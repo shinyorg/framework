@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 namespace Shiny;
 
 
-public abstract class FuncViewModel : ViewModel
+public abstract class FuncBaseViewModel : BaseViewModel
 {
-    protected FuncViewModel(BaseServices services) : base(services)
+    protected FuncBaseViewModel(BaseServices services) : base(services)
     {
     }
 
@@ -54,8 +54,8 @@ public abstract class FuncViewModel : ViewModel
         base.OnNavigatedTo(parameters);
         this.NavTo?.Invoke(parameters);
 
-        if (this.NavToTask != null)
-            await this.SafeExecuteAsync(() => this.NavToTask.Invoke(parameters));
+        // if (this.NavToTask != null)
+        //     await this.SafeExecuteAsync(() => this.NavToTask.Invoke(parameters));
     }
 
 
@@ -70,8 +70,8 @@ public abstract class FuncViewModel : ViewModel
     {
         base.OnAppearing();
         this.Appearing?.Invoke();
-        if (this.AppearingTask != null)
-            await this.SafeExecuteAsync(this.AppearingTask);
+        // if (this.AppearingTask != null)
+        //     await this.SafeExecuteAsync(this.AppearingTask);
 
         if (this.WithDisappear != null)
         {

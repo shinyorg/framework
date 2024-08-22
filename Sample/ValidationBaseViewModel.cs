@@ -8,9 +8,9 @@ using Shiny;
 namespace Sample;
 
 
-public class ValidationViewModel : ViewModel
+public class ValidationBaseViewModel : BaseViewModel
 {
-    public ValidationViewModel(BaseServices services) : base(services)
+    public ValidationBaseViewModel(BaseServices services) : base(services)
     {
         this.Save = ReactiveCommand.CreateFromTask(
             async () => await this.Dialogs.Snackbar("Fired Saved because form was valid"),

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Prism.Navigation;
-using ReactiveUI;
 using Shiny.Reflection;
 
 namespace Shiny;
@@ -12,21 +11,21 @@ namespace Shiny;
 
 public static class PrismExtensions
 {
-    public static bool IsBackNavigation(this INavigationParameters parameters)
+    public static bool IsBack(this INavigationParameters parameters)
         => parameters.GetNavigationMode() == NavigationMode.Back;
 
-    public static bool IsNewNavigation(this INavigationParameters parameters)
+    public static bool IsNew(this INavigationParameters parameters)
         => parameters.GetNavigationMode() == NavigationMode.New;
 
-    public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : ViewModel
+    public static void WhenAnyValueSelected<TViewModel, TRet>(this TViewModel viewModel, Expression<Func<TViewModel, TRet>> expression, Action<TRet> action) where TViewModel : BaseViewModel
     {
         var p = viewModel.GetPropertyInfo(expression);
         if (!p.CanWrite)
             throw new ArgumentException("Cannot write property");
 
         viewModel
-            .WhenAnyValue(expression)
-            .WhereNotNull()
+            .WhenAnyProperty(expression)
+            .Where(x => x != null)
             .Subscribe(x =>
             {
                 p.SetValue(viewModel, null);
@@ -53,28 +52,6 @@ public static class PrismExtensions
         }
     }
 
-    public static ICommand Command(this INavigationService navigation, string uri, Action<INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
-        => ReactiveCommand.CreateFromTask(async () =>
-        {
-            var p = new NavigationParameters();
-            getParams?.Invoke(p);
-            await navigation.Navigate(uri, p);
-        }, canExecute);
-
-
-    public static ICommand Command<T>(this INavigationService navigation, string uri, Action<T, INavigationParameters>? getParams = null, IObservable<bool>? canExecute = null)
-        => ReactiveCommand.CreateFromTask<T>(async arg =>
-        {
-            var p = new NavigationParameters();
-            getParams?.Invoke(arg, p);
-            await navigation.Navigate(uri, p);
-        }, canExecute);
-
-
-    public static ICommand GeneralNavigateCommand(this INavigationService navigation, IObservable<bool>? canExecute = null)
-        => ReactiveCommand.CreateFromTask<string>(uri => navigation.Navigate(uri), canExecute);
-
-
     public static Task GoBack(this INavigationService navigation, bool toRoot = false, params (string, object)[] parameters)
         => navigation.GoBack(toRoot, parameters.ToNavParams());
 
@@ -89,25 +66,6 @@ public static class PrismExtensions
         var result = await task.ConfigureAwait(false);
         result.Assert();
     }
-
-
-    public static ICommand GoBackCommand(this INavigationService navigation, bool toRoot = false, Action<INavigationParameters>? getParams = null, IObservable<bool> canExecute = null)
-        => ReactiveCommand.CreateFromTask(async () =>
-        {
-            var p = new NavigationParameters();
-            getParams?.Invoke(p);
-            await navigation.GoBack(toRoot, p);
-        }, canExecute);
-
-
-    public static ICommand GoBackCommand<T>(this INavigationService navigation, bool toRoot = false, Action<T, INavigationParameters>? getParams = null, IObservable<bool> canExecute = null)
-        => ReactiveCommand.CreateFromTask<T>(async arg =>
-        {
-            var p = new NavigationParameters();
-            getParams?.Invoke(arg, p);
-            await navigation.GoBack(toRoot, p);
-        }, canExecute);
-
 
     public static INavigationParameters Set(this INavigationParameters parameters, string key, object value)
     {

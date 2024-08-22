@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ReactiveUI;
 
 namespace Shiny;
 
@@ -57,7 +55,7 @@ public static class RxExtensions
 
 
     public static IObservable<T> ObserveOnMainThread<T>(this IObservable<T> obs)
-        => obs.ObserveOn(RxApp.MainThreadScheduler);
+        => obs; //.ObserveOn(RxApp.MainThreadScheduler);
 
 
     public static IDisposable SubOnMainThread<T>(this IObservable<T> obs, Action<T> onNext)

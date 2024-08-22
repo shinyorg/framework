@@ -19,15 +19,15 @@ public class ValidationBindingTests
         //services.AddScoped<BaseServices>();
 
         var sp = services.BuildServiceProvider();
-        var vm = sp.GetRequiredService<StandardViewModel>();
+        var vm = sp.GetRequiredService<StandardBaseViewModel>();
 
     }
 }
 
 
-public class StandardViewModel : ViewModel
+public class StandardBaseViewModel : BaseViewModel
 {
-    public StandardViewModel(BaseServices services) : base(services) {}
+    public StandardBaseViewModel(BaseServices services) : base(services) {}
 
 
     [Reactive]
@@ -37,9 +37,9 @@ public class StandardViewModel : ViewModel
 }
 
 
-public class LocalizedViewModel : ViewModel
+public class LocalizedBaseViewModel : BaseViewModel
 {
-    public LocalizedViewModel(BaseServices services) : base(services) {}
+    public LocalizedBaseViewModel(BaseServices services) : base(services) {}
 
 
     [Reactive]

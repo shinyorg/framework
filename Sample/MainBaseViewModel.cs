@@ -4,12 +4,12 @@ using ReactiveUI;
 namespace Sample;
 
 
-public class MainViewModel : ViewModel
+public class MainBaseViewModel : BaseViewModel
 {
     //public const string LocalizeKey = nameof(LocalizeKey);
 
 
-    public MainViewModel(BaseServices services) : base(services)
+    public MainBaseViewModel(BaseServices services) : base(services)
     {
         // TODO: test localization
         this.TestGEH = ReactiveCommand.Create(

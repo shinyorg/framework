@@ -7,9 +7,9 @@ using Shiny;
 namespace Sample;
 
 
-public class DialogsViewModel : ViewModel
+public class DialogsBaseViewModel : BaseViewModel
 {
-    public DialogsViewModel(BaseServices services) : base(services)
+    public DialogsBaseViewModel(BaseServices services) : base(services)
     {
         this.Snackbar = ReactiveCommand.CreateFromTask(async () =>
         {
