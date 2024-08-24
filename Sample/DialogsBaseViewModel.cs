@@ -1,27 +1,17 @@
-﻿using System;
-using System.Windows.Input;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using Shiny;
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Sample;
 
 
-public class DialogsBaseViewModel : BaseViewModel
+public partial class DialogsBaseViewModel(BaseServices services) : ViewModel(services)
 {
-    public DialogsBaseViewModel(BaseServices services) : base(services)
+    public ICommand Snackbar => Commands.CreateFromTask(async () =>
     {
-        this.Snackbar = ReactiveCommand.CreateFromTask(async () =>
-        {
-            this.Message = "Testing Snackbar";
-            var clicked = await this.Dialogs.Snackbar("This is a snackbar", 5000, "OK");
-            this.Message = clicked ? "The snackbar was tapped" : "The snackbar was not touched";
-        });
 
-        //this.Dialogs.ActionSheet
-    }
-
-
-    public ICommand Snackbar { get; }
-    [Reactive] public string Message { get; private set; }
+//         this.Message = "Testing Snackbar";
+//         var clicked = await this.Dialogs.Snackbar("This is a snackbar", 5000, "OK");
+//         this.Message = clicked ? "The snackbar was tapped" : "The snackbar was not touched";
+    });
+    [ObservableProperty] string message;
 }

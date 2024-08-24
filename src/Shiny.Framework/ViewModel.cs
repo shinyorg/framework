@@ -16,15 +16,10 @@ public abstract partial class ViewModel(BaseServices services) : ObservableObjec
 {
     protected BaseServices Services => services;
     protected INavigationService Navigation => this.Services.Navigation;
+    protected ICommandFactory Commands => this.Services.CommandFactory;
 
 
-
-    [RelayCommand]
-    async Task Navigate(string uri)
-    {
-        await this.Navigation.Navigate(uri);
-    }
-
+    [RelayCommand] Task Navigate(string uri) =>this.Navigation.Navigate(uri);
     [ObservableProperty] bool isBusy;
     [ObservableProperty] string? title;
     
@@ -44,9 +39,9 @@ public abstract partial class ViewModel(BaseServices services) : ObservableObjec
                     .SubOnMainThread(x =>
                     {
                         this.internetAvailable = x;
-                        // this.RaisePropertyChanged(nameof(this.IsInternetAvailable));
-                    });
-                // TODO: dispose
+                        this.OnPropertyChanged();
+                    })
+                    .DisposedBy(this.DestroyWith);
             }
             return this.internetAvailable!.Value;
         }

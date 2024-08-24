@@ -9,6 +9,7 @@ namespace Shiny;
 public record BaseServices(
     INavigationService Navigation,
     IDialogs Dialogs,
+    ICommandFactory CommandFactory,
     IConnectivity Connectivity,
     ILoggerFactory LoggerFactory,
     IStringLocalizerFactory? StringLocalizationFactory = null

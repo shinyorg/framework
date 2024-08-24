@@ -10,11 +10,9 @@
         <Button Text="Test Global Command Exception Handler"
                 Command="{Binding TestGEH}" />
 
-        <Button Text="Validation Sample"
-                Command="{Binding NavToValidate}" />
-
         <Button Text="Dialog Samples"
-                Command="{Binding NavToDialogs}" />
+                Command="{Binding NavigateCommand}" 
+                CommandParameter="DialogsPage"/>
 
         <Label Text="{Binding [LocalizeKey]}" />
     </VerticalStackLayout>

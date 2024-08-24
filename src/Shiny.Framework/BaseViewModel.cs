@@ -29,6 +29,4 @@ public abstract class BaseViewModel : ViewModel,
 
     public virtual void OnResume() => this.OnAppearing();
     public virtual void OnSleep() => this.OnDisappearing();
-    
-    
 }

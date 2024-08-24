@@ -10,7 +10,7 @@
                   ContentTemplate="{DataTemplate local:MainPage}"
                   Route="Main" />
 
-    <ShellContent Title="Other"
-                  ContentTemplate="{DataTemplate local:OtherPage}"
-                  Route="Other" />
+    <!-- <ShellContent Title="Other" -->
+    <!--               ContentTemplate="{DataTemplate local:OtherPage}" -->
+    <!--               Route="Other" /> -->
 </maui:ShinyShell>

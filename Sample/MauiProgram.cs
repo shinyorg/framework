@@ -12,7 +12,7 @@ public static class MauiProgram
 		var builder = MauiApp
 			.CreateBuilder()
 			.UseMauiApp<App>()
-			.UseShinyMvvm()
+			// .UseShinyMvvm()
 			.UseShinyFramework(
 				new DryIocContainerExtension(),
 				prism => prism.CreateWindow(
@@ -21,8 +21,7 @@ public static class MauiProgram
 					{
 						Console.WriteLine(ex);
 					}
-				),
-                new(ErrorAlertType.FullError)
+				)
             )
 			.ConfigureFonts(fonts =>
 			{
@@ -31,13 +30,8 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddLocalization();
-		builder.Services.AddDataAnnotationValidation();
-
 		builder.Services.RegisterForNavigation<MainPage, MainBaseViewModel>();
 		builder.Services.RegisterForNavigation<DialogsPage, DialogsBaseViewModel>();
-		builder.Services.RegisterForNavigation<ValidationPage, ValidationBaseViewModel>();
-		// builder.RegisterRoute<MainPage, MainViewModel>("Main");
-		// builder.RegisterRoute<OtherPage, OtherViewModel>("Other");
 		
 		var app = builder.Build();
 		return app;

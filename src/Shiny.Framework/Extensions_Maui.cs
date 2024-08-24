@@ -23,7 +23,7 @@ public static partial class MauiExtensions
     /// <param name="prismBuilder"></param>
     /// <param name="exceptionConfig"></param>
     /// <returns></returns>
-    public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder, GlobalExceptionHandlerConfig? exceptionConfig = null)
+    public static MauiAppBuilder UseShinyFramework(this MauiAppBuilder builder, IContainerExtension container, Action<PrismAppBuilder> prismBuilder)
     {
         builder
             .UsePrism(container, prismBuilder)
@@ -38,7 +38,6 @@ public static partial class MauiExtensions
         builder.Services.AddConnectivity();
         builder.Services.AddScoped<BaseServices>();
 
-        // RxApp.DefaultExceptionHandler = new GlobalExceptionHandler();
         return builder;
     }
 }
