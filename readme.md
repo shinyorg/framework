@@ -1,3 +1,5 @@
+This project is no longer needed.  ReactiveUI, Prism, Shiny (directly) & Community Toolkit alongside MAUI separate all provide better options separately.   
+
 # Shiny Framework Libraries
 
 These libraries were written by the author for the author and thus are not open to issues, enhancements, or anything in between.
